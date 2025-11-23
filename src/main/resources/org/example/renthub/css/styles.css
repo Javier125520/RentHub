@@ -1,0 +1,139 @@
+.background {
+    -fx-background-color: linear-gradient(to bottom right, #0f1419, #1b2633);
+}
+
+/* TITLES */
+.title-main {
+    -fx-font-size: 50px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.subtitle {
+    -fx-text-fill: #c9d6e2;
+    -fx-font-size: 18px;
+}
+
+/* CARD */
+.card {
+    -fx-background-color: #1e2732;
+    -fx-padding: 40;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 20, 0.1, 0, 6);
+}
+
+.card-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/* INPUTS */
+.input {
+    -fx-background-color: #141a20;
+    -fx-background-radius: 12;
+    -fx-padding: 12;
+    -fx-text-fill: white;
+    -fx-border-color: #2c333a;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+}
+
+.input:focused {
+    -fx-border-color: #4cc9f0;
+}
+
+/* BUTTONS */
+.btn-primary {
+    -fx-background-color: linear-gradient(to right, #4361ee, #3a0ca3);
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-font-size: 16px;
+    -fx-padding: 12 30;
+}
+
+.btn-secondary {
+    -fx-background-color: #2a323c;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-font-size: 16px;
+    -fx-padding: 12 30;
+}
+
+/* LINK */
+.hyper {
+    -fx-text-fill: #4cc9f0;
+}
+
+/* ERROR */
+.error {
+    -fx-text-fill: #ff6b6b;
+}
+
+/* -------- SIDEBAR -------- */
+.sidebar {
+    -fx-background-color: #1A1F27;
+    -fx-padding: 30 20;
+}
+
+.sidebar-title {
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #c9d6e2;
+    -fx-font-size: 16px;
+    -fx-padding: 10;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.sidebar-btn:hover {
+    -fx-text-fill: white;
+    -fx-background-color: #2A3039;
+    -fx-background-radius: 8;
+}
+
+.sidebar-btn-exit {
+    -fx-background-color: #d62828;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 18;
+    -fx-background-radius: 8;
+}
+
+.sidebar-btn-exit:hover {
+    -fx-background-color: #e63946;
+}
+
+/* -------- TITLES -------- */
+.main-title {
+    -fx-font-size: 40px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* -------- CARDS -------- */
+.card {
+    -fx-background-color: #1E2732;
+    -fx-padding: 25;
+    -fx-background-radius: 18;
+    -fx-spacing: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 20, 0.2, 0, 7);
+    -fx-pref-width: 280;
+}
+
+.card-title {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.card-sub {
+    -fx-text-fill: #9bb4c9;
+    -fx-font-size: 14px;
+}
+
+

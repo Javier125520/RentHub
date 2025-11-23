@@ -6,4 +6,6 @@ module org.example.renthub {
 
     opens org.example.renthub to javafx.fxml;
     exports org.example.renthub;
+    exports  org.example.renthub.controller;
+    opens org.example.renthub.controller to javafx.fxml;
 }

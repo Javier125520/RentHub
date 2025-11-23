@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.renthub.controller.LoginController"
+            stylesheets="@css/styles.css">
+
+    <center>
+        <VBox alignment="CENTER" prefWidth="900" prefHeight="600" styleClass="background">
+
+            <VBox alignment="CENTER_LEFT" spacing="20" styleClass="card">
+
+                <Label text="Iniciar Sesión" styleClass="card-title"/>
+
+                <TextField fx:id="txtCorreo" promptText="Correo electrónico" styleClass="input"/>
+                <PasswordField fx:id="txtPassword" promptText="Contraseña" styleClass="input"/>
+
+                <Button text="Entrar" onAction="#login" styleClass="btn-primary" maxWidth="Infinity"/>
+
+                <Label fx:id="lblError" text="" styleClass="error"/>
+
+                <Hyperlink text="¿No tienes cuenta? Regístrate" onAction="#irRegistro" styleClass="hyper"/>
+
+            </VBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>
