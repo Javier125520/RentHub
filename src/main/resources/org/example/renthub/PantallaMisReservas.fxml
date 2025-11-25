@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.1"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.MisReservasController"
+            stylesheets="@css/styles.css">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="topbar">
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
+
+            <Button text="← Volver" onAction="#volver" styleClass="btn-secondary"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <Label text="Mis Reservas" styleClass="main-title-small"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="transparent-scroll">
+            <VBox alignment="TOP_CENTER" spacing="25">
+                <padding>
+                    <Insets top="30" right="30" bottom="30" left="30"/>
+                </padding>
+
+                <!-- Contenedor donde se cargan las tarjetas -->
+                <VBox fx:id="contenedorReservas" spacing="25" maxWidth="1000"/>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
+
+

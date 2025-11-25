@@ -2,67 +2,71 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
 
-
-<?import javafx.geometry.Insets?>
-<BorderPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx/17.0.1"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.renthub.controller.MenuPropietarioController"
             stylesheets="@css/styles.css">
 
-    <!-- ========= SIDEBAR ========= -->
+    <!-- ========= SIDEBAR LATERAL ========= -->
     <left>
-        <VBox spacing="30" styleClass="sidebar"
-              alignment="TOP_CENTER"
-              prefWidth="220"
-              VBox.vgrow="ALWAYS">
+        <VBox spacing="30" styleClass="sidebar" prefWidth="220" alignment="TOP_CENTER">
 
             <Label text="StaySmart" styleClass="sidebar-title"/>
 
+            <!-- BOTONES DEL MENÚ -->
             <VBox spacing="12" alignment="TOP_LEFT">
+
                 <Button text="Inmuebles" onAction="#irInmuebles" styleClass="sidebar-btn"/>
                 <Button text="Servicios" onAction="#irServicios" styleClass="sidebar-btn"/>
                 <Button text="Reservas" onAction="#irReservas" styleClass="sidebar-btn"/>
                 <Button text="Perfil" onAction="#irPerfil" styleClass="sidebar-btn"/>
+
             </VBox>
 
-            <Pane VBox.vgrow="ALWAYS"/>
+            <Pane fx:id="spacer" VBox.vgrow="ALWAYS"/>
 
+            <!-- Cerrar sesión -->
             <Button text="Cerrar Sesión" onAction="#logout" styleClass="sidebar-btn-exit"/>
         </VBox>
     </left>
 
-    <!-- ========= CONTENIDO PRINCIPAL ========= -->
     <center>
-        <VBox spacing="25" alignment="TOP_LEFT" VBox.vgrow="ALWAYS">
+        <VBox spacing="25" alignment="TOP_LEFT">
             <padding>
                 <Insets top="40" right="40" bottom="40" left="40"/>
             </padding>
 
             <Label text="Panel del Propietario" styleClass="main-title"/>
-            <Label text="Gestiona tus inmuebles, servicios y reservas."
-                   styleClass="subtitle"/>
+            <Label text="Gestiona tus inmuebles, servicios y reservas." styleClass="subtitle"/>
 
-            <HBox spacing="25" HBox.hgrow="ALWAYS">
-                <VBox styleClass="card" spacing="12" alignment="CENTER" VBox.vgrow="ALWAYS">
+            <HBox spacing="25">
+
+                <VBox styleClass="card" spacing="12" alignment="CENTER">
                     <Label text="Inmuebles" styleClass="card-title"/>
-                    <Label text="Gestiona tus propiedades registradas" styleClass="card-sub"/>
+                    <Label text="Gestiona tus propiedades registradas"
+                           styleClass="card-sub"/>
                     <Button text="Acceder" onAction="#irInmuebles" styleClass="btn-primary"/>
                 </VBox>
 
-                <VBox styleClass="card" spacing="12" alignment="CENTER" VBox.vgrow="ALWAYS">
+                <VBox styleClass="card" spacing="12" alignment="CENTER">
                     <Label text="Servicios" styleClass="card-title"/>
-                    <Label text="Añade o modifica servicios extra" styleClass="card-sub"/>
+                    <Label text="Añade o modifica servicios extra"
+                           styleClass="card-sub"/>
                     <Button text="Acceder" onAction="#irServicios" styleClass="btn-primary"/>
                 </VBox>
 
-                <VBox styleClass="card" spacing="12" alignment="CENTER" VBox.vgrow="ALWAYS">
+                <VBox styleClass="card" spacing="12" alignment="CENTER">
                     <Label text="Reservas" styleClass="card-title"/>
-                    <Label text="Consulta reservas de tus alojamientos" styleClass="card-sub"/>
+                    <Label text="Consulta reservas de tus alojamientos"
+                           styleClass="card-sub"/>
                     <Button text="Acceder" onAction="#irReservas" styleClass="btn-primary"/>
                 </VBox>
+
             </HBox>
         </VBox>
     </center>
-
 </BorderPane>
+

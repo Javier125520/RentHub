@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.MenuHuespedController"
+            stylesheets="@css/styles.css">
+
+    <!-- ========= SIDEBAR ========= -->
+    <left>
+        <VBox spacing="30" styleClass="sidebar"
+              alignment="TOP_CENTER"
+              prefWidth="220"
+              VBox.vgrow="ALWAYS">
+
+            <Label text="StaySmart" styleClass="sidebar-title"/>
+
+            <VBox spacing="12" alignment="TOP_LEFT">
+                <Button text="Buscar Inmuebles" onAction="#irBuscarInmuebles" styleClass="sidebar-btn"/>
+                <Button text="Mis Reservas" onAction="#irMisReservas" styleClass="sidebar-btn"/>
+                <Button text="Mi Perfil" onAction="#irPerfil" styleClass="sidebar-btn"/>
+                <Button text="Soporte" onAction="#irSoporte" styleClass="sidebar-btn"/>
+            </VBox>
+
+            <Pane VBox.vgrow="ALWAYS"/>
+
+            <Button text="Cerrar Sesión" onAction="#logout" styleClass="sidebar-btn-exit"/>
+        </VBox>
+    </left>
+
+    <!-- ========= CONTENIDO PRINCIPAL ========= -->
+    <center>
+        <VBox spacing="25" alignment="TOP_LEFT" VBox.vgrow="ALWAYS">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
+
+            <Label text="¡Bienvenido!" styleClass="main-title"/>
+            <Label text="Explora inmuebles y gestiona tus reservas."
+                   styleClass="subtitle"/>
+
+            <!-- BUSCADOR -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="txtBusqueda" promptText="Buscar ciudad, zona o alojamiento"
+                           styleClass="input"
+                           HBox.hgrow="ALWAYS"/>
+
+                <Button text="Buscar" onAction="#buscar" styleClass="btn-primary"/>
+            </HBox>
+
+            <!-- CARDS -->
+            <HBox spacing="25" HBox.hgrow="ALWAYS">
+
+                <VBox styleClass="card" spacing="12" alignment="CENTER" VBox.vgrow="ALWAYS">
+                    <Label text="Buscar Inmuebles" styleClass="card-title"/>
+                    <Label text="Explora alojamientos disponibles"
+                           styleClass="card-sub"/>
+                    <Button text="Entrar" onAction="#irBuscarInmuebles" styleClass="btn-primary"/>
+                </VBox>
+
+                <VBox styleClass="card" spacing="12" alignment="CENTER" VBox.vgrow="ALWAYS">
+                    <Label text="Mis Reservas" styleClass="card-title"/>
+                    <Label text="Consulta tus próximas estancias"
+                           styleClass="card-sub"/>
+                    <Button text="Entrar" onAction="#irMisReservas" styleClass="btn-primary"/>
+                </VBox>
+
+                <VBox styleClass="card" spacing="12" alignment="CENTER" VBox.vgrow="ALWAYS">
+                    <Label text="Mi Perfil" styleClass="card-title"/>
+                    <Label text="Configura tu cuenta"
+                           styleClass="card-sub"/>
+                    <Button text="Entrar" onAction="#irPerfil" styleClass="btn-primary"/>
+                </VBox>
+
+            </HBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

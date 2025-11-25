@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.1"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.AnadirInmuebleController"
+            stylesheets="@css/styles.css">
+
+    <!-- =============== TOPBAR =============== -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="topbar">
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
+
+            <Button text="← Volver" onAction="#volver" styleClass="btn-secondary"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <Label text="Añadir Nuevo Inmueble" styleClass="main-title-small"/>
+        </HBox>
+    </top>
+
+
+    <!-- =============== CONTENIDO =============== -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="transparent-scroll">
+            <VBox alignment="TOP_CENTER" spacing="30">
+                <padding>
+                    <Insets top="30" right="30" bottom="30" left="30"/>
+                </padding>
+
+                <VBox spacing="20" maxWidth="850" styleClass="card" padding="25">
+
+                    <!-- ================= DATOS PRINCIPALES ================= -->
+                    <Label text="Información General" styleClass="main-title-small"/>
+
+                    <VBox spacing="15">
+
+                        <!-- TÍTULO -->
+                        <VBox spacing="5">
+                            <Label text="Título" styleClass="form-label"/>
+                            <TextField fx:id="txtTitulo" promptText="Ej: Apartamento luminoso en Madrid"/>
+                        </VBox>
+
+                        <!-- DESCRIPCION -->
+                        <VBox spacing="5">
+                            <Label text="Descripción" styleClass="form-label"/>
+                            <TextArea fx:id="txtDescripcion" prefRowCount="4"
+                                      promptText="Descripción detallada del inmueble..."/>
+                        </VBox>
+
+                    </VBox>
+
+
+                    <!-- ================= UBICACIÓN ================= -->
+                    <Label text="Ubicación" styleClass="main-title-small"/>
+
+                    <HBox spacing="20">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Ciudad" styleClass="form-label"/>
+                            <TextField fx:id="txtCiudad" promptText="Madrid"/>
+                        </VBox>
+
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="País" styleClass="form-label"/>
+                            <TextField fx:id="txtPais" promptText="España"/>
+                        </VBox>
+                    </HBox>
+
+
+                    <!-- ================= CAPACIDAD Y PRECIO ================= -->
+                    <HBox spacing="20">
+
+                        <VBox spacing="5">
+                            <Label text="Capacidad (número de huéspedes)" styleClass="form-label"/>
+                            <Spinner fx:id="spnCapacidad" prefWidth="120"/>
+                        </VBox>
+
+                        <VBox spacing="5">
+                            <Label text="Precio por noche (€)" styleClass="form-label"/>
+                            <TextField fx:id="txtPrecio" promptText="Ej: 85"/>
+                        </VBox>
+
+                    </HBox>
+
+
+                    <!-- ================= SERVICIOS ================= -->
+                    <Label text="Servicios" styleClass="main-title-small"/>
+
+                    <FlowPane hgap="20" vgap="10">
+                        <CheckBox fx:id="chkWifi" text="WiFi"/>
+                        <CheckBox fx:id="chkTV" text="Televisión"/>
+                        <CheckBox fx:id="chkAC" text="Aire acondicionado"/>
+                        <CheckBox fx:id="chkCalefaccion" text="Calefacción"/>
+                        <CheckBox fx:id="chkParking" text="Parking"/>
+                        <CheckBox fx:id="chkMascotas" text="Apto mascotas"/>
+                        <CheckBox fx:id="chkPiscina" text="Piscina"/>
+                        <CheckBox fx:id="chkTerraza" text="Terraza"/>
+                    </FlowPane>
+
+
+                    <!-- ================= IMAGEN PRINCIPAL ================= -->
+                    <Label text="Imagen Principal" styleClass="main-title-small"/>
+
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <Button text="Seleccionar imagen" onAction="#seleccionarImagen" styleClass="btn-secondary"/>
+
+                        <ImageView fx:id="imgPreview"
+                                   fitWidth="180" fitHeight="130"
+                                   preserveRatio="true"
+                                   smooth="true"
+                                   style="-fx-background-color: #2e323b; -fx-background-radius: 12;"/>
+                    </HBox>
+
+                    <!-- ================= BOTÓN GUARDAR ================= -->
+                    <HBox alignment="CENTER">
+                        <Button text="Guardar Inmueble"
+                                onAction="#guardar"
+                                styleClass="btn-primary"
+                                prefWidth="260" prefHeight="45"/>
+                    </HBox>
+
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
+

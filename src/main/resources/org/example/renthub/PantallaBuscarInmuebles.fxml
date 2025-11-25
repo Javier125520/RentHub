@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.BuscarInmueblesController"
+            stylesheets="@css/styles.css">
+
+    <!-- ================== BARRA SUPERIOR ================== -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="topbar">
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
+
+            <Label text="Buscar Inmuebles"
+                   styleClass="main-title-small"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <!-- Botón volver -->
+            <Button text="Volver" onAction="#volver" styleClass="btn-secondary"/>
+        </HBox>
+    </top>
+
+    <!-- ================== CONTENIDO PRINCIPAL ================== -->
+    <center>
+        <VBox spacing="20" alignment="TOP_CENTER" VBox.vgrow="ALWAYS" styleClass="background">
+            <padding>
+                <Insets top="25" left="40" right="40" bottom="40"/>
+            </padding>
+
+            <!-- BUSCADOR -->
+            <HBox spacing="10" alignment="CENTER_LEFT" maxWidth="800">
+                <TextField fx:id="txtBuscar"
+                           promptText="Buscar por ciudad, zona, características..."
+                           styleClass="input"
+                           HBox.hgrow="ALWAYS"/>
+                <Button text="Buscar" onAction="#buscar" styleClass="btn-primary"/>
+            </HBox>
+
+            <!-- GRID DE RESULTADOS -->
+            <ScrollPane fitToWidth="true" styleClass="transparent-scroll">
+                <GridPane fx:id="gridInmuebles"
+                          hgap="25" vgap="25"
+                          alignment="TOP_CENTER"
+                          styleClass="grid-container">
+                </GridPane>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>
+

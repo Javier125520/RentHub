@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.1"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.CambiarContrasenaController"
+            stylesheets="@css/styles.css">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="topbar">
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
+
+            <Button text="← Volver" onAction="#volver" styleClass="btn-secondary"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Label text="Cambiar contraseña" styleClass="main-title-small"/>
+        </HBox>
+    </top>
+
+    <!-- CONTENIDO -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="transparent-scroll">
+            <VBox alignment="TOP_CENTER" spacing="35">
+                <padding>
+                    <Insets top="50" right="20" bottom="50" left="20"/>
+                </padding>
+
+                <VBox spacing="20" maxWidth="420">
+
+                    <!-- CONTRASEÑA ACTUAL -->
+                    <VBox spacing="5">
+                        <Label text="Contraseña actual" styleClass="form-label"/>
+                        <PasswordField fx:id="txtActual" promptText="Introduce tu contraseña actual"/>
+                    </VBox>
+
+                    <!-- NUEVA CONTRASEÑA -->
+                    <VBox spacing="5">
+                        <Label text="Nueva contraseña" styleClass="form-label"/>
+                        <PasswordField fx:id="txtNueva" promptText="Mínimo 6 caracteres"/>
+                    </VBox>
+
+                    <!-- REPETIR CONTRASEÑA -->
+                    <VBox spacing="5">
+                        <Label text="Repetir contraseña" styleClass="form-label"/>
+                        <PasswordField fx:id="txtRepetir" promptText="Repite la nueva contraseña"/>
+                    </VBox>
+
+                    <!-- BOTÓN GUARDAR -->
+                    <HBox alignment="CENTER" padding="20 0 0 0">
+                        <Button text="Guardar cambios"
+                                onAction="#guardar"
+                                styleClass="btn-primary"
+                                prefWidth="240"
+                                prefHeight="45"/>
+                    </HBox>
+
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

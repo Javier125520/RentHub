@@ -1,6 +1,7 @@
 package org.example.renthub.controller;
 
 import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 
 public class MenuPropietarioController {
 
@@ -17,5 +18,8 @@ public class MenuPropietarioController {
     }
 
     public void logout(ActionEvent event) {
+    }
+
+    public void irCrearInmueble(MouseEvent event) {
     }
 }

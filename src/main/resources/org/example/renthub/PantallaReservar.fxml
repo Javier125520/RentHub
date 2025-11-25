@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.1"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.ReservarInmuebleController"
+            stylesheets="@css/styles.css">
+
+    <!-- ================= BARRA SUPERIOR ================= -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="topbar">
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
+
+            <Button text="← Volver" onAction="#volver" styleClass="btn-secondary"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <Label text="Reservar Inmueble" styleClass="main-title-small"/>
+        </HBox>
+    </top>
+
+    <!-- ================= CONTENIDO ================= -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="transparent-scroll">
+            <VBox alignment="TOP_CENTER" spacing="40">
+                <padding>
+                    <Insets top="30" right="30" bottom="30" left="30"/>
+                </padding>
+
+                <!-- IMAGEN + RESUMEN PEQUEÑO -->
+                <HBox spacing="25" maxWidth="900">
+
+                    <ImageView fx:id="imgInmueble"
+                               fitWidth="350"
+                               fitHeight="230"
+                               preserveRatio="true"
+                               smooth="true"/>
+
+                    <VBox spacing="10" alignment="TOP_LEFT">
+                        <Label fx:id="lblTitulo" styleClass="main-title-small"/>
+                        <Label fx:id="lblUbicacion" styleClass="subtitle"/>
+                        <Label fx:id="lblPrecioNoche" styleClass="card-price"/>
+                    </VBox>
+
+                </HBox>
+
+                <!-- FORMULARIO -->
+                <VBox spacing="20" maxWidth="900">
+
+                    <!-- FECHAS -->
+                    <VBox spacing="10">
+                        <Label text="Fechas de reserva" styleClass="main-title-small"/>
+
+                        <HBox spacing="20">
+                            <VBox spacing="5">
+                                <Label text="Entrada" styleClass="form-label"/>
+                                <DatePicker fx:id="dateEntrada" />
+                            </VBox>
+
+                            <VBox spacing="5">
+                                <Label text="Salida" styleClass="form-label"/>
+                                <DatePicker fx:id="dateSalida" />
+                            </VBox>
+                        </HBox>
+                    </VBox>
+
+                    <!-- HUÉSPEDES -->
+                    <VBox spacing="10">
+                        <Label text="Número de huéspedes" styleClass="main-title-small"/>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="Huéspedes:"/>
+                            <Spinner fx:id="spinnerHuespedes" prefWidth="80"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- RESUMEN -->
+                    <VBox spacing="10">
+                        <Label text="Resumen" styleClass="main-title-small"/>
+
+                        <VBox styleClass="card" maxWidth="900" spacing="10">
+
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Precio por noche:" styleClass="card-sub"/>
+                                <Label fx:id="lblPrecioBase" styleClass="card-sub"/>
+                            </HBox>
+
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Noches:" styleClass="card-sub"/>
+                                <Label fx:id="lblNoches" styleClass="card-sub"/>
+                            </HBox>
+
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Total:" styleClass="card-price"/>
+                                <Label fx:id="lblTotal" styleClass="card-price"/>
+                            </HBox>
+
+                        </VBox>
+                    </VBox>
+
+                    <!-- BOTÓN CONFIRMAR -->
+                    <HBox alignment="CENTER">
+                        <padding>
+                            <Insets top="20" />
+                        </padding>
+                        <Button text="Confirmar Reserva"
+                                onAction="#confirmar"
+                                styleClass="btn-primary"
+                                prefWidth="300" prefHeight="45"/>
+                    </HBox>
+
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
+
