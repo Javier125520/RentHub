@@ -2,7 +2,7 @@ package org.example.renthub.controller;
 
 import javafx.event.ActionEvent;
 
-public class AnadirInmuebleController {
+public class EditarInmuebleController {
     public void volver(ActionEvent event) {
     }
 

@@ -54,7 +54,10 @@
                 </VBox>
 
                 <!-- BOTÓN EDITAR -->
-                <HBox alignment="CENTER" padding="15 0 0 0">
+                <HBox alignment="CENTER">
+                    <padding>
+                        <Insets top="15" right="20" bottom="15" left="20" />
+                    </padding>
                     <Button text="Editar perfil"
                             onAction="#editar"
                             styleClass="btn-primary"
@@ -67,5 +70,6 @@
     </center>
 
 </BorderPane>
+
 
 

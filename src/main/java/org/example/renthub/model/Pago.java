@@ -10,18 +10,14 @@ public class Pago {
     private double monto;
     private EstadoPago estado;
 
-    // Relación bidireccional
-    private Reserva reserva;
-
     public Pago() {}
 
-    public Pago(int id, MetodoPago metodo, LocalDate fechaPago, double monto, EstadoPago estado, Reserva reserva) {
+    public Pago(int id, MetodoPago metodo, LocalDate fechaPago, double monto, EstadoPago estado) {
         this.id = id;
         this.metodo = metodo;
         this.fechaPago = fechaPago;
         this.monto = monto;
         this.estado = estado;
-        this.setReserva(reserva);
     }
 
     // getters y setters
@@ -40,23 +36,13 @@ public class Pago {
     public EstadoPago getEstado() { return estado; }
     public void setEstado(EstadoPago estado) { this.estado = estado; }
 
-    public Reserva getReserva() { return reserva; }
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
-        if (reserva != null && reserva.getPago() != this) {
-            reserva.setPago(this);
-        }
-    }
-
     @Override
     public String toString() {
-        String reservaInfo = (reserva == null) ? "null" : ("Reserva{id=" + reserva.getId() + "}");
         return "Pago{" +
                 "id=" + id +
                 ", metodo=" + metodo +
                 ", monto=" + monto +
                 ", estado=" + estado +
-                ", reserva=" + reservaInfo +
                 '}';
     }
 

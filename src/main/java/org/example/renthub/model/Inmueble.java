@@ -12,12 +12,14 @@ public class Inmueble {
     private String ciudad;
     private double precioNoche;
     private boolean disponible;
+    private String fotoPrincipal;
 
     // Relación bidireccional
     private Usuario propietario;
     private List<Reserva> reservas = new ArrayList<>();
     private List<Reseña> resenas = new ArrayList<>();
     private List<InmuebleServicio> servicios = new ArrayList<>();
+    private List<ImagenInmueble> imagenes = new ArrayList<>();
 
     public Inmueble() {}
 
@@ -95,6 +97,22 @@ public class Inmueble {
             servicios.add(is);
             is.setInmueble(this);
         }
+    }
+
+    public List<ImagenInmueble> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<ImagenInmueble> imagenes) {
+        this.imagenes = imagenes;
+    }
+
+    public String getFotoPrincipal() {
+        return fotoPrincipal;
+    }
+
+    public void setFotoPrincipal(String fotoPrincipal) {
+        this.fotoPrincipal = fotoPrincipal;
     }
 
     @Override

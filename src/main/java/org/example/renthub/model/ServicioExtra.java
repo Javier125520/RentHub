@@ -9,9 +9,6 @@ public class ServicioExtra {
     private String nombre;
     private String descripcion;
 
-    // relación bidireccional con inmuebles (a través de InmuebleServicio)
-    private List<InmuebleServicio> inmuebles = new ArrayList<>();
-
     public ServicioExtra() {}
 
     public ServicioExtra(int id, String nombre, String descripcion) {

@@ -7,10 +7,10 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17.0.1"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.renthub.controller.AnadirInmuebleController"
+            fx:controller="org.example.renthub.controller.EditarInmuebleController"
             stylesheets="@css/styles.css">
 
-    <!-- =============== TOPBAR =============== -->
+    <!-- =============== TOP =============== -->
     <top>
         <HBox alignment="CENTER_LEFT" spacing="15" styleClass="topbar">
             <padding>
@@ -21,7 +21,7 @@
 
             <Pane HBox.hgrow="ALWAYS"/>
 
-            <Label text="Añadir Nuevo Inmueble" styleClass="main-title-small"/>
+            <Label text="Editar Inmueble" styleClass="main-title-small"/>
         </HBox>
     </top>
 
@@ -34,27 +34,21 @@
                     <Insets top="30" right="30" bottom="30" left="30"/>
                 </padding>
 
-                <VBox spacing="20" maxWidth="850" styleClass="card" >
-                    <padding>
-                        <Insets top="25" right="25" bottom="25" left="25"/>
-                    </padding>
+                <VBox spacing="20" maxWidth="850" styleClass="card" padding="25">
 
                     <!-- ================= DATOS PRINCIPALES ================= -->
                     <Label text="Información General" styleClass="main-title-small"/>
 
                     <VBox spacing="15">
 
-                        <!-- TÍTULO -->
                         <VBox spacing="5">
                             <Label text="Título" styleClass="form-label"/>
-                            <TextField fx:id="txtTitulo" promptText="Ej: Apartamento luminoso en Madrid"/>
+                            <TextField fx:id="txtTitulo"/>
                         </VBox>
 
-                        <!-- DESCRIPCION -->
                         <VBox spacing="5">
                             <Label text="Descripción" styleClass="form-label"/>
-                            <TextArea fx:id="txtDescripcion" prefRowCount="4"
-                                      promptText="Descripción detallada del inmueble..."/>
+                            <TextArea fx:id="txtDescripcion" prefRowCount="4"/>
                         </VBox>
 
                     </VBox>
@@ -66,12 +60,12 @@
                     <HBox spacing="20">
                         <VBox spacing="5" HBox.hgrow="ALWAYS">
                             <Label text="Ciudad" styleClass="form-label"/>
-                            <TextField fx:id="txtCiudad" promptText="Madrid"/>
+                            <TextField fx:id="txtCiudad"/>
                         </VBox>
 
                         <VBox spacing="5" HBox.hgrow="ALWAYS">
                             <Label text="País" styleClass="form-label"/>
-                            <TextField fx:id="txtPais" promptText="España"/>
+                            <TextField fx:id="txtPais"/>
                         </VBox>
                     </HBox>
 
@@ -80,13 +74,13 @@
                     <HBox spacing="20">
 
                         <VBox spacing="5">
-                            <Label text="Capacidad (número de huéspedes)" styleClass="form-label"/>
+                            <Label text="Capacidad" styleClass="form-label"/>
                             <Spinner fx:id="spnCapacidad" prefWidth="120"/>
                         </VBox>
 
                         <VBox spacing="5">
                             <Label text="Precio por noche (€)" styleClass="form-label"/>
-                            <TextField fx:id="txtPrecio" promptText="Ej: 85"/>
+                            <TextField fx:id="txtPrecio"/>
                         </VBox>
 
                     </HBox>
@@ -107,11 +101,11 @@
                     </FlowPane>
 
 
-                    <!-- ================= IMAGEN PRINCIPAL ================= -->
+                    <!-- ================= IMAGEN ================= -->
                     <Label text="Imagen Principal" styleClass="main-title-small"/>
 
                     <HBox spacing="20" alignment="CENTER_LEFT">
-                        <Button text="Seleccionar imagen" onAction="#seleccionarImagen" styleClass="btn-secondary"/>
+                        <Button text="Cambiar imagen" onAction="#seleccionarImagen" styleClass="btn-secondary"/>
 
                         <ImageView fx:id="imgPreview"
                                    fitWidth="180" fitHeight="130"
@@ -122,7 +116,7 @@
 
                     <!-- ================= BOTÓN GUARDAR ================= -->
                     <HBox alignment="CENTER">
-                        <Button text="Guardar Inmueble"
+                        <Button text="Guardar Cambios"
                                 onAction="#guardar"
                                 styleClass="btn-primary"
                                 prefWidth="260" prefHeight="45"/>

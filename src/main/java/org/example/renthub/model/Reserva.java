@@ -17,8 +17,7 @@ public class Reserva {
 
     public Reserva() {}
 
-    public Reserva(int id, LocalDate fechaInicio, LocalDate fechaFin, double total,
-                   EstadoReserva estado, Inmueble inmueble, Usuario huesped) {
+    public Reserva(int id, LocalDate fechaInicio, LocalDate fechaFin, double total, EstadoReserva estado, Inmueble inmueble, Usuario huesped, Pago pago) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -26,6 +25,7 @@ public class Reserva {
         this.estado = estado;
         this.setInmueble(inmueble);
         this.setHuesped(huesped);
+        this.setPago(pago);
     }
 
     // getters y setters
@@ -67,27 +67,28 @@ public class Reserva {
     }
 
     public Pago getPago() { return pago; }
+
     public void setPago(Pago pago) {
         this.pago = pago;
-        if (pago != null && pago.getReserva() != this) {
-            pago.setReserva(this);
-        }
     }
 
     @Override
-    public String toString() {
+    public String toString () {
         String inmuebleInfo = (inmueble == null) ? "null" :
                 ("Inmueble{id=" + inmueble.getId() + ", titulo=" + inmueble.getTitulo() + "}");
         String huespedInfo = (huesped == null) ? "null" :
                 ("Usuario{id=" + huesped.getId() + ", nombre=" + huesped.getNombre() + "}");
+        String pagoInfo = (pago == null) ? "null" :
+                ("Pago{id=" + pago.getId() + ", monto=" + pago.getMonto() + "}");
         return "Reserva{" +
                 "id=" + id +
-                ", inicio=" + fechaInicio +
-                ", fin=" + fechaFin +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
                 ", total=" + total +
                 ", estado=" + estado +
                 ", inmueble=" + inmuebleInfo +
                 ", huesped=" + huespedInfo +
+                ", pago=" + pagoInfo +
                 '}';
     }
 
@@ -104,4 +105,5 @@ public class Reserva {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

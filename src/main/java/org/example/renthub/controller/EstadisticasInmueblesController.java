@@ -2,11 +2,8 @@ package org.example.renthub.controller;
 
 import javafx.event.ActionEvent;
 
-public class MisInmueblesController {
+public class EstadisticasInmueblesController {
     public void volver(ActionEvent event) {
-    }
-
-    public void addInmueble(ActionEvent event) {
-
+        
     }
 }

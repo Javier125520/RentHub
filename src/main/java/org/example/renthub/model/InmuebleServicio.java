@@ -12,14 +12,17 @@ public class InmuebleServicio {
 
     public InmuebleServicio() {}
 
-    public InmuebleServicio(Inmueble inmueble, ServicioExtra servicio, double precioAdicional, boolean incluidoEnPrecio, EstadoServicio estadoServicio) {
+    public InmuebleServicio(int id, Inmueble inmueble, ServicioExtra servicio, double precioAdicional, boolean incluidoEnPrecio, EstadoServicio estadoServicio) {
+        this.id = id;
         this.setInmueble(inmueble);
         this.setServicio(servicio);
         this.precioAdicional = precioAdicional;
         this.incluidoEnPrecio = incluidoEnPrecio;
+        this.estado = estadoServicio;
     }
 
     // getters y setters
+
 
     public Inmueble getInmueble() { return inmueble; }
     public void setInmueble(Inmueble inmueble) {
@@ -74,6 +77,8 @@ public class InmuebleServicio {
     public void setIncluidoEnPrecio(boolean incluidoEnPrecio) {
         this.incluidoEnPrecio = incluidoEnPrecio;
     }
+
+
 
     @Override
     public String toString() {

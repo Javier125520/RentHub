@@ -8,4 +8,11 @@ public class EditarPerfilController {
 
     public void cambiarContrasena(ActionEvent event) {
     }
+
+    public void guardar(ActionEvent event) {
+    }
+
+    public void cambiarFoto(ActionEvent event) {
+        
+    }
 }

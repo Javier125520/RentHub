@@ -168,6 +168,37 @@
     -fx-background-color: #2a313a;
 }
 
+.form-label {
+    -fx-text-fill: #d0d0d0;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.text-field, .text-area {
+    -fx-background-color: #2b2f36;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 10;
+}
+
+.text-area {
+    -fx-control-inner-background: #2b2f36;
+}
+
+.spinner {
+    -fx-background-color: #2b2f36;
+}
+
+.check-box {
+    -fx-text-fill: #d6d6d6;
+}
+
+.check-box .box {
+    -fx-background-color: #2b2f36;
+    -fx-border-color: #555;
+}
+
+
 
 
 

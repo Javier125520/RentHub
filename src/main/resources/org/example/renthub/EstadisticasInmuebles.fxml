@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.1"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.EstadisticasInmueblesController"
+            stylesheets="@css/styles.css">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="topbar">
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
+
+            <Button text="← Volver"
+                    onAction="#volver"
+                    styleClass="btn-secondary"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <Label text="Estadísticas de mis inmuebles"
+                   styleClass="main-title-small"/>
+        </HBox>
+    </top>
+
+
+    <!-- CONTENIDO -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="transparent-scroll">
+            <VBox spacing="30" alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="25" right="25" bottom="25" left="25"/>
+                </padding>
+
+                <!-- TÍTULO PRINCIPAL -->
+                <Label text="Resumen general"
+                       styleClass="main-title"/>
+
+
+                <!-- CARDS DE RESUMEN -->
+                <HBox spacing="20" alignment="CENTER" maxWidth="1000">
+
+                    <VBox spacing="10" styleClass="card" alignment="CENTER" prefWidth="280" prefHeight="150">
+                        <Label text="Total Inmuebles" styleClass="card-title"/>
+                        <Label fx:id="lblTotalInmuebles" text="0" styleClass="card-price"/>
+                    </VBox>
+
+                    <VBox spacing="10" styleClass="card" alignment="CENTER" prefWidth="280" prefHeight="150">
+                        <Label text="Reservas Activas" styleClass="card-title"/>
+                        <Label fx:id="lblReservasActivas" text="0" styleClass="card-price"/>
+                    </VBox>
+
+                    <VBox spacing="10" styleClass="card" alignment="CENTER" prefWidth="280" prefHeight="150">
+                        <Label text="Ingresos del Mes" styleClass="card-title"/>
+                        <Label fx:id="lblIngresosMes" text="0 €" styleClass="card-price"/>
+                    </VBox>
+
+                </HBox>
+
+
+
+                <!-- SECCIÓN GRÁFICOS -->
+                <VBox spacing="20" maxWidth="1000">
+
+                    <Label text="Ocupación general"
+                           styleClass="main-title-small"/>
+
+                    <!-- Contenedor donde cargarás un PieChart o BarChart -->
+                    <StackPane fx:id="contenedorGraficoOcupacion"
+                               styleClass="card"
+                               prefHeight="350"/>
+
+
+                    <Label text="Ingresos por inmueble"
+                           styleClass="main-title-small"/>
+
+                    <!-- Segundo gráfico -->
+                    <StackPane fx:id="contenedorGraficoIngresos"
+                               styleClass="card"
+                               prefHeight="350"/>
+
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
