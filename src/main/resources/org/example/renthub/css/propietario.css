@@ -1,0 +1,38 @@
+/* ───────────────────────────────
+   Estilos Rol PROPIETARIO
+   ─────────────────────────────── */
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #145A32;
+    -fx-padding: 20;
+    -fx-pref-width: 230;
+}
+
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E8F8F5;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 15;
+    -fx-background-radius: 6;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #1E8449;
+}
+
+/* Seleccionado */
+.sidebar-button-selected {
+    -fx-background-color: #196F3D;
+}
+
+/* Colores principales */
+.primary-color {
+    -fx-text-fill: #145A32;
+}
+
+.highlight {
+    -fx-background-color: #2ECC71;
+    -fx-text-fill: white;
+}

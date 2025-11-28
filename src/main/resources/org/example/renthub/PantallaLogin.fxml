@@ -18,7 +18,7 @@
                 <TextField fx:id="txtCorreo" promptText="Correo electrónico" styleClass="input"/>
                 <PasswordField fx:id="txtPassword" promptText="Contraseña" styleClass="input"/>
 
-                <Button text="Entrar" onAction="#login" styleClass="btn-primary" maxWidth="Infinity"/>
+                <Button text="Entrar" onAction="#iniciarSesion" styleClass="btn-primary" maxWidth="Infinity"/>
 
                 <Label fx:id="lblError" text="" styleClass="error"/>
 

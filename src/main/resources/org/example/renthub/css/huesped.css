@@ -1,0 +1,50 @@
+/* ───────────────────────────────
+   Estilos Rol HUÉSPED
+   ─────────────────────────────── */
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #1B4F72;
+    -fx-padding: 20;
+    -fx-pref-width: 230;
+}
+
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ECF0F1;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 15;
+    -fx-background-radius: 6;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #2E86C1;
+}
+
+/* Botón seleccionado */
+.sidebar-button-selected {
+    -fx-background-color: #21618C;
+}
+
+/* Colores principales */
+.primary-color {
+    -fx-text-fill: #1B4F72;
+}
+
+.highlight {
+    -fx-background-color: #2E86C1;
+    -fx-text-fill: white;
+}
+
+.topbar {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 15 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 10, 0, 0, 2);
+}
+
+.search-field {
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-font-size: 15px;
+}

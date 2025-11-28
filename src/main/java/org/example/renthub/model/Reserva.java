@@ -5,8 +5,8 @@ import java.util.Objects;
 
 public class Reserva {
     private int id;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
+    private LocalDate fechaEntrada;
+    private LocalDate fechaSalida;
     private double total;
     private EstadoReserva estado;
 
@@ -17,10 +17,10 @@ public class Reserva {
 
     public Reserva() {}
 
-    public Reserva(int id, LocalDate fechaInicio, LocalDate fechaFin, double total, EstadoReserva estado, Inmueble inmueble, Usuario huesped, Pago pago) {
+    public Reserva(int id, LocalDate fechaEntrada, LocalDate fechaSalida, double total, EstadoReserva estado, Inmueble inmueble, Usuario huesped, Pago pago) {
         this.id = id;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+        this.fechaEntrada = fechaEntrada;
+        this.fechaSalida = fechaSalida;
         this.total = total;
         this.estado = estado;
         this.setInmueble(inmueble);
@@ -32,11 +32,11 @@ public class Reserva {
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public LocalDate getFechaInicio() { return fechaInicio; }
-    public void setFechaInicio(LocalDate fechaInicio) { this.fechaInicio = fechaInicio; }
+    public LocalDate getFechaEntrada() { return fechaEntrada; }
+    public void setFechaEntrada(LocalDate fechaEntrada) { this.fechaEntrada = fechaEntrada; }
 
-    public LocalDate getFechaFin() { return fechaFin; }
-    public void setFechaFin(LocalDate fechaFin) { this.fechaFin = fechaFin; }
+    public LocalDate getFechaSalida() { return fechaSalida; }
+    public void setFechaSalida(LocalDate fechaSalida) { this.fechaSalida = fechaSalida; }
 
     public double getTotal() { return total; }
     public void setTotal(double total) { this.total = total; }
@@ -82,8 +82,8 @@ public class Reserva {
                 ("Pago{id=" + pago.getId() + ", monto=" + pago.getMonto() + "}");
         return "Reserva{" +
                 "id=" + id +
-                ", fechaInicio=" + fechaInicio +
-                ", fechaFin=" + fechaFin +
+                ", fechaInicio=" + fechaEntrada +
+                ", fechaFin=" + fechaSalida +
                 ", total=" + total +
                 ", estado=" + estado +
                 ", inmueble=" + inmuebleInfo +

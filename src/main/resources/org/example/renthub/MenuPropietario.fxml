@@ -19,17 +19,17 @@
             <!-- BOTONES DEL MENÚ -->
             <VBox spacing="12" alignment="TOP_LEFT">
 
-                <Button text="Inmuebles" onAction="#irInmuebles" styleClass="sidebar-btn"/>
-                <Button text="Servicios" onAction="#irServicios" styleClass="sidebar-btn"/>
-                <Button text="Reservas" onAction="#irReservas" styleClass="sidebar-btn"/>
-                <Button text="Perfil" onAction="#irPerfil" styleClass="sidebar-btn"/>
+                <Button text="Inmuebles" onAction="#abrirGestionInmuebles" styleClass="sidebar-btn"/>
+                <Button text="Servicios" onAction="#abrirGestionReseñas" styleClass="sidebar-btn"/>
+                <Button text="Reservas" onAction="#abrirGestionReservas" styleClass="sidebar-btn"/>
+                <Button text="Perfil" onAction="#abrirPerfil" styleClass="sidebar-btn"/>
 
             </VBox>
 
             <Pane fx:id="spacer" VBox.vgrow="ALWAYS"/>
 
             <!-- Cerrar sesión -->
-            <Button text="Cerrar Sesión" onAction="#logout" styleClass="sidebar-btn-exit"/>
+            <Button text="Cerrar Sesión" onAction="#cerrarSesion" styleClass="sidebar-btn-exit"/>
         </VBox>
     </left>
 

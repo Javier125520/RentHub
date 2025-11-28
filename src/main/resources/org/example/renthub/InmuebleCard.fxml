@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.InmuebleCardController"
+            prefWidth="250" prefHeight="320"
+            styleClass="card-inmueble">
+
+    <children>
+
+        <!-- Imagen del inmueble -->
+        <ImageView fx:id="imagenInmueble"
+                   fitWidth="230"
+                   fitHeight="150"
+                   layoutX="10" layoutY="10"
+                   preserveRatio="false"
+                   style="-fx-background-radius: 12;"
+        />
+
+        <!-- Título -->
+        <Label fx:id="lblTitulo"
+               layoutX="10" layoutY="170"
+               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+        <!-- Ciudad -->
+        <Label fx:id="lblCiudad"
+               layoutX="10" layoutY="200"
+               style="-fx-text-fill: #636E72; -fx-font-size: 13px;"/>
+
+        <!-- Precio -->
+        <Label fx:id="lblPrecio"
+               layoutX="10" layoutY="230"
+               style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1B4F72;"/>
+
+        <!-- Botón Ver Detalles -->
+        <Button text="Ver Detalles"
+                layoutX="10" layoutY="265"
+                prefWidth="230"
+                styleClass="btn-primary"
+                onAction="#verDetalles"/>
+
+    </children>
+
+</AnchorPane>

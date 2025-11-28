@@ -24,6 +24,8 @@ public class ImagenInmuebleDAO extends ImagenInmueble {
     private static final String SELECT_ALL =
             "SELECT * FROM imagen_inmueble";
 
+    private static final String SELECT_BY_INMUEBLE_ID =
+            "SELECT * FROM imagen_inmueble WHERE inmueble_id = ?";
 
     // ========================= CONSTRUCTORES =========================
 
@@ -43,7 +45,6 @@ public class ImagenInmuebleDAO extends ImagenInmueble {
         super();
         loadById(id);
     }
-
 
     // ========================= MÉTODOS PRINCIPALES =========================
 
@@ -161,6 +162,32 @@ public class ImagenInmuebleDAO extends ImagenInmueble {
         }
 
         return lista;
+    }
+
+    public static List<ImagenInmueble> getByInmuebleId(int id) {
+        List<ImagenInmueble> imagenes = new ArrayList<>();
+        Connection conn = MySQLConnection.getConnection();
+        if (conn == null) return imagenes;
+
+        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_INMUEBLE_ID)) {
+
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ImagenInmueble img = new ImagenInmueble();
+                img.setId(rs.getInt("id"));
+                img.setUrl(rs.getString("url"));
+                img.setInmuebleId(new InmuebleDAO(rs.getInt("inmueble_id")));
+
+                imagenes.add(img);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return imagenes;
     }
 }
 

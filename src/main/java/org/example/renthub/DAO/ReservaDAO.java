@@ -38,6 +38,11 @@ public class ReservaDAO extends Reserva {
     private static final String SELECT_BY_HUESPED =
             "SELECT * FROM reserva WHERE huesped_id = ?";
 
+    private static final String SELECT_BY_USUARIO =
+            "SELECT r.* FROM reserva r " +
+            "JOIN inmueble i ON r.inmueble_id = i.id " +
+            "WHERE i.propietario_id = ?";
+
 
     // ========================= CONSTRUCTORES =========================
 
@@ -53,8 +58,8 @@ public class ReservaDAO extends Reserva {
     public ReservaDAO(Reserva r) {
         super(
                 r.getId(),
-                r.getFechaInicio(),
-                r.getFechaFin(),
+                r.getFechaEntrada(),
+                r.getFechaSalida(),
                 r.getTotal(),
                 r.getEstado(),
                 r.getInmueble(),
@@ -78,8 +83,8 @@ public class ReservaDAO extends Reserva {
 
         try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setDate(1, Date.valueOf(getFechaInicio()));
-            ps.setDate(2, Date.valueOf(getFechaFin()));
+            ps.setDate(1, Date.valueOf(getFechaEntrada()));
+            ps.setDate(2, Date.valueOf(getFechaSalida()));
             ps.setDouble(3, getTotal());
             ps.setString(4, getEstado().name());
             ps.setInt(5, getInmueble().getId());
@@ -109,8 +114,8 @@ public class ReservaDAO extends Reserva {
 
         try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
 
-            ps.setDate(1, Date.valueOf(getFechaInicio()));
-            ps.setDate(2, Date.valueOf(getFechaFin()));
+            ps.setDate(1, Date.valueOf(getFechaEntrada()));
+            ps.setDate(2, Date.valueOf(getFechaSalida()));
             ps.setDouble(3, getTotal());
             ps.setString(4, getEstado().name());
             ps.setInt(5, getInmueble().getId());
@@ -158,8 +163,8 @@ public class ReservaDAO extends Reserva {
             if (rs.next()) {
 
                 setId(rs.getInt("id"));
-                setFechaInicio(rs.getDate("fecha_inicio").toLocalDate());
-                setFechaFin(rs.getDate("fecha_fin").toLocalDate());
+                setFechaEntrada(rs.getDate("fecha_inicio").toLocalDate());
+                setFechaSalida(rs.getDate("fecha_fin").toLocalDate());
                 setTotal(rs.getDouble("total"));
                 setEstado(EstadoReserva.valueOf(rs.getString("estado")));
 
@@ -191,8 +196,8 @@ public class ReservaDAO extends Reserva {
                 Reserva r = new Reserva();
 
                 r.setId(rs.getInt("id"));
-                r.setFechaInicio(rs.getDate("fecha_inicio").toLocalDate());
-                r.setFechaFin(rs.getDate("fecha_fin").toLocalDate());
+                r.setFechaEntrada(rs.getDate("fecha_inicio").toLocalDate());
+                r.setFechaSalida(rs.getDate("fecha_fin").toLocalDate());
                 r.setTotal(rs.getDouble("total"));
                 r.setEstado(EstadoReserva.valueOf(rs.getString("estado")));
 
@@ -226,8 +231,8 @@ public class ReservaDAO extends Reserva {
                 Reserva r = new Reserva();
 
                 r.setId(rs.getInt("id"));
-                r.setFechaInicio(rs.getDate("fecha_inicio").toLocalDate());
-                r.setFechaFin(rs.getDate("fecha_fin").toLocalDate());
+                r.setFechaEntrada(rs.getDate("fecha_inicio").toLocalDate());
+                r.setFechaSalida(rs.getDate("fecha_fin").toLocalDate());
                 r.setTotal(rs.getDouble("total"));
                 r.setEstado(EstadoReserva.valueOf(rs.getString("estado")));
 
@@ -261,8 +266,42 @@ public class ReservaDAO extends Reserva {
                 Reserva r = new Reserva();
 
                 r.setId(rs.getInt("id"));
-                r.setFechaInicio(rs.getDate("fecha_inicio").toLocalDate());
-                r.setFechaFin(rs.getDate("fecha_fin").toLocalDate());
+                r.setFechaEntrada(rs.getDate("fecha_inicio").toLocalDate());
+                r.setFechaSalida(rs.getDate("fecha_fin").toLocalDate());
+                r.setTotal(rs.getDouble("total"));
+                r.setEstado(EstadoReserva.valueOf(rs.getString("estado")));
+
+                r.setInmueble(new InmuebleDAO(rs.getInt("inmueble_id")));
+                r.setHuesped(new UsuarioDAO(rs.getInt("huesped_id")));
+                r.setPago(PagoDAO.getByReservaId(r.getId()));
+
+                lista.add(r);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
+    public static List<Reserva> getByUsuario(int id) {
+        List<Reserva> lista = new ArrayList<>();
+        Connection conn = MySQLConnection.getConnection();
+        if (conn == null) return lista;
+
+        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_USUARIO)) {
+
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Reserva r = new Reserva();
+
+                r.setId(rs.getInt("id"));
+                r.setFechaEntrada(rs.getDate("fecha_inicio").toLocalDate());
+                r.setFechaSalida(rs.getDate("fecha_fin").toLocalDate());
                 r.setTotal(rs.getDouble("total"));
                 r.setEstado(EstadoReserva.valueOf(rs.getString("estado")));
 

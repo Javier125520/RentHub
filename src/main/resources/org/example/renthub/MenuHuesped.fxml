@@ -1,83 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.geometry.Insets?>
+<BorderPane fx:id="mainContainer" xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.renthub.controller.MenuHuespedController"
-            stylesheets="@css/styles.css">
+            stylesheets="@css/generales.css, @css/huesped.css">
 
-    <!-- ========= SIDEBAR ========= -->
+    <!-- ───────────────────────────────-->
+    <!--  SIDEBAR IZQUIERDO             -->
+    <!-- ───────────────────────────────-->
     <left>
-        <VBox spacing="30" styleClass="sidebar"
-              alignment="TOP_CENTER"
-              prefWidth="220"
-              VBox.vgrow="ALWAYS">
+        <VBox spacing="20" styleClass="sidebar">
 
-            <Label text="StaySmart" styleClass="sidebar-title"/>
+            <Label text="RentHub"
+                   style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;" />
 
-            <VBox spacing="12" alignment="TOP_LEFT">
-                <Button text="Buscar Inmuebles" onAction="#irBuscarInmuebles" styleClass="sidebar-btn"/>
-                <Button text="Mis Reservas" onAction="#irMisReservas" styleClass="sidebar-btn"/>
-                <Button text="Mi Perfil" onAction="#irPerfil" styleClass="sidebar-btn"/>
-                <Button text="Soporte" onAction="#irSoporte" styleClass="sidebar-btn"/>
-            </VBox>
+            <Button text="🏠  Inicio"
+                    onAction="#mostrarInicio"
+                    styleClass="sidebar-button"/>
 
-            <Pane VBox.vgrow="ALWAYS"/>
+            <Button text="📅  Mis Reservas"
+                    onAction="#verMisReservas"
+                    styleClass="sidebar-button"/>
 
-            <Button text="Cerrar Sesión" onAction="#logout" styleClass="sidebar-btn-exit"/>
+            <Button text="⭐  Mis Reseñas"
+                    onAction="#verMisResenas"
+                    styleClass="sidebar-button"/>
+
+            <Button text="👤  Mi Perfil"
+                    onAction="#abrirPerfil"
+                    styleClass="sidebar-button"/>
+
+            <VBox VBox.vgrow="ALWAYS"/>
+
+            <Button text="Cerrar Sesión"
+                    onAction="#cerrarSesion"
+                    style="-fx-background-color: #C0392B; -fx-text-fill: white; -fx-background-radius: 8;" />
         </VBox>
     </left>
 
-    <!-- ========= CONTENIDO PRINCIPAL ========= -->
+
+    <!-- ───────────────────────────────-->
+    <!--   BARRA SUPERIOR DE BÚSQUEDA   -->
+    <!-- ───────────────────────────────-->
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="topbar">
+
+            <TextField fx:id="searchBar" promptText="Buscar por ciudad, dirección o título..."
+                       styleClass="search-field"
+                       HBox.hgrow="ALWAYS"/>
+
+            <Button text="Buscar"
+                    onAction="#buscarInmuebles"
+                    styleClass="btn-primary"/>
+        </HBox>
+    </top>
+
+
+    <!-- ───────────────────────────────-->
+    <!--  CONTENIDO PRINCIPAL (CARDS)   -->
+    <!-- ───────────────────────────────-->
     <center>
-        <VBox spacing="25" alignment="TOP_LEFT" VBox.vgrow="ALWAYS">
-            <padding>
-                <Insets top="40" right="40" bottom="40" left="40"/>
-            </padding>
+        <ScrollPane fitToWidth="true" fx:id="scrollContent">
+            <VBox spacing="25">
+                <padding>
+                    <Insets top="25" right="25" bottom="25" left="25"/>
+                </padding>
+                <!-- Título principal -->
+                <Label text="Recomendados para ti"
+                       styleClass="title"/>
 
-            <Label text="¡Bienvenido!" styleClass="main-title"/>
-            <Label text="Explora inmuebles y gestiona tus reservas."
-                   styleClass="subtitle"/>
-
-            <!-- BUSCADOR -->
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <TextField fx:id="txtBusqueda" promptText="Buscar ciudad, zona o alojamiento"
-                           styleClass="input"
-                           HBox.hgrow="ALWAYS"/>
-
-                <Button text="Buscar" onAction="#buscar" styleClass="btn-primary"/>
-            </HBox>
-
-            <!-- CARDS -->
-            <HBox spacing="25" HBox.hgrow="ALWAYS">
-
-                <VBox styleClass="card" spacing="12" alignment="CENTER" VBox.vgrow="ALWAYS">
-                    <Label text="Buscar Inmuebles" styleClass="card-title"/>
-                    <Label text="Explora alojamientos disponibles"
-                           styleClass="card-sub"/>
-                    <Button text="Entrar" onAction="#irBuscarInmuebles" styleClass="btn-primary"/>
-                </VBox>
-
-                <VBox styleClass="card" spacing="12" alignment="CENTER" VBox.vgrow="ALWAYS">
-                    <Label text="Mis Reservas" styleClass="card-title"/>
-                    <Label text="Consulta tus próximas estancias"
-                           styleClass="card-sub"/>
-                    <Button text="Entrar" onAction="#irMisReservas" styleClass="btn-primary"/>
-                </VBox>
-
-                <VBox styleClass="card" spacing="12" alignment="CENTER" VBox.vgrow="ALWAYS">
-                    <Label text="Mi Perfil" styleClass="card-title"/>
-                    <Label text="Configura tu cuenta"
-                           styleClass="card-sub"/>
-                    <Button text="Entrar" onAction="#irPerfil" styleClass="btn-primary"/>
-                </VBox>
-
-            </HBox>
-
-        </VBox>
+                <!-- GRID DE INMUEBLES -->
+                <GridPane fx:id="gridInmuebles" hgap="20" vgap="20">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                    </columnConstraints>
+                </GridPane>
+            </VBox>
+        </ScrollPane>
     </center>
 
 </BorderPane>
+

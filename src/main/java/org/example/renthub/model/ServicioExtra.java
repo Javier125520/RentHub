@@ -9,6 +9,8 @@ public class ServicioExtra {
     private String nombre;
     private String descripcion;
 
+    private List<InmuebleServicio> inmuebles = new ArrayList<>();
+
     public ServicioExtra() {}
 
     public ServicioExtra(int id, String nombre, String descripcion) {
