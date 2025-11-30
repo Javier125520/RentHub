@@ -48,3 +48,8 @@
     -fx-padding: 10;
     -fx-font-size: 15px;
 }
+
+.card {
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+}

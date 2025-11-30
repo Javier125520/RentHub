@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import org.example.renthub.model.Inmueble;
@@ -17,10 +18,10 @@ import java.util.List;
 
 public class MenuHuespedController {
 
+    public GridPane gridInmuebles;
     private Usuario usuarioActual; // Usuario logueado
 
     @FXML private Label lblBienvenida;
-
 
 
     // Recibir usuario desde LoginController
@@ -50,7 +51,7 @@ public class MenuHuespedController {
 
     @FXML
     private void abrirPerfil(ActionEvent event) {
-        cargarPantallaConUsuario(event, "PerfilUsuario.fxml");
+        cargarPantallaConUsuario(event, "PerfilHuesped.fxml");
     }
 
     @FXML

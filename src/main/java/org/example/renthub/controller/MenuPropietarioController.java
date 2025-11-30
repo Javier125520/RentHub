@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.renthub.model.Usuario;
 
@@ -35,7 +36,7 @@ public class MenuPropietarioController {
 
     @FXML
     private void abrirPerfil(ActionEvent event) {
-        cargarPantallaConUsuario(event, "PerfilUsuario.fxml");
+        cargarPantallaConUsuario(event, "PerfilHuesped.fxml");
     }
 
     @FXML
@@ -47,7 +48,7 @@ public class MenuPropietarioController {
         cambiarPantalla(event, "GestionarReseñas.fxml");
     }
 
-    public void abrirGestionReservas(ActionEvent event) {
+    public void abrirReservasMisInmuebles(ActionEvent event) {
         cambiarPantalla(event, "GestionarReservasPropietario.fxml");
     }
 
@@ -86,6 +87,12 @@ public class MenuPropietarioController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void añadirInmueble(MouseEvent event) {
+    }
+
+    public void verEstadisticas(MouseEvent event) {
     }
 }
 

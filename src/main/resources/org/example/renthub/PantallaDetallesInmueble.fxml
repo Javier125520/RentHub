@@ -1,87 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.geometry.*?>
-
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.renthub.controller.DetallesInmuebleController"
-            stylesheets="@css/styles.css">
+            prefWidth="1200" prefHeight="800"
+            stylesheets="@css/generales.css, @css/huesped.css">
 
+    <!--   BARRA SUPERIOR (volver + título)                     -->
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="topbar">
+        <HBox spacing="15" style="-fx-background-color: #FFFFFF;" alignment="CENTER_LEFT">
             <padding>
-                <Insets top="15" right="20" bottom="15" left="20"/>
+                <Insets top="15" right="15" bottom="15" left="15"/>
             </padding>
+            <Button text="⟵ Volver"
+                    onAction="#volver"
+                    styleClass="btn-secondary"/>
 
-            <Button text="← Volver" onAction="#volver" styleClass="btn-secondary"/>
-
-            <Pane HBox.hgrow="ALWAYS"/>
-
-            <Label text="Detalle del Inmueble" styleClass="main-title-small"/>
+            <Label fx:id="lblTitulo"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
         </HBox>
     </top>
 
-    <!-- ================= CONTENIDO ================= -->
+
+    <!--  CONTENIDO CENTRAL                                     -->
     <center>
-        <ScrollPane fitToWidth="true" styleClass="transparent-scroll">
-            <VBox spacing="30" alignment="TOP_CENTER">
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="30">
                 <padding>
                     <Insets top="20" right="20" bottom="20" left="20"/>
                 </padding>
 
-                <!-- FOTO PRINCIPAL -->
-                <ImageView fx:id="imgPrincipal"
-                           fitWidth="900"
-                           fitHeight="500"
-                           preserveRatio="true"
-                           smooth="true"
-                           style="-fx-background-radius: 20;"/>
+                <!-- ▬▬▬▬▬▬▬ IMAGEN PRINCIPAL + MINIATURAS ▬▬▬▬▬▬▬ -->
+                <VBox spacing="10">
 
-                <!-- TITULO + UBICACION + PRECIO -->
-                <VBox spacing="10" alignment="TOP_LEFT" maxWidth="900">
+                    <ImageView fx:id="imgPrincipal"
+                               fitWidth="1100"
+                               fitHeight="400"
+                               preserveRatio="false"
+                               style="-fx-background-radius: 12;"
+                    />
 
-                    <Label fx:id="lblTitulo" text="Título del Inmueble"
-                           styleClass="main-title"/>
+                    <HBox spacing="10" fx:id="miniaturasHBox">
+                        <!-- Aquí se cargan miniaturas dinámicamente -->
+                    </HBox>
 
-                    <Label fx:id="lblUbicacion" text="Madrid, España"
+                </VBox>
+
+                <!-- ▬▬▬▬▬▬▬ INFORMACIÓN GENERAL ▬▬▬▬▬▬▬ -->
+                <HBox spacing="30">
+
+                    <!-- COLUMNA 1: DATOS IMPORTANTES -->
+                    <VBox spacing="15" prefWidth="550">
+
+                        <Label text="Información del alojamiento"
+                               styleClass="subtitle"/>
+
+                        <Label fx:id="lblCiudad"
+                               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                        <Label fx:id="lblDireccion"
+                               style="-fx-text-fill: #636E72;"/>
+
+                        <!-- Precio por noche -->
+                        <Label fx:id="lblPrecio"
+                               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1B4F72;"/>
+
+                    </VBox>
+
+
+                    <!-- COLUMNA 2: SERVICIOS -->
+                    <VBox spacing="15" prefWidth="550">
+
+                        <Label text="Servicios incluidos"
+                               styleClass="subtitle"/>
+
+                        <VBox spacing="8" fx:id="serviciosVBox">
+                            <!-- Aquí se llenan dinámicamente -->
+                        </VBox>
+
+                    </VBox>
+                </HBox>
+
+
+                <!-- ▬▬▬▬▬▬▬ DESCRIPCIÓN ▬▬▬▬▬▬▬ -->
+                <VBox spacing="10">
+                    <Label text="Descripción"
                            styleClass="subtitle"/>
 
-                    <Label fx:id="lblPrecio" text="95 €/noche"
-                           styleClass="card-price"/>
-
+                    <TextArea fx:id="txtDescripcion"
+                              editable="false"
+                              wrapText="true"
+                              prefRowCount="6"
+                              style="-fx-background-radius: 8; -fx-padding: 12;"/>
                 </VBox>
 
-                <!-- GALERÍA -->
-                <HBox fx:id="galeria" spacing="15" maxWidth="900"/>
 
-                <!-- SERVICIOS -->
-                <VBox spacing="10" maxWidth="900">
-                    <Label text="Servicios incluidos" styleClass="main-title-small"/>
-
-                    <FlowPane fx:id="listaServicios"
-                              hgap="10" vgap="10"
-                              maxWidth="900"/>
-                </VBox>
-
-                <!-- DESCRIPCIÓN -->
-                <VBox spacing="10" maxWidth="900">
-                    <Label text="Descripción" styleClass="main-title-small"/>
-
-                    <Label fx:id="lblDescripcion"
-                           wrapText="true"
-                           style="-fx-font-size: 16px; -fx-text-fill: #cbd5e0;"/>
-                </VBox>
-
-                <!-- BOTÓN RESERVAR -->
-                <HBox alignment="CENTER" maxWidth="900">
-                    <Button text="Reservar ahora"
-                            onAction="#reservar"
+                <!-- ▬▬▬▬▬▬▬ BOTÓN RESERVAR ▬▬▬▬▬▬▬ -->
+                <HBox alignment="CENTER">
+                    <padding>
+                        <Insets top="20" right="0" bottom="40" left="0"/>
+                    </padding>
+                    <Button text="Reservar este inmueble"
                             styleClass="btn-primary"
-                            prefWidth="250"
-                            prefHeight="45"/>
+                            prefWidth="300"
+                            onAction="#reservar"/>
                 </HBox>
 
             </VBox>

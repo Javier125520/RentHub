@@ -2,71 +2,108 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.1"
-            xmlns:fx="http://javafx.com/fxml"
+<BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.renthub.controller.MenuPropietarioController"
-            stylesheets="@css/styles.css">
+            prefWidth="1200" prefHeight="800"
+            stylesheets="@css/generales.css, @css/propietario.css">
 
-    <!-- ========= SIDEBAR LATERAL ========= -->
-    <left>
-        <VBox spacing="30" styleClass="sidebar" prefWidth="220" alignment="TOP_CENTER">
+    <!-- ─────────────────────────────────────────────── -->
+    <!-- BARRA SUPERIOR                                  -->
+    <!-- ─────────────────────────────────────────────── -->
+    <top>
+        <HBox spacing="15"
+              alignment="CENTER_LEFT"
+              style="-fx-background-color: #FFFFFF;">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <Label text="🏠 Panel del Propietario"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
-            <Label text="StaySmart" styleClass="sidebar-title"/>
+            <Pane HBox.hgrow="ALWAYS"/>
 
-            <!-- BOTONES DEL MENÚ -->
-            <VBox spacing="12" alignment="TOP_LEFT">
+            <Button text="Cerrar sesión"
+                    onAction="#cerrarSesion"
+                    styleClass="btn-secondary"/>
+        </HBox>
+    </top>
 
-                <Button text="Inmuebles" onAction="#abrirGestionInmuebles" styleClass="sidebar-btn"/>
-                <Button text="Servicios" onAction="#abrirGestionReseñas" styleClass="sidebar-btn"/>
-                <Button text="Reservas" onAction="#abrirGestionReservas" styleClass="sidebar-btn"/>
-                <Button text="Perfil" onAction="#abrirPerfil" styleClass="sidebar-btn"/>
 
-            </VBox>
-
-            <Pane fx:id="spacer" VBox.vgrow="ALWAYS"/>
-
-            <!-- Cerrar sesión -->
-            <Button text="Cerrar Sesión" onAction="#cerrarSesion" styleClass="sidebar-btn-exit"/>
-        </VBox>
-    </left>
-
+    <!-- ─────────────────────────────────────────────── -->
+    <!-- CONTENIDO PRINCIPAL                             -->
+    <!-- ─────────────────────────────────────────────── -->
     <center>
-        <VBox spacing="25" alignment="TOP_LEFT">
+        <VBox alignment="TOP_CENTER" spacing="30">
             <padding>
                 <Insets top="40" right="40" bottom="40" left="40"/>
             </padding>
 
-            <Label text="Panel del Propietario" styleClass="main-title"/>
-            <Label text="Gestiona tus inmuebles, servicios y reservas." styleClass="subtitle"/>
+            <Label text="Bienvenido, propietario"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
 
-            <HBox spacing="25">
+            <!-- GRID DE OPCIONES -->
+            <GridPane hgap="30" vgap="30" alignment="CENTER">
 
-                <VBox styleClass="card" spacing="12" alignment="CENTER">
-                    <Label text="Inmuebles" styleClass="card-title"/>
-                    <Label text="Gestiona tus propiedades registradas"
-                           styleClass="card-sub"/>
-                    <Button text="Acceder" onAction="#irInmuebles" styleClass="btn-primary"/>
+                <!-- ███ MIS INMUEBLES -->
+                <VBox spacing="10" alignment="CENTER"
+                      onMouseClicked="#abrirGestionInmuebles"
+                      styleClass="menu-card">
+
+                    <Label text="🏘️" style="-fx-font-size: 50;"/>
+                    <Label text="Mis inmuebles"
+                           styleClass="menu-title"/>
                 </VBox>
 
-                <VBox styleClass="card" spacing="12" alignment="CENTER">
-                    <Label text="Servicios" styleClass="card-title"/>
-                    <Label text="Añade o modifica servicios extra"
-                           styleClass="card-sub"/>
-                    <Button text="Acceder" onAction="#irServicios" styleClass="btn-primary"/>
+
+                <!-- ███ AÑADIR INMUEBLE -->
+                <VBox spacing="10" alignment="CENTER"
+                      onMouseClicked="#añadirInmueble"
+                      styleClass="menu-card">
+
+                    <Label text="➕" style="-fx-font-size: 50;"/>
+                    <Label text="Nuevo inmueble"
+                           styleClass="menu-title"/>
                 </VBox>
 
-                <VBox styleClass="card" spacing="12" alignment="CENTER">
-                    <Label text="Reservas" styleClass="card-title"/>
-                    <Label text="Consulta reservas de tus alojamientos"
-                           styleClass="card-sub"/>
-                    <Button text="Acceder" onAction="#irReservas" styleClass="btn-primary"/>
+
+                <!-- ███ RESERVAS DE MIS INMUEBLES -->
+                <VBox spacing="10" alignment="CENTER"
+                      onMouseClicked="#abrirReservasMisInmuebles"
+                      styleClass="menu-card">
+
+                    <Label text="📅" style="-fx-font-size: 50;"/>
+                    <Label text="Reservas"
+                           styleClass="menu-title"/>
                 </VBox>
 
-            </HBox>
+
+                <!-- ███ ESTADÍSTICAS -->
+                <VBox spacing="10" alignment="CENTER"
+                      onMouseClicked="#verEstadisticas"
+                      styleClass="menu-card">
+
+                    <Label text="📊" style="-fx-font-size: 50;"/>
+                    <Label text="Estadísticas"
+                           styleClass="menu-title"/>
+                </VBox>
+
+
+                <!-- ███ PERFIL -->
+                <VBox spacing="10" alignment="CENTER"
+                      onMouseClicked="#abrirPerfil"
+                      styleClass="menu-card">
+
+                    <Label text="👤" style="-fx-font-size: 50;"/>
+                    <Label text="Mi perfil"
+                           styleClass="menu-title"/>
+                </VBox>
+            </GridPane>
+
         </VBox>
     </center>
+
 </BorderPane>
+
 
