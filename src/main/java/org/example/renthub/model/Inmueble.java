@@ -10,6 +10,8 @@ public class Inmueble {
     private String descripcion;
     private String direccion;
     private String ciudad;
+    private int capacidad;
+    private int numeroHabitaciones;
     private double precioNoche;
     private boolean disponible;
     private String fotoPrincipal;
@@ -23,13 +25,16 @@ public class Inmueble {
 
     public Inmueble() {}
 
-    public Inmueble(int id, String titulo, String descripcion, String direccion,
-                    String ciudad, double precioNoche, boolean disponible, Usuario propietario) {
+    public Inmueble(int id, String titulo, String descripcion, String direccion, String ciudad,
+                    int capacidad, int numeroHabitaciones, double precioNoche, boolean disponible,
+                    Usuario propietario) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.direccion = direccion;
         this.ciudad = ciudad;
+        this.capacidad = capacidad;
+        this.numeroHabitaciones = numeroHabitaciones;
         this.precioNoche = precioNoche;
         this.disponible = disponible;
         this.setPropietario(propietario);
@@ -50,6 +55,12 @@ public class Inmueble {
 
     public String getCiudad() { return ciudad; }
     public void setCiudad(String ciudad) { this.ciudad = ciudad; }
+
+    public int getCapacidad() { return capacidad; }
+    public void setCapacidad(int capacidad) { this.capacidad = capacidad; }
+
+    public int getNumeroHabitaciones() { return numeroHabitaciones; }
+    public void setNumeroHabitaciones(int numeroHabitaciones) { this.numeroHabitaciones = numeroHabitaciones; }
 
     public double getPrecioNoche() { return precioNoche; }
     public void setPrecioNoche(double precioNoche) { this.precioNoche = precioNoche; }
@@ -123,12 +134,14 @@ public class Inmueble {
         return "Inmueble{" +
                 "id=" + id +
                 ", titulo='" + titulo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", direccion='" + direccion + '\'' +
                 ", ciudad='" + ciudad + '\'' +
+                ", capacidad=" + capacidad +
+                ", numeroHabitaciones=" + numeroHabitaciones +
                 ", precioNoche=" + precioNoche +
                 ", disponible=" + disponible +
                 ", propietario=" + propietarioInfo +
-                ", reservas=" + reservas.size() +
-                ", servicios=" + servicios.size() +
                 '}';
     }
 

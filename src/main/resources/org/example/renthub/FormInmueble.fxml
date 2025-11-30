@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fitToWidth="true"
+            styleClass="root-pane">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <!-- Título -->
+        <Label text="Registrar / Editar Inmueble"
+               styleClass="title"/>
+
+        <!-- FORMULARIO PRINCIPAL -->
+        <GridPane hgap="20" vgap="15">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+
+            <!-- TÍTULO -->
+            <Label text="Título:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtTitulo" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <!-- DESCRIPCIÓN -->
+            <Label text="Descripción:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextArea fx:id="txtDescripcion" prefRowCount="4"
+                      GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <!-- DIRECCIÓN -->
+            <Label text="Dirección:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtDireccion" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <!-- CIUDAD -->
+            <Label text="Ciudad:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtCiudad" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <!-- PRECIO NOCHE -->
+            <Label text="Precio por noche (€):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtPrecioNoche" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <!-- DISPONIBLE -->
+            <Label text="Disponible:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <CheckBox fx:id="chkDisponible" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+            <!-- CAPACIDAD -->
+            <Label text="Capacidad:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtCapacidad" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+            <!-- HABITACIONES -->
+            <Label text="Número de habitaciones:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtHabitaciones" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+            <!-- FOTO -->
+            <Label text="Foto principal (URL):" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtFoto" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <!-- SERVICIOS -->
+        <VBox spacing="15">
+            <Label text="Servicios del inmueble" styleClass="subtitle"/>
+
+            <HBox spacing="15">
+                <ComboBox fx:id="comboServicios" promptText="Seleccionar servicio"/>
+            </HBox>
+
+            <TableView fx:id="tablaServicios">
+                <columns>
+                    <TableColumn text="Servicio"/>
+                    <TableColumn text="Incluido"/>
+                    <TableColumn text="Precio adicional"/>
+                    <TableColumn text="Estado"/>
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- BOTONES -->
+        <HBox spacing="20" alignment="center">
+            <Button text="Guardar" fx:id="btnGuardar" styleClass="primary-btn"/>
+            <Button text="Cancelar" fx:id="btnCancelar" styleClass="secondary-btn"/>
+        </HBox>
+
+    </VBox>
+
+</ScrollPane>

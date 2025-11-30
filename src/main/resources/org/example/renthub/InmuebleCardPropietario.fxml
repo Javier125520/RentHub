@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.InmuebleCardPropietarioController"
+            prefWidth="330" prefHeight="340"
+            styleClass="card-inmueble">
+
+    <children>
+
+        <!-- IMAGEN -->
+        <ImageView fx:id="imgFoto"
+                   layoutX="10" layoutY="10"
+                   fitWidth="310" fitHeight="180"
+                   preserveRatio="false"
+                   style="-fx-background-radius: 15;"
+        />
+
+        <!-- TITULO -->
+        <Label fx:id="lblTitulo"
+               layoutX="20" layoutY="200"
+               style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+        <!-- PRECIO -->
+        <Label fx:id="lblPrecio"
+               layoutX="20" layoutY="230"
+               style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;"/>
+
+        <!-- ESTADO -->
+        <Label fx:id="lblEstado"
+               layoutX="20" layoutY="260"
+               style="-fx-font-size: 14px; -fx-text-fill: #7F8C8D;"/>
+
+
+        <!-- BOTONES -->
+        <HBox spacing="10" layoutX="20" layoutY="290">
+
+            <Button text="Editar"
+                    onAction="#editar"
+                    styleClass="btn-secondary"
+                    prefWidth="80"/>
+
+            <Button text="Reservas"
+                    onAction="#verReservas"
+                    styleClass="btn-primary"
+                    prefWidth="90"/>
+
+            <Button text="🗑"
+                    onAction="#eliminar"
+                    style="-fx-background-color: #C0392B; -fx-text-fill: white;"
+                    prefWidth="50"/>
+
+        </HBox>
+
+    </children>
+
+</AnchorPane>
+

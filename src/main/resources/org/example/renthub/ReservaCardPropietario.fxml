@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.ReservaCardPropietarioController"
+            prefWidth="1000" prefHeight="200"
+            styleClass="card-inmueble">
+
+    <children>
+
+        <ImageView fx:id="imgInmueble"
+                   fitWidth="200" fitHeight="180"
+                   layoutX="10" layoutY="10"/>
+
+        <VBox layoutX="230" layoutY="10" spacing="10">
+
+            <Label fx:id="lblTitulo"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <Label fx:id="lblHuesped"
+                   style="-fx-font-size: 16px;"/>
+
+            <Label fx:id="lblFechas"
+                   style="-fx-text-fill: #636E72;"/>
+
+            <Label fx:id="lblEstado"
+                   style="-fx-font-size: 14px; -fx-text-fill: #7F8C8D;"/>
+        </VBox>
+
+        <VBox layoutX="820" layoutY="40" spacing="15">
+
+            <Button text="Ver detalles"
+                    styleClass="btn-primary"
+                    onAction="#verDetalles"
+                    prefWidth="150"/>
+
+            <Button text="Cancelar reserva"
+                    style="-fx-background-color: #C0392B; -fx-text-fill: white;"
+                    onAction="#cancelar"
+                    prefWidth="150"/>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>
+

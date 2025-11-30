@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.ReservasInmueblesController"
+            prefWidth="1200" prefHeight="800"
+            stylesheets="@css/generales.css, @css/propietario.css">
+
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: #FFFFFF;">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <Button text="⟵ Volver"
+                    onAction="#volver"
+                    styleClass="btn-secondary"/>
+
+            <Label text="Reservas de mis inmuebles"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <TextField fx:id="txtBuscar"
+                       promptText="Buscar huésped o inmueble..."
+                       prefWidth="250"
+                       styleClass="search-bar"/>
+        </HBox>
+    </top>
+
+
+    <center>
+        <ScrollPane fitToWidth="true">
+            <VBox spacing="20" alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <VBox fx:id="contenedorReservas"
+                      spacing="25"
+                      prefWidth="1000"/>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

@@ -2,47 +2,66 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.renthub.controller.MisReservasController"
+            fx:controller="org.example.renthub.controller.MisInmueblesController"
             prefWidth="1200" prefHeight="800"
-            stylesheets="@css/generales.css, @css/huesped.css">
+            stylesheets="@css/generales.css, @css/propietario.css">
 
-    <!-- ─────────────────────────────────────────────── -->
-    <!-- BARRA SUPERIOR                                   -->
-    <!-- ─────────────────────────────────────────────── -->
+    <!-- ─────────────────────────────── -->
+    <!-- BARRA SUPERIOR                  -->
+    <!-- ─────────────────────────────── -->
     <top>
-        <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #FFFFFF;">
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: #FFFFFF;">
             <padding>
                 <Insets top="15" right="15" bottom="15" left="15"/>
             </padding>
+
             <Button text="⟵ Volver"
                     onAction="#volver"
                     styleClass="btn-secondary"/>
 
-            <Label text="Mis Reservas"
+            <Label text="Mis Inmuebles"
                    style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <!-- BUSCADOR -->
+            <TextField fx:id="txtBuscar"
+                       promptText="Buscar inmueble..."
+                       prefWidth="250"
+                       styleClass="search-bar"/>
+
+            <!-- BOTÓN NUEVO INMUEBLE -->
+            <Button text="➕ Nuevo"
+                    styleClass="btn-primary"
+                    onAction="#crearInmueble"/>
         </HBox>
     </top>
 
 
-    <!-- ─────────────────────────────────────────────── -->
-    <!-- CONTENIDO                                       -->
-    <!-- ─────────────────────────────────────────────── -->
+
+    <!-- ─────────────────────────────── -->
+    <!-- CONTENIDO                       -->
+    <!-- ─────────────────────────────── -->
     <center>
         <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
-            <VBox spacing="25">
+            <VBox spacing="25" alignment="TOP_CENTER">
                 <padding>
-                    <Insets top="20" right="20" bottom="20" left="20"/>
+                    <Insets top="25" right="25" bottom="25" left="25"/>
                 </padding>
 
-                <Label text="Reservas Realizadas"
-                       styleClass="title"/>
-
-                <!-- Aquí se cargarán las cards de reservas -->
-                <VBox fx:id="contenedorReservas" spacing="20">
-                </VBox>
+                <!-- CONTENEDOR DE CARDS -->
+                <FlowPane fx:id="contenedorInmuebles"
+                          hgap="25" vgap="25"
+                          alignment="CENTER"
+                          prefWidth="1100"
+                          style="-fx-padding: 10;">
+                </FlowPane>
 
             </VBox>
         </ScrollPane>

@@ -93,6 +93,7 @@ public class MenuPropietarioController {
     }
 
     public void verEstadisticas(MouseEvent event) {
+
     }
 }
 

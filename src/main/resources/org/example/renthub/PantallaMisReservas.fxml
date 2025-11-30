@@ -2,36 +2,48 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.geometry.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.1"
-            xmlns:fx="http://javafx.com/fxml"
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.renthub.controller.MisReservasController"
-            stylesheets="@css/styles.css">
+            prefWidth="1200" prefHeight="800"
+            stylesheets="@css/generales.css, @css/huesped.css">
 
+    <!-- ─────────────────────────────────────────────── -->
+    <!-- BARRA SUPERIOR                                   -->
+    <!-- ─────────────────────────────────────────────── -->
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="topbar">
+        <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #FFFFFF;">
             <padding>
-                <Insets top="15" right="20" bottom="15" left="20"/>
+                <Insets top="15" right="15" bottom="15" left="15"/>
             </padding>
+            <Button text="⟵ Volver"
+                    onAction="#volver"
+                    styleClass="btn-secondary"/>
 
-            <Button text="← Volver" onAction="#volver" styleClass="btn-secondary"/>
-
-            <Pane HBox.hgrow="ALWAYS"/>
-
-            <Label text="Mis Reservas" styleClass="main-title-small"/>
+            <Label text="Mis Reservas"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
         </HBox>
     </top>
 
+
+    <!-- ─────────────────────────────────────────────── -->
+    <!-- CONTENIDO                                       -->
+    <!-- ─────────────────────────────────────────────── -->
     <center>
-        <ScrollPane fitToWidth="true" styleClass="transparent-scroll">
-            <VBox alignment="TOP_CENTER" spacing="25">
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="25">
                 <padding>
-                    <Insets top="30" right="30" bottom="30" left="30"/>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
                 </padding>
 
-                <!-- Contenedor donde se cargan las tarjetas -->
-                <VBox fx:id="contenedorReservas" spacing="25" maxWidth="1000"/>
+                <Label text="Reservas Realizadas"
+                       styleClass="title"/>
+
+                <!-- Aquí se cargarán las cards de reservas -->
+                <VBox fx:id="contenedorReservas" spacing="20">
+                </VBox>
+
             </VBox>
         </ScrollPane>
     </center>

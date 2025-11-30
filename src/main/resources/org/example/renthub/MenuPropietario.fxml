@@ -46,59 +46,60 @@
             <!-- GRID DE OPCIONES -->
             <GridPane hgap="30" vgap="30" alignment="CENTER">
 
-                <!-- ███ MIS INMUEBLES -->
+                <!-- MIS INMUEBLES -->
                 <VBox spacing="10" alignment="CENTER"
-                      onMouseClicked="#abrirGestionInmuebles"
-                      styleClass="menu-card">
+                      onMouseClicked="#abrirMisInmuebles"
+                      styleClass="menu-card"
+                      GridPane.rowIndex="0" GridPane.columnIndex="0">
 
                     <Label text="🏘️" style="-fx-font-size: 50;"/>
-                    <Label text="Mis inmuebles"
-                           styleClass="menu-title"/>
+                    <Label text="Mis inmuebles" styleClass="menu-title"/>
                 </VBox>
 
 
-                <!-- ███ AÑADIR INMUEBLE -->
+                <!-- NUEVO INMUEBLE -->
                 <VBox spacing="10" alignment="CENTER"
-                      onMouseClicked="#añadirInmueble"
-                      styleClass="menu-card">
+                      onMouseClicked="#crearInmueble"
+                      styleClass="menu-card"
+                      GridPane.rowIndex="0" GridPane.columnIndex="1">
 
                     <Label text="➕" style="-fx-font-size: 50;"/>
-                    <Label text="Nuevo inmueble"
-                           styleClass="menu-title"/>
+                    <Label text="Nuevo inmueble" styleClass="menu-title"/>
                 </VBox>
 
 
-                <!-- ███ RESERVAS DE MIS INMUEBLES -->
+                <!-- RESERVAS -->
                 <VBox spacing="10" alignment="CENTER"
-                      onMouseClicked="#abrirReservasMisInmuebles"
-                      styleClass="menu-card">
+                      onMouseClicked="#verReservasInmuebles"
+                      styleClass="menu-card"
+                      GridPane.rowIndex="0" GridPane.columnIndex="2">
 
                     <Label text="📅" style="-fx-font-size: 50;"/>
-                    <Label text="Reservas"
-                           styleClass="menu-title"/>
+                    <Label text="Reservas" styleClass="menu-title"/>
                 </VBox>
 
 
-                <!-- ███ ESTADÍSTICAS -->
+                <!-- ESTADÍSTICAS -->
                 <VBox spacing="10" alignment="CENTER"
                       onMouseClicked="#verEstadisticas"
-                      styleClass="menu-card">
+                      styleClass="menu-card"
+                      GridPane.rowIndex="1" GridPane.columnIndex="0">
 
                     <Label text="📊" style="-fx-font-size: 50;"/>
-                    <Label text="Estadísticas"
-                           styleClass="menu-title"/>
+                    <Label text="Estadísticas" styleClass="menu-title"/>
                 </VBox>
 
 
-                <!-- ███ PERFIL -->
+                <!-- MI PERFIL -->
                 <VBox spacing="10" alignment="CENTER"
                       onMouseClicked="#abrirPerfil"
-                      styleClass="menu-card">
+                      styleClass="menu-card"
+                      GridPane.rowIndex="1" GridPane.columnIndex="1">
 
                     <Label text="👤" style="-fx-font-size: 50;"/>
-                    <Label text="Mi perfil"
-                           styleClass="menu-title"/>
+                    <Label text="Mi perfil" styleClass="menu-title"/>
                 </VBox>
+
             </GridPane>
 
         </VBox>

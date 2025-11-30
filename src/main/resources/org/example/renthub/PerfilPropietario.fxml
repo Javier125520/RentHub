@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Circle?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.PerfilPropietarioController"
+            prefWidth="1200" prefHeight="850"
+            stylesheets="@css/generales.css, @css/propietario.css">
+
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT"
+              style="-fx-background-color: #FFFFFF;">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <Button text="⟵ Volver"
+                    onAction="#volver"
+                    styleClass="btn-secondary"/>
+
+            <Label text="Mi Perfil"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+
+    <center>
+        <ScrollPane fitToWidth="true">
+            <VBox spacing="30" alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="30" right="30" bottom="30" left="30"/>
+                </padding>
+                <!-- FOTO -->
+                <VBox spacing="10" alignment="CENTER">
+                    <Circle fx:id="fotoPropietario" radius="60" fill="#D6EAF8"
+                            stroke="#2C3E50" strokeWidth="2"/>
+                    <Label fx:id="lblNombre" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+                </VBox>
+
+                <!-- INFORMACIÓN PERSONAL -->
+                <VBox spacing="20" styleClass="card" prefWidth="700">
+
+                    <Label text="Información personal" styleClass="subtitle"/>
+
+                    <Label text="Nombre completo:"/>
+                    <TextField fx:id="txtNombre"/>
+
+                    <Label text="Correo:"/>
+                    <TextField fx:id="txtCorreo"/>
+
+                    <Label text="Contraseña (opcional):"/>
+                    <PasswordField fx:id="txtPassword"/>
+                </VBox>
+
+                <!-- INFORMACIÓN PROFESIONAL -->
+                <VBox spacing="20" styleClass="card" prefWidth="700">
+
+                    <Label text="Información de propietario" styleClass="subtitle"/>
+
+                    <Label text="DNI / CIF:"/>
+                    <TextField fx:id="txtDni"/>
+
+                    <Label text="Teléfono de contacto:"/>
+                    <TextField fx:id="txtTelefono"/>
+
+                    <Label text="Cuenta bancaria (para ingresos):"/>
+                    <TextField fx:id="txtCuenta"/>
+                </VBox>
+
+
+                <Button text="Guardar cambios"
+                        styleClass="btn-primary"
+                        onAction="#guardarCambios"
+                        prefWidth="250"/>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
+
