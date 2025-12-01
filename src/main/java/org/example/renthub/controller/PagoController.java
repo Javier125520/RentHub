@@ -1,4 +1,4 @@
 package org.example.renthub.controller;
 
-public class MisInmueblesController {
+public class PagoController {
 }

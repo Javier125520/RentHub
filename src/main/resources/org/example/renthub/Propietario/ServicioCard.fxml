@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.ServicioCardController"
+            prefWidth="300" prefHeight="220"
+            styleClass="card"
+            style="-fx-padding: 20;">
+
+    <children>
+
+        <VBox spacing="12"
+              AnchorPane.topAnchor="0"
+              AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0"
+              AnchorPane.bottomAnchor="0">
+
+            <!-- Nombre del servicio -->
+            <Label fx:id="lblNombre"
+                   wrapText="true"
+                   style="-fx-font-size: 17px; -fx-font-weight: bold;"/>
+
+            <!-- Precio adicional -->
+            <Label fx:id="lblPrecio"
+                   style="-fx-font-size: 15px; -fx-text-fill: #1B4F72; -fx-font-weight: bold;"/>
+
+            <!-- Descripción -->
+            <Label fx:id="lblDescripcion"
+                   wrapText="true"
+                   style="-fx-font-size: 13px; -fx-text-fill: #7F8C8D;"/>
+
+            <Separator/>
+
+            <!-- Botones -->
+            <HBox spacing="10">
+
+                <!-- Botón Editar -->
+                <Button fx:id="btnEditar"
+                        text="Editar"
+                        onAction="#editarServicio"
+                        styleClass="btn-primary"
+                        prefWidth="120"/>
+
+                <!-- Botón Eliminar -->
+                <Button fx:id="btnEliminar"
+                        text="Eliminar"
+                        onAction="#eliminarServicio"
+                        style="-fx-background-color: #E74C3C; -fx-text-fill: white;"
+                        prefWidth="120"/>
+
+            </HBox>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>
+

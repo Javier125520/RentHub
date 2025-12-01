@@ -1,62 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.renthub.controller.MenuPropietarioController"
-            prefWidth="1400" prefHeight="900"
-            stylesheets="@../css/generales.css, @../css/huesped.css">
+<BorderPane prefHeight="900" prefWidth="1400" stylesheets="@../css/generales.css, @../css/huesped.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.renthub.controller.MenuPropietarioController">
 
     <!-- SIDEBAR -->
     <left>
-        <VBox spacing="20"
-              styleClass="sidebar"
-              prefWidth="260">
+        <VBox prefHeight="900.0" prefWidth="250.0" spacing="20" styleClass="sidebar">
             <padding>
-                <Insets top="25" right="25" bottom="25" left="25"/>
+                <Insets bottom="25" left="25" right="25" top="25" />
             </padding>
 
-            <Label text="RentHub"
-                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;" text="RentHub" />
 
-            <Separator style="-fx-background-color: white;"/>
+            <Separator style="-fx-background-color: white;" />
 
             <Label styleClass="title" text="Menú Propietario" textFill="WHITE" />
 
             <!-- BOTONES DE NAVEGACIÓN -->
-            <Button text="🏠 Mis Inmuebles"
-                    fx:id="btnMisInmuebles"
-                    styleClass="sidebar-button"
-                    onAction="#abrirMisInmuebles"/>
+            <Button fx:id="btnMisInmuebles" onAction="#abrirMisInmuebles" styleClass="sidebar-button" text="🏠 Mis Inmuebles" />
 
-            <Button text="Servicios"
-                    fx:id="btnServicios"
-                    styleClass="sidebar-button"
-                    onAction="#abrirServicios"/>
+            <Button fx:id="btnServicios" onAction="#abrirServicios" styleClass="sidebar-button" text="Servicios" />
 
-            <Button text="👤 Mi Perfil"
-                    fx:id="btnPerfil"
-                    styleClass="sidebar-button"
-                    onAction="#abrirPerfil"/>
+            <Button fx:id="btnPerfil" onAction="#abrirPerfil" styleClass="sidebar-button" text="👤 Mi Perfil" />
 
-            <Button text="⛔ Cerrar sesión"
-                    fx:id="btnCerrarSesion"
-                    styleClass="sidebar-button"
-                    onAction="#cerrarSesion"
-                    style="-fx-text-fill: #FDEDEC;"/>
+            <Button fx:id="btnCerrarSesion" onAction="#cerrarSesion" style="-fx-text-fill: #FDEDEC;" styleClass="sidebar-button" text="⛔ Cerrar sesión" />
         </VBox>
     </left>
 
 
     <!-- PANEL PRINCIPAL DONDE SE CARGAN LAS OTRAS PANTALLAS -->
     <center>
-        <AnchorPane fx:id="panelContenido"
-                    style="-fx-background-color: #F8F9F9;">
+        <AnchorPane fx:id="panelContenido" style="-fx-background-color: #F8F9F9;">
         </AnchorPane>
     </center>
 
 </BorderPane>
-
-

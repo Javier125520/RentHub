@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.InmueblePropietarioCardController"
+            styleClass="card-inmueble"
+            prefWidth="330" prefHeight="380"
+            style="-fx-padding: 15;">
+
+    <children>
+        <VBox spacing="12"
+              AnchorPane.topAnchor="0"
+              AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0"
+              AnchorPane.bottomAnchor="0">
+
+            <!-- IMAGEN -->
+            <ImageView fx:id="imgInmueble"
+                       fitHeight="180"
+                       preserveRatio="false"
+                       style="-fx-background-radius: 12;"/>
+
+            <!-- INFORMACIÓN PRINCIPAL -->
+            <Label fx:id="lblTitulo"
+                   wrapText="true"
+                   style="-fx-font-size: 17px; -fx-font-weight: bold;"/>
+
+            <Label fx:id="lblCiudad"
+                   wrapText="true"
+                   style="-fx-text-fill: #7F8C8D; -fx-font-size: 14px;"/>
+
+            <Label fx:id="lblPrecio"
+                   style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1B4F72;"/>
+
+            <Separator/>
+
+            <!-- BOTONES -->
+            <VBox spacing="10">
+
+                <!-- Editar -->
+                <Button text="Editar inmueble"
+                        fx:id="btnEditar"
+                        styleClass="btn-primary"
+                        prefHeight="35"
+                        onAction="#editarInmueble"/>
+
+                <!-- Ver reseñas -->
+                <Button text="Ver reseñas"
+                        fx:id="btnResenas"
+                        styleClass="btn-secondary"
+                        prefHeight="35"
+                        onAction="#verResenas"/>
+
+                <!-- Eliminar -->
+                <Button text="Eliminar"
+                        fx:id="btnEliminar"
+                        style="-fx-background-color: #E74C3C; -fx-text-fill: white;"
+                        prefHeight="35"
+                        onAction="#eliminarInmueble"/>
+            </VBox>
+
+        </VBox>
+    </children>
+
+</AnchorPane>
+
+

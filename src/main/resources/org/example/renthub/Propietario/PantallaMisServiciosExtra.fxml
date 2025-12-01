@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.MisServiciosExtraController"
+            stylesheets="@../css/generales.css, @../css/propietario.css"
+            prefWidth="1200" prefHeight="900">
+
+    <!-- ─────────────── TOP BAR ─────────────── -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="topbar" style="-fx-padding: 15 25;">
+            <children>
+
+                <!-- Título -->
+                <Label text="Mis Servicios" styleClass="title"/>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <!-- Botón Crear Servicio -->
+                <Button text="Nuevo Servicio"
+                        fx:id="btnNuevoServicio"
+                        styleClass="btn-primary"
+                        prefHeight="40"
+                        onAction="#nuevoServicio"/>
+            </children>
+        </HBox>
+    </top>
+
+
+    <!-- ─────────────── LISTA DE SERVICIOS ─────────────── -->
+    <center>
+        <ScrollPane fitToWidth="true"
+                    style="-fx-background-color: transparent;"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="ALWAYS">
+
+            <FlowPane fx:id="contenedorServicios"
+                      hgap="30"
+                      vgap="30"
+                      style="-fx-background-color: transparent;"
+                      prefWidth="1000">
+                <padding>
+                    <Insets top="30" right="30" bottom="30" left="30"/>
+                </padding>
+            </FlowPane>
+
+        </ScrollPane>
+    </center>
+
+</BorderPane>
+
+

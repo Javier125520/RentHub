@@ -4,13 +4,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 
-<?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.renthub.controller.MisInmueblesController"
             prefWidth="1200" prefHeight="800"
-            stylesheets="@../css/generales.css, @css/propietario.css">
+            stylesheets="@../css/generales.css, @../css/propietario.css">
 
     <!-- ─────────────────────────────── -->
     <!-- BARRA SUPERIOR                  -->

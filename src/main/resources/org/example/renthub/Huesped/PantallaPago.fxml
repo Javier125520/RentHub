@@ -10,7 +10,7 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.renthub.controller.PagoController"
             prefWidth="1000" prefHeight="700"
-            stylesheets="@../css/generales.css, @css/huesped.css">
+            stylesheets="@../css/generales.css, @../css/huesped.css">
 
     <!-- TOP BAR -->
     <top>

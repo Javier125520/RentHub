@@ -3,82 +3,96 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.shape.Circle?>
+
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.renthub.controller.PerfilPropietarioController"
-            prefWidth="1200" prefHeight="850"
-            stylesheets="@../css/generales.css, @css/propietario.css">
+            stylesheets="@../css/generales.css, @../css/propietario.css"
+            prefWidth="1100" prefHeight="850">
 
+    <!-- ─────────────── TOP BAR ─────────────── -->
     <top>
-        <HBox spacing="20" alignment="CENTER_LEFT"
-              style="-fx-background-color: #FFFFFF;">
-            <padding>
-                <Insets top="15" right="15" bottom="15" left="15"/>
-            </padding>
-            <Button text="⟵ Volver"
-                    onAction="#volver"
-                    styleClass="btn-secondary"/>
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="topbar" style="-fx-padding: 15 25;">
+            <children>
 
-            <Label text="Mi Perfil"
-                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+                <Label text="Mi Perfil" styleClass="title"/>
+
+            </children>
         </HBox>
     </top>
 
 
+    <!-- ─────────────── CONTENIDO CENTRAL ─────────────── -->
     <center>
-        <ScrollPane fitToWidth="true">
-            <VBox spacing="30" alignment="TOP_CENTER">
-                <padding>
-                    <Insets top="30" right="30" bottom="30" left="30"/>
-                </padding>
-                <!-- FOTO -->
-                <VBox spacing="10" alignment="CENTER">
-                    <Circle fx:id="fotoPropietario" radius="60" fill="#D6EAF8"
-                            stroke="#2C3E50" strokeWidth="2"/>
-                    <Label fx:id="lblNombre" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <ScrollPane fitToWidth="true"
+                    hbarPolicy="NEVER"
+                    style="-fx-background-color: transparent; -fx-padding: 20;">
+
+            <VBox spacing="40" alignment="TOP_CENTER"
+                  style="-fx-padding: 30;"
+                  prefWidth="900">
+
+                <!-- ──────── SECCIÓN FOTO ──────── -->
+                <VBox spacing="20" alignment="CENTER" styleClass="card" style="-fx-padding: 30; -fx-max-width: 500;">
+                    <children>
+
+                        <Label text="Foto de perfil" styleClass="subtitle"/>
+
+                        <Circle fx:id="imgPerfil"
+                                radius="60"
+                                styleClass="circle"/>
+
+                        <Button text="Cambiar foto"
+                                styleClass="btn-secondary"
+                                onAction="#cambiarFoto"/>
+                    </children>
                 </VBox>
 
-                <!-- INFORMACIÓN PERSONAL -->
-                <VBox spacing="20" styleClass="card" prefWidth="700">
+
+                <!-- ──────── SECCIÓN DATOS PERSONALES ──────── -->
+                <VBox spacing="25" alignment="CENTER" styleClass="card" style="-fx-padding: 30; -fx-max-width: 600;">
 
                     <Label text="Información personal" styleClass="subtitle"/>
 
-                    <Label text="Nombre completo:"/>
-                    <TextField fx:id="txtNombre"/>
+                    <!-- Nombre -->
+                    <VBox spacing="5" alignment="CENTER_LEFT" prefWidth="500">
+                        <Label text="Nombre completo" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtNombre" styleClass="text-input"/>
+                    </VBox>
 
-                    <Label text="Correo:"/>
-                    <TextField fx:id="txtCorreo"/>
+                    <!-- Email -->
+                    <VBox spacing="5" alignment="CENTER_LEFT" prefWidth="500">
+                        <Label text="Correo electrónico" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtEmail" styleClass="text-input"/>
+                    </VBox>
 
-                    <Label text="Contraseña (opcional):"/>
-                    <PasswordField fx:id="txtPassword"/>
+                    <!-- Teléfono -->
+                    <VBox spacing="5" alignment="CENTER_LEFT" prefWidth="500">
+                        <Label text="Teléfono de contacto" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtTelefono" styleClass="text-input"/>
+                    </VBox>
+
+                    <!-- Contraseña -->
+                    <HBox spacing="15" alignment="CENTER_LEFT" prefWidth="500">
+                        <Label text="Contraseña:" style="-fx-font-weight: bold;"/>
+                        <Button text="Cambiar contraseña"
+                                styleClass="btn-secondary"
+                                onAction="#cambiarContrasena"/>
+                    </HBox>
+
+                    <!-- Guardar -->
+                    <Button text="Guardar cambios"
+                            fx:id="btnGuardar"
+                            styleClass="btn-primary"
+                            prefWidth="200"
+                            onAction="#guardarCambios"/>
+
                 </VBox>
-
-                <!-- INFORMACIÓN PROFESIONAL -->
-                <VBox spacing="20" styleClass="card" prefWidth="700">
-
-                    <Label text="Información de propietario" styleClass="subtitle"/>
-
-                    <Label text="DNI / CIF:"/>
-                    <TextField fx:id="txtDni"/>
-
-                    <Label text="Teléfono de contacto:"/>
-                    <TextField fx:id="txtTelefono"/>
-
-                    <Label text="Cuenta bancaria (para ingresos):"/>
-                    <TextField fx:id="txtCuenta"/>
-                </VBox>
-
-
-                <Button text="Guardar cambios"
-                        styleClass="btn-primary"
-                        onAction="#guardarCambios"
-                        prefWidth="250"/>
 
             </VBox>
+
         </ScrollPane>
     </center>
 
 </BorderPane>
-

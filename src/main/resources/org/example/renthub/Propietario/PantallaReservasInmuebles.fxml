@@ -7,7 +7,7 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.renthub.controller.ReservasInmueblesController"
             prefWidth="1200" prefHeight="800"
-            stylesheets="@../css/generales.css, @css/propietario.css">
+            stylesheets="@../css/generales.css, @../css/propietario.css">
 
     <top>
         <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: #FFFFFF;">
