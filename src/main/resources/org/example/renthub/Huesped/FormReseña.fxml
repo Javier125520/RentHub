@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.FormReseñaController"
+            prefWidth="900" prefHeight="650"
+            stylesheets="@../css/generales.css, @../css/huesped.css">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT"
+              styleClass="topbar">
+
+            <Button text="← Volver"
+                    styleClass="btn-secondary"
+                    onAction="#volver"/>
+
+            <Label text="Escribir Reseña" styleClass="title"/>
+        </HBox>
+    </top>
+
+    <!-- CONTENIDO -->
+    <center>
+        <VBox spacing="30" alignment="TOP_CENTER">
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+            <!-- NOMBRE DEL INMUEBLE -->
+            <Label fx:id="lblTituloInmueble"
+                   styleClass="subtitle"/>
+
+
+            <!-- ESTRELLAS -->
+            <HBox spacing="10" alignment="CENTER">
+
+                <Label text="★" fx:id="star1" styleClass="estrella-apagada" onMouseClicked="#clickStar1"/>
+                <Label text="★" fx:id="star2" styleClass="estrella-apagada" onMouseClicked="#clickStar2"/>
+                <Label text="★" fx:id="star3" styleClass="estrella-apagada" onMouseClicked="#clickStar3"/>
+                <Label text="★" fx:id="star4" styleClass="estrella-apagada" onMouseClicked="#clickStar4"/>
+                <Label text="★" fx:id="star5" styleClass="estrella-apagada" onMouseClicked="#clickStar5"/>
+
+            </HBox>
+
+
+            <!-- TEXTO DE LA RESEÑA -->
+            <VBox spacing="10" alignment="CENTER_LEFT" prefWidth="600">
+                <Label text="Comentario"/>
+                <TextArea fx:id="txtComentario"
+                          promptText="Escribe aquí tu experiencia..."
+                          prefRowCount="8"
+                          prefWidth="600"
+                          wrapText="true"
+                          styleClass="text-input"/>
+            </VBox>
+
+
+            <!-- BOTÓN ENVIAR -->
+            <Button text="Enviar reseña"
+                    styleClass="btn-primary"
+                    prefWidth="220"
+                    onAction="#enviarResena"/>
+
+            <!-- ERROR -->
+            <Label fx:id="lblError"
+                   style="-fx-text-fill: #C0392B;"
+                   visible="false" managed="false"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>
+

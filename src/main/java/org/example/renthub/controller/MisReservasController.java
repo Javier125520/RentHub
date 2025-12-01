@@ -138,7 +138,7 @@ public class MisReservasController {
     private void volver(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/org/example/renthub/MenuHuesped.fxml")
+                    getClass().getResource("/org/example/renthub/Huesped/MenuHuesped.fxml")
             );
             Parent root = loader.load();
 

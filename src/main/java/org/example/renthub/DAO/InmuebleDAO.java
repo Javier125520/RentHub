@@ -51,6 +51,8 @@ public class InmuebleDAO extends Inmueble {
                 i.getDescripcion(),
                 i.getDireccion(),
                 i.getCiudad(),
+                i.getCapacidad(),
+                i.getNumeroHabitaciones(),
                 i.getPrecioNoche(),
                 i.isDisponible(),
                 i.getPropietario()

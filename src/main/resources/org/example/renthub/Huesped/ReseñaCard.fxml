@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.ReseñaCardController"
+            prefHeight="180"
+            prefWidth="900"
+            styleClass="card"
+            style="-fx-padding: 20; -fx-background-radius: 12;">
+
+    <!-- IZQUIERDA: TÍTULO + ESTRELLAS -->
+    <left>
+        <VBox spacing="10">
+
+            <Label fx:id="lblInmueble" styleClass="subtitle"/>
+
+            <!-- Estrellas -->
+            <HBox spacing="5">
+                <Label fx:id="star1" text="★" styleClass="estrella-apagada"/>
+                <Label fx:id="star2" text="★" styleClass="estrella-apagada"/>
+                <Label fx:id="star3" text="★" styleClass="estrella-apagada"/>
+                <Label fx:id="star4" text="★" styleClass="estrella-apagada"/>
+                <Label fx:id="star5" text="★" styleClass="estrella-apagada"/>
+            </HBox>
+
+            <HBox spacing="5">
+                <Label text="Fecha:" style="-fx-font-weight: bold;"/>
+                <Label fx:id="lblFecha"/>
+            </HBox>
+
+        </VBox>
+    </left>
+
+
+    <!-- CENTRO: COMENTARIO -->
+    <center>
+        <Label fx:id="lblComentario"
+               wrapText="true"
+               maxWidth="450"
+               style="-fx-font-size: 14px;"/>
+    </center>
+
+
+    <!-- DERECHA: BOTÓN ELIMINAR -->
+    <right>
+        <VBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="btnEliminar"
+                    text="Eliminar"
+                    style="-fx-background-color: #E74C3C; -fx-text-fill: white;"
+                    onAction="#eliminarResena"
+                    prefWidth="120"/>
+        </VBox>
+    </right>
+
+</BorderPane>
+
+

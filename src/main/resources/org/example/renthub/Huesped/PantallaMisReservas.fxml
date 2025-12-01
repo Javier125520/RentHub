@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.MisReseñasController"
+            prefWidth="1100" prefHeight="800"
+            stylesheets="@../css/generales.css, @../css/huesped.css">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #FFFFFF;">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <Button text="⟵ Volver"
+                    onAction="#volver"
+                    styleClass="btn-secondary"/>
+
+            <Label text="Mis Reseñas"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox fx:id="contenedorResenas"
+                  spacing="20"/>
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
+
+

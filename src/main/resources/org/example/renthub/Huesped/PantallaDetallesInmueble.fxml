@@ -14,7 +14,7 @@
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.renthub.controller.DetallesInmuebleController"
             fitToWidth="true"
-            stylesheets="@css/generales.css, @css/huesped.css">
+            stylesheets="@../css/generales.css, @../css/huesped.css">
 
     <VBox spacing="30">
 

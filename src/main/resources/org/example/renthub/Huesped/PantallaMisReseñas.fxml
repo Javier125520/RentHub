@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.renthub.controller.MisReservasController"
+            fx:controller="org.example.renthub.controller.MisReseñasController"
             prefWidth="1200" prefHeight="800"
-            stylesheets="@css/generales.css, @css/huesped.css">
+            stylesheets="@../css/generales.css, @../css/huesped.css">
 
     <!-- ─────────────────────────────────────────────── -->
     <!-- BARRA SUPERIOR                                   -->
@@ -17,14 +17,16 @@
             <padding>
                 <Insets top="15" right="15" bottom="15" left="15"/>
             </padding>
+
             <Button text="⟵ Volver"
                     onAction="#volver"
                     styleClass="btn-secondary"/>
 
-            <Label text="Mis Reservas"
+            <Label text="Mis Reseñas"
                    style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
         </HBox>
     </top>
+
 
 
     <!-- ─────────────────────────────────────────────── -->
@@ -37,17 +39,15 @@
                     <Insets top="20" right="20" bottom="20" left="20"/>
                 </padding>
 
-                <Label text="Reservas Realizadas"
+                <Label text="Reseñas realizadas"
                        styleClass="title"/>
 
-                <!-- Aquí se cargarán las cards de reservas -->
-                <VBox fx:id="contenedorReservas" spacing="20">
-                </VBox>
+                <!-- Aquí se añadirán las cards de reseñas -->
+                <VBox fx:id="contenedorResenas" spacing="20"/>
 
             </VBox>
         </ScrollPane>
     </center>
 
 </BorderPane>
-
 

@@ -15,7 +15,6 @@ public class ImagenInmueble {
 
     // Getters y Setters
 
-
     public int getId() {
         return id;
     }

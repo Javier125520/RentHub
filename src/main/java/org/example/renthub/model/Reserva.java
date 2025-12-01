@@ -9,8 +9,6 @@ public class Reserva {
     private LocalDate fechaSalida;
     private double total;
     private EstadoReserva estado;
-
-    // Relaciones
     private Inmueble inmueble;
     private Usuario huesped;
     private Pago pago; // opcional, puede ser null hasta que se realice

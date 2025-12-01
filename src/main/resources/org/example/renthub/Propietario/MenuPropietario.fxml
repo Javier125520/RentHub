@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.MenuPropietarioController"
+            prefWidth="1400" prefHeight="900"
+            stylesheets="@../css/generales.css, @../css/huesped.css">
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox spacing="20"
+              styleClass="sidebar"
+              prefWidth="260">
+            <padding>
+                <Insets top="25" right="25" bottom="25" left="25"/>
+            </padding>
+
+            <Label text="RentHub"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+            <Separator style="-fx-background-color: white;"/>
+
+            <Label styleClass="title" text="Menú Propietario" textFill="WHITE" />
+
+            <!-- BOTONES DE NAVEGACIÓN -->
+            <Button text="🏠 Mis Inmuebles"
+                    fx:id="btnMisInmuebles"
+                    styleClass="sidebar-button"
+                    onAction="#abrirMisInmuebles"/>
+
+            <Button text="Servicios"
+                    fx:id="btnServicios"
+                    styleClass="sidebar-button"
+                    onAction="#abrirServicios"/>
+
+            <Button text="👤 Mi Perfil"
+                    fx:id="btnPerfil"
+                    styleClass="sidebar-button"
+                    onAction="#abrirPerfil"/>
+
+            <Button text="⛔ Cerrar sesión"
+                    fx:id="btnCerrarSesion"
+                    styleClass="sidebar-button"
+                    onAction="#cerrarSesion"
+                    style="-fx-text-fill: #FDEDEC;"/>
+        </VBox>
+    </left>
+
+
+    <!-- PANEL PRINCIPAL DONDE SE CARGAN LAS OTRAS PANTALLAS -->
+    <center>
+        <AnchorPane fx:id="panelContenido"
+                    style="-fx-background-color: #F8F9F9;">
+        </AnchorPane>
+    </center>
+
+</BorderPane>
+
+

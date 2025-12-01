@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.renthub.controller.PerfilHuespedController"
+            prefWidth="1100" prefHeight="750"
+            stylesheets="@../css/generales.css, @../css/huesped.css">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="topbar">
+            <Label text="Mi Perfil" styleClass="title"/>
+        </HBox>
+    </top>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <center>
+        <HBox spacing="40" alignment="TOP_CENTER">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
+            <!-- FOTO DE PERFIL -->
+            <VBox spacing="20" alignment="TOP_CENTER" prefWidth="280">
+
+                <ImageView fx:id="imgPerfil"
+                           fitHeight="180"
+                           fitWidth="180"
+                           preserveRatio="false"
+                           styleClass="circle"
+                           style="-fx-background-color: #D5D8DC; -fx-background-radius: 90;"/>
+
+                <Button text="Cambiar foto"
+                        fx:id="btnCambiarFoto"
+                        styleClass="btn-secondary"
+                        onAction="#cambiarFoto"/>
+
+            </VBox>
+
+
+            <!-- DATOS DEL USUARIO -->
+            <VBox spacing="25" prefWidth="500" styleClass="card">
+                <padding>
+                    <Insets top="30" right="30" bottom="30" left="30"/>
+                </padding>
+
+                <Label text="Datos personales" styleClass="subtitle"/>
+
+                <VBox spacing="10">
+                    <Label text="Nombre completo"/>
+                    <TextField fx:id="txtNombre" styleClass="text-input"/>
+                </VBox>
+
+                <VBox spacing="10">
+                    <Label text="Correo electrónico"/>
+                    <TextField fx:id="txtCorreo" styleClass="text-input"/>
+                </VBox>
+
+                <VBox spacing="10">
+                    <Label text="Teléfono"/>
+                    <TextField fx:id="txtTelefono" styleClass="text-input"/>
+                </VBox>
+
+                <VBox spacing="10">
+                    <Label text="Ciudad"/>
+                    <TextField fx:id="txtCiudad" styleClass="text-input"/>
+                </VBox>
+
+                <Button text="Guardar cambios"
+                        fx:id="btnGuardar"
+                        styleClass="btn-primary"
+                        prefHeight="40"
+                        onAction="#guardarCambios"/>
+            </VBox>
+
+
+            <!-- CAMBIO DE CONTRASEÑA -->
+            <VBox spacing="25" prefWidth="350" styleClass="card">
+                <padding>
+                        <Insets top="30" right="30" bottom="30" left="30"/>
+                </padding>
+
+                <Label text="Cambiar contraseña" styleClass="subtitle"/>
+
+                <VBox spacing="10">
+                    <Label text="Contraseña actual"/>
+                    <PasswordField fx:id="txtActual" styleClass="text-input"/>
+                </VBox>
+
+                <VBox spacing="10">
+                    <Label text="Nueva contraseña"/>
+                    <PasswordField fx:id="txtNueva1" styleClass="text-input"/>
+                </VBox>
+
+                <VBox spacing="10">
+                    <Label text="Repetir nueva contraseña"/>
+                    <PasswordField fx:id="txtNueva2" styleClass="text-input"/>
+                </VBox>
+
+                <Button text="Actualizar contraseña"
+                        fx:id="btnCambiarPass"
+                        styleClass="btn-primary"
+                        prefHeight="40"
+                        onAction="#cambiarContrasena"/>
+
+                <Label fx:id="lblError"
+                       visible="false"
+                       managed="false"
+                       style="-fx-text-fill: #C0392B; -fx-font-size: 14px;"/>
+            </VBox>
+
+        </HBox>
+    </center>
+
+</BorderPane>
+
+
+
+
