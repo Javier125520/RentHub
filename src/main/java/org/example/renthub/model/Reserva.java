@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Reserva {
-    private int id;
+    private int idReserva;
     private LocalDate fechaEntrada;
     private LocalDate fechaSalida;
     private double total;
@@ -15,8 +15,8 @@ public class Reserva {
 
     public Reserva() {}
 
-    public Reserva(int id, LocalDate fechaEntrada, LocalDate fechaSalida, double total, EstadoReserva estado, Inmueble inmueble, Usuario huesped, Pago pago) {
-        this.id = id;
+    public Reserva(int idReserva, LocalDate fechaEntrada, LocalDate fechaSalida, double total, EstadoReserva estado, Inmueble inmueble, Usuario huesped, Pago pago) {
+        this.idReserva = idReserva;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.total = total;
@@ -27,8 +27,8 @@ public class Reserva {
     }
 
     // getters y setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getIdReserva() { return idReserva; }
+    public void setIdReserva(int idReserva) { this.idReserva = idReserva; }
 
     public LocalDate getFechaEntrada() { return fechaEntrada; }
     public void setFechaEntrada(LocalDate fechaEntrada) { this.fechaEntrada = fechaEntrada; }
@@ -73,13 +73,13 @@ public class Reserva {
     @Override
     public String toString () {
         String inmuebleInfo = (inmueble == null) ? "null" :
-                ("Inmueble{id=" + inmueble.getId() + ", titulo=" + inmueble.getTitulo() + "}");
+                ("Inmueble{id=" + inmueble.getIdInmueble() + ", titulo=" + inmueble.getTitulo() + "}");
         String huespedInfo = (huesped == null) ? "null" :
-                ("Usuario{id=" + huesped.getId() + ", nombre=" + huesped.getNombre() + "}");
+                ("Usuario{id=" + huesped.getIdUsuario() + ", nombre=" + huesped.getNombre() + "}");
         String pagoInfo = (pago == null) ? "null" :
                 ("Pago{id=" + pago.getId() + ", monto=" + pago.getMonto() + "}");
         return "Reserva{" +
-                "id=" + id +
+                "id=" + idReserva +
                 ", fechaInicio=" + fechaEntrada +
                 ", fechaFin=" + fechaSalida +
                 ", total=" + total +
@@ -96,12 +96,12 @@ public class Reserva {
         if (o == null || getClass() != o.getClass()) return false;
 
         Reserva reserva = (Reserva) o;
-        return id == reserva.id;
+        return idReserva == reserva.idReserva;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idReserva);
     }
 
 }

@@ -62,8 +62,8 @@ public class InmuebleServicioDAO extends InmuebleServicio {
 
         try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setInt(1, getInmueble().getId());
-            ps.setInt(2, getServicio().getId());
+            ps.setInt(1, getInmueble().getIdInmueble());
+            ps.setInt(2, getServicio().getIdServicio());
             ps.setString(3, getEstado().name());
             ps.setDouble(4, getPrecioAdicional());
             ps.setBoolean(5, isIncluidoEnPrecio());
@@ -92,8 +92,8 @@ public class InmuebleServicioDAO extends InmuebleServicio {
 
         try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
 
-            ps.setInt(1, getInmueble().getId());
-            ps.setInt(2, getServicio().getId());
+            ps.setInt(1, getInmueble().getIdInmueble());
+            ps.setInt(2, getServicio().getIdServicio());
             ps.setString(3, getEstado().name());
             ps.setDouble(4, getPrecioAdicional());
             ps.setBoolean(5, isIncluidoEnPrecio());

@@ -54,7 +54,7 @@ public class ImagenInmuebleDAO extends ImagenInmueble {
 
         try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setInt(1, getInmuebleId().getId());
+            ps.setInt(1, getInmuebleId().getIdInmueble());
             ps.setString(2, getUrl());
 
             int filas = ps.executeUpdate();

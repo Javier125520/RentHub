@@ -75,8 +75,8 @@ public class ReseñaDAO extends Reseña {
             ps.setInt(1, getPuntuacion());
             ps.setString(2, getComentario());
             ps.setDate(3, Date.valueOf(getFecha()));
-            ps.setInt(4, getInmueble().getId());
-            ps.setInt(5, getHuesped().getId());
+            ps.setInt(4, getInmueble().getIdInmueble());
+            ps.setInt(5, getHuesped().getIdUsuario());
 
             int rows = ps.executeUpdate();
 
@@ -105,8 +105,8 @@ public class ReseñaDAO extends Reseña {
             ps.setInt(1, getPuntuacion());
             ps.setString(2, getComentario());
             ps.setDate(3, Date.valueOf(getFecha()));
-            ps.setInt(4, getInmueble().getId());
-            ps.setInt(5, getHuesped().getId());
+            ps.setInt(4, getInmueble().getIdInmueble());
+            ps.setInt(5, getHuesped().getIdUsuario());
             ps.setInt(6, getId());
 
             return ps.executeUpdate() > 0;

@@ -82,8 +82,8 @@ public class InmuebleServicio {
 
     @Override
     public String toString() {
-        String inmuebleInfo = (inmueble == null) ? "null" : ("Inmueble{id=" + inmueble.getId() + "}");
-        String servicioInfo = (servicio == null) ? "null" : ("Servicio{id=" + servicio.getId() + ", nombre=" + servicio.getNombre() + "}");
+        String inmuebleInfo = (inmueble == null) ? "null" : ("Inmueble{id=" + inmueble.getIdInmueble() + "}");
+        String servicioInfo = (servicio == null) ? "null" : ("Servicio{id=" + servicio.getIdServicio() + ", nombre=" + servicio.getNombre() + "}");
         return "InmuebleServicio{" +
                 inmuebleInfo +
                 ", " + servicioInfo +
@@ -98,17 +98,17 @@ public class InmuebleServicio {
 
         InmuebleServicio that = (InmuebleServicio) o;
         // igualdad por pareja (inmueble, servicio) si ambos no null
-        return Objects.equals(inmueble == null ? null : inmueble.getId(),
-                that.inmueble == null ? null : that.inmueble.getId())
-                && Objects.equals(servicio == null ? null : servicio.getId(),
-                that.servicio == null ? null : that.servicio.getId());
+        return Objects.equals(inmueble == null ? null : inmueble.getIdInmueble(),
+                that.inmueble == null ? null : that.inmueble.getIdInmueble())
+                && Objects.equals(servicio == null ? null : servicio.getIdServicio(),
+                that.servicio == null ? null : that.servicio.getIdServicio());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-                inmueble == null ? null : inmueble.getId(),
-                servicio == null ? null : servicio.getId()
+                inmueble == null ? null : inmueble.getIdInmueble(),
+                servicio == null ? null : servicio.getIdServicio()
         );
     }
 }

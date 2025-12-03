@@ -61,8 +61,8 @@ public class Reseña {
 
     @Override
     public String toString() {
-        String inmuebleInfo = (inmueble == null) ? "null" : ("Inmueble{id=" + inmueble.getId() + ", titulo=" + inmueble.getTitulo() + "}");
-        String huespedInfo = (huesped == null) ? "null" : ("Usuario{id=" + huesped.getId() + ", nombre=" + huesped.getNombre() + "}");
+        String inmuebleInfo = (inmueble == null) ? "null" : ("Inmueble{id=" + inmueble.getIdInmueble() + ", titulo=" + inmueble.getTitulo() + "}");
+        String huespedInfo = (huesped == null) ? "null" : ("Usuario{id=" + huesped.getIdUsuario() + ", nombre=" + huesped.getNombre() + "}");
         return "Resena{" +
                 "id=" + id +
                 ", puntuacion=" + puntuacion +

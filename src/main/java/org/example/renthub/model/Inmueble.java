@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Inmueble {
-    private int id;
+    private int idInmueble;
     private String titulo;
     private String descripcion;
     private String direccion;
@@ -24,10 +24,10 @@ public class Inmueble {
 
     public Inmueble() {}
 
-    public Inmueble(int id, String titulo, String descripcion, String direccion, String ciudad,
+    public Inmueble(int idInmueble, String titulo, String descripcion, String direccion, String ciudad,
                     int capacidad, int numeroHabitaciones, double precioNoche, boolean disponible,
                     Usuario propietario) {
-        this.id = id;
+        this.idInmueble = idInmueble;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.direccion = direccion;
@@ -40,8 +40,8 @@ public class Inmueble {
     }
 
     // getters y setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getIdInmueble() { return idInmueble; }
+    public void setIdInmueble(int idInmueble) { this.idInmueble = idInmueble; }
 
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
@@ -121,9 +121,9 @@ public class Inmueble {
     public String toString() {
         // evitar desbordes incluyendo solo id y título del propietario
         String propietarioInfo = (propietario == null) ? "null" :
-                ("Usuario{id=" + propietario.getId() + ", nombre=" + propietario.getNombre() + "}");
+                ("Usuario{id=" + propietario.getIdUsuario() + ", nombre=" + propietario.getNombre() + "}");
         return "Inmueble{" +
-                "id=" + id +
+                "id=" + idInmueble +
                 ", titulo='" + titulo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", direccion='" + direccion + '\'' +
@@ -142,11 +142,11 @@ public class Inmueble {
         if (o == null || getClass() != o.getClass()) return false;
 
         Inmueble inmueble = (Inmueble) o;
-        return id == inmueble.id;
+        return idInmueble == inmueble.idInmueble;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idInmueble);
     }
 }

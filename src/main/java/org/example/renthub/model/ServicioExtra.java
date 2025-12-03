@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ServicioExtra {
-    private int id;
+    private int idServicio;
     private String nombre;
     private String descripcion;
 
@@ -13,15 +13,15 @@ public class ServicioExtra {
 
     public ServicioExtra() {}
 
-    public ServicioExtra(int id, String nombre, String descripcion) {
-        this.id = id;
+    public ServicioExtra(int idServicio, String nombre, String descripcion) {
+        this.idServicio = idServicio;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
 
     // getters y setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getIdServicio() { return idServicio; }
+    public void setIdServicio(int idServicio) { this.idServicio = idServicio; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
@@ -42,7 +42,7 @@ public class ServicioExtra {
     @Override
     public String toString() {
         return "ServicioExtra{" +
-                "id=" + id +
+                "id=" + idServicio +
                 ", nombre='" + nombre + '\'' +
                 ", inmuebles=" + inmuebles.size() +
                 '}';
@@ -54,11 +54,11 @@ public class ServicioExtra {
         if (o == null || getClass() != o.getClass()) return false;
 
         ServicioExtra that = (ServicioExtra) o;
-        return id == that.id;
+        return idServicio == that.idServicio;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idServicio);
     }
 }

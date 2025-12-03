@@ -1,11 +1,7 @@
 package org.example.renthub.DAO;
 
 import org.example.renthub.connection.MySQLConnection;
-import org.example.renthub.model.EstadoReserva;
-import org.example.renthub.model.Inmueble;
 import org.example.renthub.model.Reserva;
-import org.example.renthub.model.Usuario;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,38 +9,54 @@ import java.util.List;
 
 public class ReservaDAO extends Reserva {
 
-    // ========================= SQL =========================
+    // ────────────────────────────────────────────────
+    //  CONSULTAS SQL
+    // ────────────────────────────────────────────────
 
     private static final String INSERT =
-            "INSERT INTO reserva (fecha_inicio, fecha_fin, total, estado, inmueble_id, huesped_id) " +
-                    "VALUES (?, ?, ?, ?, ?, ?)";
+            "INSERT INTO reserva (id_usuario, id_inmueble, fecha_inicio, fecha_fin, precio_total, estado) " +
+                    "VALUES (?, ?, ?, ?, ?, ?);";
 
     private static final String UPDATE =
-            "UPDATE reserva SET fecha_inicio=?, fecha_fin=?, total=?, estado=?, inmueble_id=?, huesped_id=? " +
-                    "WHERE id=?";
+            "UPDATE reserva SET id_usuario=?, id_inmueble=?, fecha_inicio=?, fecha_fin=?, precio_total=?, estado=? " +
+                    "WHERE id_reserva = ?;";
 
     private static final String DELETE =
-            "DELETE FROM reserva WHERE id = ?";
+            "DELETE FROM reserva WHERE id_reserva = ?;";
 
     private static final String SELECT_BY_ID =
-            "SELECT * FROM reserva WHERE id = ?";
+            "SELECT * FROM reserva WHERE id_reserva = ?;";
 
     private static final String SELECT_ALL =
-            "SELECT * FROM reserva";
-
-    private static final String SELECT_BY_INMUEBLE =
-            "SELECT * FROM reserva WHERE inmueble_id = ?";
-
-    private static final String SELECT_BY_HUESPED =
-            "SELECT * FROM reserva WHERE huesped_id = ?";
+            "SELECT * FROM reserva;";
 
     private static final String SELECT_BY_USUARIO =
-            "SELECT r.* FROM reserva r " +
-            "JOIN inmueble i ON r.inmueble_id = i.id " +
-            "WHERE i.propietario_id = ?";
+            "SELECT * FROM reserva WHERE id_usuario = ?;";
+
+    private static final String SELECT_BY_INMUEBLE =
+            "SELECT * FROM reserva WHERE id_inmueble = ?;";
+
+    private static final String CHECK_SOLAPAMIENTO =
+            "SELECT COUNT(*) AS total FROM reserva " +
+                    "WHERE id_inmueble = ? AND (" +
+                    "(fecha_inicio <= ? AND fecha_fin >= ?) " +      // Inicio dentro de otra reserva
+                    "OR (fecha_inicio <= ? AND fecha_fin >= ?) " +   // Fin dentro de otra reserva
+                    "OR (fecha_inicio >= ? AND fecha_fin <= ?)" +    // Fechas completamente dentro
+                    ");";
+
+    private static final String SELECT_ACTIVAS =
+            "SELECT * FROM reserva WHERE fecha_fin >= CURDATE();";
+
+    private static final String SELECT_PASADAS =
+            "SELECT * FROM reserva WHERE fecha_fin < CURDATE();";
+
+    private static final String SELECT_ENTRE_FECHAS =
+            "SELECT * FROM reserva WHERE fecha_inicio >= ? AND fecha_fin <= ?;";
 
 
-    // ========================= CONSTRUCTORES =========================
+    // ────────────────────────────────────────────────
+    //  CONSTRUCTORES
+    // ────────────────────────────────────────────────
 
     public ReservaDAO() {
         super();
@@ -52,128 +64,87 @@ public class ReservaDAO extends Reserva {
 
     public ReservaDAO(int id) {
         super();
-        loadById(id);
+        getById(id);
     }
 
     public ReservaDAO(Reserva r) {
-        super(
-                r.getId(),
-                r.getFechaEntrada(),
-                r.getFechaSalida(),
-                r.getTotal(),
-                r.getEstado(),
-                r.getInmueble(),
-                r.getHuesped(),
-                r.getPago()
-        );
-    }
-
-    public ReservaDAO(LocalDate inicio, LocalDate fin, double total,
-                      EstadoReserva estado, Inmueble inmueble, Usuario huesped) {
-
-        super(0, inicio, fin, total, estado, inmueble, huesped, null);
+        super(r.getIdReserva(), r.getFechaEntrada(), r.getFechaSalida(), r.getTotal(),
+                r.getEstado(), r.getInmueble(), r.getHuesped(), r.getPago());
     }
 
 
-    // ========================= SAVE =========================
+    // ────────────────────────────────────────────────
+    //  MÉTODO SAVE (INSERT + UPDATE)
+    // ────────────────────────────────────────────────
 
-    public boolean save() {
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return false;
+    public boolean save() throws SQLException {
+        Connection con = MySQLConnection.getConnection();
 
-        try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
+        // UPDATE
+        if (this.getId_reserva() != 0) {
+            try (PreparedStatement ps = con.prepareStatement(UPDATE)) {
 
-            ps.setDate(1, Date.valueOf(getFechaEntrada()));
-            ps.setDate(2, Date.valueOf(getFechaSalida()));
-            ps.setDouble(3, getTotal());
-            ps.setString(4, getEstado().name());
-            ps.setInt(5, getInmueble().getId());
-            ps.setInt(6, getHuesped().getId());
+                ps.setInt(1, getUsuario().getId_usuario());
+                ps.setInt(2, getInmueble().getId_inmueble());
+                ps.setDate(3, Date.valueOf(getFecha_inicio()));
+                ps.setDate(4, Date.valueOf(getFecha_fin()));
+                ps.setDouble(5, getPrecio_total());
+                ps.setString(6, getEstado());
+                ps.setInt(7, getId_reserva());
 
-            int filas = ps.executeUpdate();
+                return ps.executeUpdate() > 0;
+            }
+        }
 
-            if (filas > 0) {
+        // INSERT
+        try (PreparedStatement ps = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setInt(1, getUsuario().getId_usuario());
+            ps.setInt(2, getInmueble().getId_inmueble());
+            ps.setDate(3, Date.valueOf(getFecha_inicio()));
+            ps.setDate(4, Date.valueOf(getFecha_fin()));
+            ps.setDouble(5, getPrecio_total());
+            ps.setString(6, getEstado());
+
+            boolean inserted = ps.executeUpdate() > 0;
+
+            if (inserted) {
                 ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) setId(rs.getInt(1));
+                if (rs.next()) this.setId_reserva(rs.getInt(1));
             }
 
-            return filas > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            return inserted;
         }
     }
 
 
-    // ========================= UPDATE =========================
+    // ────────────────────────────────────────────────
+    //  DELETE
+    // ────────────────────────────────────────────────
 
-    public boolean update() {
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return false;
+    public boolean remove() throws SQLException {
+        Connection con = MySQLConnection.getConnection();
 
-        try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
-
-            ps.setDate(1, Date.valueOf(getFechaEntrada()));
-            ps.setDate(2, Date.valueOf(getFechaSalida()));
-            ps.setDouble(3, getTotal());
-            ps.setString(4, getEstado().name());
-            ps.setInt(5, getInmueble().getId());
-            ps.setInt(6, getHuesped().getId());
-            ps.setInt(7, getId());
-
+        try (PreparedStatement ps = con.prepareStatement(DELETE)) {
+            ps.setInt(1, getId_reserva());
             return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 
 
-    // ========================= DELETE =========================
+    // ────────────────────────────────────────────────
+    //  GET BY ID
+    // ────────────────────────────────────────────────
 
-    public boolean delete() {
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return false;
+    public void getById(int id) {
+        Connection con = MySQLConnection.getConnection();
 
-        try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
-
-            ps.setInt(1, getId());
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-    // ========================= LOAD BY ID =========================
-
-    public void loadById(int id) {
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return;
-
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID)) {
-
+        try (PreparedStatement ps = con.prepareStatement(SELECT_BY_ID)) {
             ps.setInt(1, id);
+
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-
-                setId(rs.getInt("id"));
-                setFechaEntrada(rs.getDate("fecha_inicio").toLocalDate());
-                setFechaSalida(rs.getDate("fecha_fin").toLocalDate());
-                setTotal(rs.getDouble("total"));
-                setEstado(EstadoReserva.valueOf(rs.getString("estado")));
-
-                setInmueble(new InmuebleDAO(rs.getInt("inmueble_id")));
-                setHuesped(new UsuarioDAO(rs.getInt("huesped_id")));
-
-                // cargar pago (si existe)
-                setPago(PagoDAO.getByReservaId(getId()));
-            }
+            if (rs.next()) loadFromResultSet(rs);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -181,30 +152,102 @@ public class ReservaDAO extends Reserva {
     }
 
 
-    // ========================= MÉTODOS ESTÁTICOS =========================
+    // ────────────────────────────────────────────────
+    //  CONSULTAS ESTÁTICAS
+    // ────────────────────────────────────────────────
 
     public static List<Reserva> getAll() {
         List<Reserva> lista = new ArrayList<>();
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return lista;
+        Connection con = MySQLConnection.getConnection();
 
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = con.prepareStatement(SELECT_ALL)) {
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                ReservaDAO r = new ReservaDAO();
+                r.loadFromResultSet(rs);
+                lista.add(r);
+            }
 
-                Reserva r = new Reserva();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-                r.setId(rs.getInt("id"));
-                r.setFechaEntrada(rs.getDate("fecha_inicio").toLocalDate());
-                r.setFechaSalida(rs.getDate("fecha_fin").toLocalDate());
-                r.setTotal(rs.getDouble("total"));
-                r.setEstado(EstadoReserva.valueOf(rs.getString("estado")));
+        return lista;
+    }
 
-                r.setInmueble(new InmuebleDAO(rs.getInt("inmueble_id")));
-                r.setHuesped(new UsuarioDAO(rs.getInt("huesped_id")));
-                r.setPago(PagoDAO.getByReservaId(r.getId()));
+    public static List<Reserva> getByUsuario(int idUsuario) {
+        List<Reserva> lista = new ArrayList<>();
+        Connection con = MySQLConnection.getConnection();
 
+        try (PreparedStatement ps = con.prepareStatement(SELECT_BY_USUARIO)) {
+            ps.setInt(1, idUsuario);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ReservaDAO r = new ReservaDAO();
+                r.loadFromResultSet(rs);
+                lista.add(r);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
+    public static List<Reserva> getByInmueble(int idInmueble) {
+        List<Reserva> lista = new ArrayList<>();
+        Connection con = MySQLConnection.getConnection();
+
+        try (PreparedStatement ps = con.prepareStatement(SELECT_BY_INMUEBLE)) {
+            ps.setInt(1, idInmueble);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ReservaDAO r = new ReservaDAO();
+                r.loadFromResultSet(rs);
+                lista.add(r);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
+    public static List<Reserva> getReservasActivas() {
+        List<Reserva> lista = new ArrayList<>();
+        Connection con = MySQLConnection.getConnection();
+
+        try (PreparedStatement ps = con.prepareStatement(SELECT_ACTIVAS)) {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ReservaDAO r = new ReservaDAO();
+                r.loadFromResultSet(rs);
+                lista.add(r);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
+    public static List<Reserva> getReservasPasadas() {
+        List<Reserva> lista = new ArrayList<>();
+        Connection con = MySQLConnection.getConnection();
+
+        try (PreparedStatement ps = con.prepareStatement(SELECT_PASADAS)) {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ReservaDAO r = new ReservaDAO();
+                r.loadFromResultSet(rs);
                 lista.add(r);
             }
 
@@ -216,30 +259,19 @@ public class ReservaDAO extends Reserva {
     }
 
 
-    public static List<Reserva> getByInmueble(int inmuebleId) {
+    public static List<Reserva> getReservasEntreFechas(LocalDate inicio, LocalDate fin) {
         List<Reserva> lista = new ArrayList<>();
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return lista;
+        Connection con = MySQLConnection.getConnection();
 
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_INMUEBLE)) {
+        try (PreparedStatement ps = con.prepareStatement(SELECT_ENTRE_FECHAS)) {
+            ps.setDate(1, Date.valueOf(inicio));
+            ps.setDate(2, Date.valueOf(fin));
 
-            ps.setInt(1, inmuebleId);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-
-                Reserva r = new Reserva();
-
-                r.setId(rs.getInt("id"));
-                r.setFechaEntrada(rs.getDate("fecha_inicio").toLocalDate());
-                r.setFechaSalida(rs.getDate("fecha_fin").toLocalDate());
-                r.setTotal(rs.getDouble("total"));
-                r.setEstado(EstadoReserva.valueOf(rs.getString("estado")));
-
-                r.setInmueble(new InmuebleDAO(rs.getInt("inmueble_id")));
-                r.setHuesped(new UsuarioDAO(rs.getInt("huesped_id")));
-                r.setPago(PagoDAO.getByReservaId(r.getId()));
-
+                ReservaDAO r = new ReservaDAO();
+                r.loadFromResultSet(rs);
                 lista.add(r);
             }
 
@@ -251,73 +283,61 @@ public class ReservaDAO extends Reserva {
     }
 
 
-    public static List<Reserva> getByHuesped(int huespedId) {
-        List<Reserva> lista = new ArrayList<>();
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return lista;
+    // ────────────────────────────────────────────────
+    //  COMPROBAR SOLAPAMIENTO DE FECHAS
+    // ────────────────────────────────────────────────
 
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_HUESPED)) {
+    public static boolean haySolapamiento(int idInmueble, LocalDate inicio, LocalDate fin) {
+        Connection con = MySQLConnection.getConnection();
 
-            ps.setInt(1, huespedId);
+        try (PreparedStatement ps = con.prepareStatement(CHECK_SOLAPAMIENTO)) {
+
+            ps.setInt(1, idInmueble);
+
+            ps.setDate(2, Date.valueOf(inicio));
+            ps.setDate(3, Date.valueOf(inicio));
+
+            ps.setDate(4, Date.valueOf(fin));
+            ps.setDate(5, Date.valueOf(fin));
+
+            ps.setDate(6, Date.valueOf(inicio));
+            ps.setDate(7, Date.valueOf(fin));
+
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-
-                Reserva r = new Reserva();
-
-                r.setId(rs.getInt("id"));
-                r.setFechaEntrada(rs.getDate("fecha_inicio").toLocalDate());
-                r.setFechaSalida(rs.getDate("fecha_fin").toLocalDate());
-                r.setTotal(rs.getDouble("total"));
-                r.setEstado(EstadoReserva.valueOf(rs.getString("estado")));
-
-                r.setInmueble(new InmuebleDAO(rs.getInt("inmueble_id")));
-                r.setHuesped(new UsuarioDAO(rs.getInt("huesped_id")));
-                r.setPago(PagoDAO.getByReservaId(r.getId()));
-
-                lista.add(r);
-            }
+            if (rs.next()) return rs.getInt("total") > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return lista;
+        return false;
     }
 
-    public static List<Reserva> getByUsuario(int id) {
-        List<Reserva> lista = new ArrayList<>();
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return lista;
 
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_USUARIO)) {
+    // ────────────────────────────────────────────────
+    //  MAPEO RESULTSET → RESERVA
+    // ────────────────────────────────────────────────
 
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+    private void loadFromResultSet(ResultSet rs) throws SQLException {
 
-            while (rs.next()) {
+        this.setId_reserva(rs.getInt("id_reserva"));
 
-                Reserva r = new Reserva();
+        // Usuario
+        int idUsuario = rs.getInt("id_usuario");
+        this.setUsuario(new UsuarioDAO(idUsuario));
 
-                r.setId(rs.getInt("id"));
-                r.setFechaEntrada(rs.getDate("fecha_inicio").toLocalDate());
-                r.setFechaSalida(rs.getDate("fecha_fin").toLocalDate());
-                r.setTotal(rs.getDouble("total"));
-                r.setEstado(EstadoReserva.valueOf(rs.getString("estado")));
+        // Inmueble
+        int idInmueble = rs.getInt("id_inmueble");
+        this.setInmueble(new InmuebleDAO(idInmueble));
 
-                r.setInmueble(new InmuebleDAO(rs.getInt("inmueble_id")));
-                r.setHuesped(new UsuarioDAO(rs.getInt("huesped_id")));
-                r.setPago(PagoDAO.getByReservaId(r.getId()));
-
-                lista.add(r);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return lista;
+        this.setFecha_inicio(rs.getDate("fecha_inicio").toLocalDate());
+        this.setFecha_fin(rs.getDate("fecha_fin").toLocalDate());
+        this.setPrecio_total(rs.getDouble("precio_total"));
+        this.setEstado(rs.getString("estado"));
     }
 }
+
+
 
 
