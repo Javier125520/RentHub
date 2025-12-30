@@ -3,251 +3,230 @@ package org.example.renthub.DAO;
 
 import org.example.renthub.model.*;
 import org.example.renthub.connection.MySQLConnection;
+import org.example.renthub.model.Enum.TipoInmueble;
+
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InmuebleDAO extends Inmueble {
+public class InmuebleDAO {
 
-    // ────────────────────────────────────────────────
-    //  CONSULTAS NECESARIAS
-    // ────────────────────────────────────────────────
+    private final Connection conn;
+
+    // =========================
+    // SQL BASE
+    // =========================
 
     private static final String INSERT =
-            "INSERT INTO inmueble (titulo, descripcion, direccion, ciudad, capacidad, numero_habitaciones, precio_noche, disponible, id_propietario) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            "INSERT INTO inmueble (tipo_inmueble, titulo, descripcion, direccion, ciudad, capacidad, numero_habitaciones, precio_noche, disponible, propietario_id) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String UPDATE =
-            "UPDATE inmueble SET titulo=?, descripcion=?, direccion=?, ciudad=?, capacidad=?, numero_habitaciones=?, precio_noche=?, disponible=?, id_propietario=? " +
-                    "WHERE id_inmueble = ?;";
+            "UPDATE inmueble SET tipo_inmueble=?, titulo=?, descripcion=?, direccion=?, ciudad=?, capacidad=?, numero_habitaciones=?, precio_noche=?, disponible=?, propietario_id=? " +
+                    "WHERE id_inmueble=?";
 
     private static final String DELETE =
-            "DELETE FROM inmueble WHERE id_inmueble = ?;";
+            "DELETE FROM inmueble WHERE id_inmueble=?";
 
     private static final String SELECT_BY_ID =
-            "SELECT * FROM inmueble WHERE id_inmueble = ?;";
+            "SELECT * FROM inmueble WHERE id_inmueble=?";
 
-    private static final String SELECT_ALL =
-            "SELECT * FROM inmueble;";
-
-    private static final String SELECT_BY_PROPIETARIO =
-            "SELECT * FROM inmueble WHERE id_propietario = ?;";
-
-    private static final String SELECT_DISPONIBLES =
-            "SELECT * FROM inmueble WHERE disponible = 1;";
-
-    private static final String SELECT_BY_CIUDAD =
-            "SELECT * FROM inmueble WHERE ciudad LIKE ?;";
-
-    private static final String SELECT_FILTROS =
-            "SELECT * FROM inmueble WHERE ciudad LIKE ? AND capacidad >= ? AND precio_noche <= ?;";
-
-
-    // ────────────────────────────────────────────────
-    //  CONSTRUCTORES
-    // ────────────────────────────────────────────────
+    // =========================
+    // CONSTRUCTORES
+    // =========================
 
     public InmuebleDAO() {
-        super();
+        this.conn = MySQLConnection.getConnection();
     }
 
-    public InmuebleDAO(Inmueble i) {
-        super(i.getIdInmueble(), i.getTitulo(), i.getDescripcion(),
-                i.getDireccion(), i.getCiudad(), i.getCapacidad(),
-                i.getNumeroHabitaciones(), i.getPrecioNoche(),
-                i.isDisponible(), i.getPropietario());
+    public InmuebleDAO(Connection conn) {
+        this.conn = conn;
     }
 
-    public InmuebleDAO(int id) {
-        super();
-        getById(id);
-    }
+    // =========================
+    // CRUD
+    // =========================
 
+    public boolean insert(Inmueble i) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
 
-    // ────────────────────────────────────────────────
-    //  MÉTODOS CRUD
-    // ────────────────────────────────────────────────
+            ps.setString(1, i.getTipoInmueble().name());
+            ps.setString(2, i.getTitulo());
+            ps.setString(3, i.getDescripcion());
+            ps.setString(4, i.getDireccion());
+            ps.setString(5, i.getCiudad());
+            ps.setInt(6, i.getCapacidad());
+            ps.setInt(7, i.getNumeroHabitaciones());
+            ps.setDouble(8, i.getPrecioNoche());
+            ps.setBoolean(9, i.isDisponible());
+            ps.setInt(10, i.getPropietario().getIdUsuario());
 
-    public boolean save() throws SQLException {
-        Connection con = MySQLConnection.getConnection();
-
-        // UPDATE
-        if (this.getIdInmueble() != 0) {
-            try (PreparedStatement ps = con.prepareStatement(UPDATE)) {
-                ps.setString(1, getTitulo());
-                ps.setString(2, getDescripcion());
-                ps.setString(3, getDireccion());
-                ps.setString(4, getCiudad());
-                ps.setInt(5, getCapacidad());
-                ps.setInt(6, getNumeroHabitaciones());
-                ps.setDouble(7, getPrecioNoche());
-                ps.setBoolean(8, isDisponible());
-                ps.setInt(9, getPropietario().getIdUsuario());
-                ps.setInt(10, getIdInmueble());
-                return ps.executeUpdate() > 0;
-            }
-        }
-
-        // INSERT
-        try (PreparedStatement ps = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, getTitulo());
-            ps.setString(2, getDescripcion());
-            ps.setString(3, getDireccion());
-            ps.setString(4, getCiudad());
-            ps.setInt(5, getCapacidad());
-            ps.setInt(6, getNumeroHabitaciones());
-            ps.setDouble(7, getPrecioNoche());
-            ps.setBoolean(8, isDisponible());
-            ps.setInt(9, getPropietario().getIdUsuario());
-
-            boolean inserted = ps.executeUpdate() > 0;
-
-            if (inserted) {
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) this.setIdInmueble(rs.getInt(1));
+                if (rs.next()) {
+                    i.setIdInmueble(rs.getInt(1));
+                }
+                return true;
             }
-
-            return inserted;
+            return false;
         }
     }
 
-    public boolean remove() throws SQLException {
-        Connection con = MySQLConnection.getConnection();
-        try (PreparedStatement ps = con.prepareStatement(DELETE)) {
-            ps.setInt(1, getIdInmueble());
+    public boolean update(Inmueble i) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
+
+            ps.setString(1, i.getTipoInmueble().name());
+            ps.setString(2, i.getTitulo());
+            ps.setString(3, i.getDescripcion());
+            ps.setString(4, i.getDireccion());
+            ps.setString(5, i.getCiudad());
+            ps.setInt(6, i.getCapacidad());
+            ps.setInt(7, i.getNumeroHabitaciones());
+            ps.setDouble(8, i.getPrecioNoche());
+            ps.setBoolean(9, i.isDisponible());
+            ps.setInt(10, i.getPropietario().getIdUsuario());
+            ps.setInt(11, i.getIdInmueble());
+
             return ps.executeUpdate() > 0;
         }
     }
 
-
-    // ────────────────────────────────────────────────
-    //  CONSULTAS PARA CARGAR DATOS
-    // ────────────────────────────────────────────────
-
-    public void getById(int id) {
-        Connection con = MySQLConnection.getConnection();
-        try (PreparedStatement ps = con.prepareStatement(SELECT_BY_ID)) {
-            ps.setInt(1, id);
-
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) loadFromResultSet(rs);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public boolean delete(int idInmueble) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
+            ps.setInt(1, idInmueble);
+            return ps.executeUpdate() > 0;
         }
     }
 
-    public static List<Inmueble> getAll() {
-        List<Inmueble> lista = new ArrayList<>();
-        Connection con = MySQLConnection.getConnection();
-
-        try (PreparedStatement ps = con.prepareStatement(SELECT_ALL)) {
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) lista.add(loadInmueble(rs));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return lista;
-    }
-
-    public static List<Inmueble> getByPropietario(Usuario propietario) {
-        List<Inmueble> lista = new ArrayList<>();
-        Connection con = MySQLConnection.getConnection();
-
-        try (PreparedStatement ps = con.prepareStatement(SELECT_BY_PROPIETARIO)) {
-            ps.setInt(1, propietario.getIdUsuario());
+    public Inmueble findById(int idInmueble) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID)) {
+            ps.setInt(1, idInmueble);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) lista.add(loadInmueble(rs));
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            if (rs.next()) {
+                return mapInmueble(rs);
+            }
         }
-
-        return lista;
+        return null;
     }
 
-    public static List<Inmueble> getDisponibles() {
-        List<Inmueble> lista = new ArrayList<>();
-        Connection con = MySQLConnection.getConnection();
+    // =========================
+    // BÚSQUEDA FLEXIBLE (OPCIÓN 2)
+    // =========================
 
-        try (PreparedStatement ps = con.prepareStatement(SELECT_DISPONIBLES)) {
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) lista.add(loadInmueble(rs));
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public List<Inmueble> buscar(
+            String ciudad,
+            Double precioMin,
+            Double precioMax,
+            Integer capacidad,
+            LocalDate fechaEntrada,
+            LocalDate fechaSalida,
+            List<Integer> serviciosIncluidos
+    ) throws SQLException {
+
+        StringBuilder sql = new StringBuilder(
+                "SELECT DISTINCT i.* FROM inmueble i "
+        );
+
+        // join solo si hay servicios
+        if (serviciosIncluidos != null && !serviciosIncluidos.isEmpty()) {
+            sql.append("JOIN inmueble_servicio isv ON i.id_inmueble = isv.inmueble_id ");
         }
 
-        return lista;
-    }
+        sql.append("WHERE i.disponible = TRUE ");
 
-    public static List<Inmueble> buscarPorCiudad(String ciudad) {
-        List<Inmueble> lista = new ArrayList<>();
-        Connection con = MySQLConnection.getConnection();
+        List<Object> params = new ArrayList<>();
 
-        try (PreparedStatement ps = con.prepareStatement(SELECT_BY_CIUDAD)) {
-            ps.setString(1, "%" + ciudad + "%");
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) lista.add(loadInmueble(rs));
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (ciudad != null && !ciudad.isBlank()) {
+            sql.append("AND i.ciudad LIKE ? ");
+            params.add("%" + ciudad + "%");
         }
 
-        return lista;
-    }
-
-    public static List<Inmueble> buscarConFiltros(String ciudad, int capacidad, double precioMax) {
-        List<Inmueble> lista = new ArrayList<>();
-        Connection con = MySQLConnection.getConnection();
-
-        try (PreparedStatement ps = con.prepareStatement(SELECT_FILTROS)) {
-            ps.setString(1, "%" + ciudad + "%");
-            ps.setInt(2, capacidad);
-            ps.setDouble(3, precioMax);
-
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) lista.add(loadInmueble(rs));
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (precioMin != null) {
+            sql.append("AND i.precio_noche >= ? ");
+            params.add(precioMin);
         }
 
-        return lista;
+        if (precioMax != null) {
+            sql.append("AND i.precio_noche <= ? ");
+            params.add(precioMax);
+        }
+
+        if (capacidad != null) {
+            sql.append("AND i.capacidad >= ? ");
+            params.add(capacidad);
+        }
+
+        if (fechaEntrada != null && fechaSalida != null) {
+            sql.append("""
+                AND i.id_inmueble NOT IN (
+                    SELECT r.inmueble_id
+                    FROM reserva r
+                    WHERE r.fecha_entrada < ?
+                      AND r.fecha_salida > ?
+                )
+                """);
+            params.add(Date.valueOf(fechaSalida));
+            params.add(Date.valueOf(fechaEntrada));
+        }
+
+        if (serviciosIncluidos != null && !serviciosIncluidos.isEmpty()) {
+            sql.append("AND isv.servicio_id IN (");
+            for (int i = 0; i < serviciosIncluidos.size(); i++) {
+                sql.append("?");
+                if (i < serviciosIncluidos.size() - 1) {
+                    sql.append(",");
+                }
+            }
+            sql.append(") AND isv.incluido_en_precio = TRUE ");
+            params.addAll(serviciosIncluidos);
+        }
+
+        List<Inmueble> resultado = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    resultado.add(mapInmueble(rs));
+                }
+            }
+        }
+
+        return resultado;
     }
 
+    // =========================
+    // MAPEADOR
+    // =========================
 
-    // ────────────────────────────────────────────────
-    //  MÉTODOS AUXILIARES DE MAPEO
-    // ────────────────────────────────────────────────
+    private Inmueble mapInmueble(ResultSet rs) throws SQLException {
 
-    private static Inmueble loadInmueble(ResultSet rs) throws SQLException {
-        InmuebleDAO i = new InmuebleDAO();
-        i.loadFromResultSet(rs);
+        Inmueble i = new Inmueble();
+
+        i.setIdInmueble(rs.getInt("id_inmueble"));
+        i.setTipoInmueble(TipoInmueble.valueOf(rs.getString("tipo_inmueble")));
+        i.setTitulo(rs.getString("titulo"));
+        i.setDescripcion(rs.getString("descripcion"));
+        i.setDireccion(rs.getString("direccion"));
+        i.setCiudad(rs.getString("ciudad"));
+        i.setCapacidad(rs.getInt("capacidad"));
+        i.setNumeroHabitaciones(rs.getInt("numero_habitaciones"));
+        i.setPrecioNoche(rs.getDouble("precio_noche"));
+        i.setDisponible(rs.getBoolean("disponible"));
+
+        Usuario propietario = new Usuario();
+        propietario.setIdUsuario(rs.getInt("propietario_id"));
+        i.setPropietario(propietario);
+
         return i;
     }
-
-    private void loadFromResultSet(ResultSet rs) throws SQLException {
-        this.setIdInmueble(rs.getInt("id_inmueble"));
-        this.setTitulo(rs.getString("titulo"));
-        this.setDescripcion(rs.getString("descripcion"));
-        this.setDireccion(rs.getString("direccion"));
-        this.setCiudad(rs.getString("ciudad"));
-        this.setCapacidad(rs.getInt("capacidad"));
-        this.setNumeroHabitaciones(rs.getInt("numero_habitaciones"));
-        this.setPrecioNoche(rs.getDouble("precio_noche"));
-        this.setDisponible(rs.getBoolean("disponible"));
-
-        // Cargar propietario
-        int idProp = rs.getInt("id_propietario");
-        this.setPropietario(new UsuarioDAO(idProp));
-
-        // Cargar imágenes y servicios cuando sea necesario:
-        // this.setImagenes(ImagenInmuebleDAO.getByInmueble(this.getId_inmueble()))
-        // this.setServicios(InmuebleServicioDAO.getByInmueble(this.getId_inmueble()))
-    }
 }
+
 

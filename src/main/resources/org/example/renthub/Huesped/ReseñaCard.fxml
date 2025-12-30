@@ -1,60 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.renthub.controller.ReseñaCardController"
-            prefHeight="180"
-            prefWidth="900"
-            styleClass="card"
-            style="-fx-padding: 20; -fx-background-radius: 12;">
+<VBox prefWidth="950" styleClass="booking-card" stylesheets="@../css/huesped.css" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.renthub.controller.ReseñaCardController" >
+    <padding><Insets top="25" right="30" bottom="25" left="30"/></padding>
 
-    <!-- IZQUIERDA: TÍTULO + ESTRELLAS -->
-    <left>
-        <VBox spacing="10">
-
-            <Label fx:id="lblInmueble" styleClass="subtitle"/>
-
-            <!-- Estrellas -->
-            <HBox spacing="5">
-                <Label fx:id="star1" text="★" styleClass="estrella-apagada"/>
-                <Label fx:id="star2" text="★" styleClass="estrella-apagada"/>
-                <Label fx:id="star3" text="★" styleClass="estrella-apagada"/>
-                <Label fx:id="star4" text="★" styleClass="estrella-apagada"/>
-                <Label fx:id="star5" text="★" styleClass="estrella-apagada"/>
-            </HBox>
-
-            <HBox spacing="5">
-                <Label text="Fecha:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="lblFecha"/>
-            </HBox>
-
+    <HBox alignment="CENTER_LEFT">
+        <VBox spacing="5">
+            <Label fx:id="lblInmueble" text="Apartamento Moderno en el Centro" styleClass="property-title-large"/>
+            <Label fx:id="lblUbicacion" text="📍 Madrid, España" styleClass="text-muted"/>
         </VBox>
-    </left>
+        <Region HBox.hgrow="ALWAYS" />
+        <HBox alignment="CENTER" spacing="5">
+            <Label text="⭐" style="-fx-font-size: 18; -fx-text-fill: #FBBF24;"/>
+            <Label fx:id="lblPuntuacion" text="5" style="-fx-font-weight: bold; -fx-font-size: 18;"/>
+        </HBox>
+    </HBox>
 
+    <VBox spacing="10">
+        <VBox.margin><Insets top="20" bottom="20"/></VBox.margin>
+        <Label fx:id="lblComentario" text="Excelente estancia, muy limpio y bien ubicado." wrapText="true" style="-fx-font-size: 14; -fx-text-fill: #374151;"/>
+        <Label fx:id="lblFecha" text="23 de diciembre de 2025" styleClass="text-muted" style="-fx-font-size: 11;"/>
+    </VBox>
 
-    <!-- CENTRO: COMENTARIO -->
-    <center>
-        <Label fx:id="lblComentario"
-               wrapText="true"
-               maxWidth="450"
-               style="-fx-font-size: 14px;"/>
-    </center>
-
-
-    <!-- DERECHA: BOTÓN ELIMINAR -->
-    <right>
-        <VBox spacing="10" alignment="CENTER_RIGHT">
-            <Button fx:id="btnEliminar"
-                    text="Eliminar"
-                    style="-fx-background-color: #E74C3C; -fx-text-fill: white;"
-                    onAction="#eliminarResena"
-                    prefWidth="120"/>
-        </VBox>
-    </right>
-
-</BorderPane>
-
-
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <Button fx:id="btnEditar" text="✏ Editar" styleClass="btn-outline"/>
+        <Button fx:id="btnEliminar" text="🗑 Eliminar" styleClass="btn-danger"/>
+    </HBox>
+</VBox>

@@ -1,4 +1,5 @@
 package org.example.renthub.controller;
 
-public class DetallesInmuebleController {
+public class LoginController {
+
 }

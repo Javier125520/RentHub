@@ -1,5 +1,7 @@
 package org.example.renthub.model;
 
+import org.example.renthub.model.Enum.RolUsuario;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -52,6 +54,7 @@ public class Usuario {
     public void setResenas(List<Reseña> resenas) { this.resenas = resenas; }
 
     // utilidades para mantener coherencia bidireccional
+
     public void addInmueble(Inmueble inmueble) {
         if (!inmuebles.contains(inmueble)) {
             inmuebles.add(inmueble);

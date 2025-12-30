@@ -29,7 +29,12 @@ public class Reseña {
     public void setId(int id) { this.id = id; }
 
     public int getPuntuacion() { return puntuacion; }
-    public void setPuntuacion(int puntuacion) { this.puntuacion = puntuacion; }
+    public void setPuntuacion(int puntuacion) {
+        if (puntuacion < 1 || puntuacion > 5) {
+            throw new IllegalArgumentException("La puntuación debe estar entre 1 y 5");
+        }
+        this.puntuacion = puntuacion;
+    }
 
     public String getComentario() { return comentario; }
     public void setComentario(String comentario) { this.comentario = comentario; }
@@ -39,7 +44,7 @@ public class Reseña {
 
     public Inmueble getInmueble() { return inmueble; }
     public void setInmueble(Inmueble inmueble) {
-        if (this.inmueble != null && this.inmueble.getResenas().contains(this)) {
+        if (this.inmueble != null) {
             this.inmueble.getResenas().remove(this);
         }
         this.inmueble = inmueble;
@@ -50,7 +55,7 @@ public class Reseña {
 
     public Usuario getHuesped() { return huesped; }
     public void setHuesped(Usuario huesped) {
-        if (this.huesped != null && this.huesped.getResenas().contains(this)) {
+        if (this.huesped != null) {
             this.huesped.getResenas().remove(this);
         }
         this.huesped = huesped;

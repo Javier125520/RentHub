@@ -1,5 +1,7 @@
 package org.example.renthub.model;
 
+import org.example.renthub.model.Enum.EstadoReserva;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -7,23 +9,23 @@ public class Reserva {
     private int idReserva;
     private LocalDate fechaEntrada;
     private LocalDate fechaSalida;
-    private double total;
+    private double PrecioTotal;
     private EstadoReserva estado;
+
     private Inmueble inmueble;
     private Usuario huesped;
     private Pago pago; // opcional, puede ser null hasta que se realice
 
     public Reserva() {}
 
-    public Reserva(int idReserva, LocalDate fechaEntrada, LocalDate fechaSalida, double total, EstadoReserva estado, Inmueble inmueble, Usuario huesped, Pago pago) {
+    public Reserva(int idReserva, LocalDate fechaEntrada, LocalDate fechaSalida, double total, EstadoReserva estado, Inmueble inmueble, Usuario huesped) {
         this.idReserva = idReserva;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
-        this.total = total;
+        this.PrecioTotal = total;
         this.estado = estado;
         this.setInmueble(inmueble);
         this.setHuesped(huesped);
-        this.setPago(pago);
     }
 
     // getters y setters
@@ -36,15 +38,15 @@ public class Reserva {
     public LocalDate getFechaSalida() { return fechaSalida; }
     public void setFechaSalida(LocalDate fechaSalida) { this.fechaSalida = fechaSalida; }
 
-    public double getTotal() { return total; }
-    public void setTotal(double total) { this.total = total; }
+    public double getPrecioTotal() { return PrecioTotal; }
+    public void setPrecioTotal(double precioTotal) { this.PrecioTotal = precioTotal; }
 
     public EstadoReserva getEstado() { return estado; }
     public void setEstado(EstadoReserva estado) { this.estado = estado; }
 
     public Inmueble getInmueble() { return inmueble; }
     public void setInmueble(Inmueble inmueble) {
-        if (this.inmueble != null && this.inmueble.getReservas().contains(this)) {
+        if (this.inmueble != null) {
             this.inmueble.getReservas().remove(this);
         }
         this.inmueble = inmueble;
@@ -55,7 +57,7 @@ public class Reserva {
 
     public Usuario getHuesped() { return huesped; }
     public void setHuesped(Usuario huesped) {
-        if (this.huesped != null && this.huesped.getReservas().contains(this)) {
+        if (this.huesped != null) {
             this.huesped.getReservas().remove(this);
         }
         this.huesped = huesped;
@@ -64,29 +66,28 @@ public class Reserva {
         }
     }
 
-    public Pago getPago() { return pago; }
+    public Pago getPago() {
+        return pago;
+    }
 
     public void setPago(Pago pago) {
+        if (this.pago != null) {
+            throw new IllegalStateException("La reserva ya tiene un pago asociado");
+        }
         this.pago = pago;
     }
 
     @Override
-    public String toString () {
-        String inmuebleInfo = (inmueble == null) ? "null" :
-                ("Inmueble{id=" + inmueble.getIdInmueble() + ", titulo=" + inmueble.getTitulo() + "}");
-        String huespedInfo = (huesped == null) ? "null" :
-                ("Usuario{id=" + huesped.getIdUsuario() + ", nombre=" + huesped.getNombre() + "}");
-        String pagoInfo = (pago == null) ? "null" :
-                ("Pago{id=" + pago.getId() + ", monto=" + pago.getMonto() + "}");
+    public String toString() {
         return "Reserva{" +
-                "id=" + idReserva +
-                ", fechaInicio=" + fechaEntrada +
-                ", fechaFin=" + fechaSalida +
-                ", total=" + total +
+                "idReserva=" + idReserva +
+                ", fechaEntrada=" + fechaEntrada +
+                ", fechaSalida=" + fechaSalida +
+                ", total=" + PrecioTotal +
                 ", estado=" + estado +
-                ", inmueble=" + inmuebleInfo +
-                ", huesped=" + huespedInfo +
-                ", pago=" + pagoInfo +
+                ", inmueble=" + inmueble +
+                ", huesped=" + huesped +
+                ", pago=" + pago +
                 '}';
     }
 

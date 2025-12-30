@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.renthub.controller.LoginController"
-            stylesheets="@css/styles.css">
+<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/17.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.renthub.controller.LoginController"
+      stylesheets="@css/styles.css">
 
-    <center>
-        <VBox alignment="CENTER" prefWidth="900" prefHeight="600" styleClass="background">
+    <VBox spacing="15" maxWidth="350" styleClass="card" alignment="CENTER">
+        <padding><Insets top="40" right="30" bottom="40" left="30"/></padding>
 
-            <VBox alignment="CENTER_LEFT" spacing="20" styleClass="card">
+        <Label text="🏠" style="-fx-font-size: 40; -fx-text-fill: #2563EB;"/>
+        <Label text="RentHub" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+        <Label text="Plataforma de alquiler de viviendas" style="-fx-text-fill: #6B7280;"/>
 
-                <Label text="Iniciar Sesión" styleClass="card-title"/>
+        <HBox alignment="CENTER" style="-fx-background-color: #F3F4F6; -fx-background-radius: 20;">
+            <Button text="Iniciar Sesión" style="-fx-background-color: white; -fx-background-radius: 20;" prefWidth="140"/>
+            <Button text="Crear Cuenta" style="-fx-background-color: transparent;" prefWidth="140"/>
+        </HBox>
 
-                <TextField fx:id="txtCorreo" promptText="Correo electrónico" styleClass="input"/>
-                <PasswordField fx:id="txtPassword" promptText="Contraseña" styleClass="input"/>
-
-                <Button text="Entrar" onAction="#iniciarSesion" styleClass="btn-primary" maxWidth="Infinity"/>
-
-                <Label fx:id="lblError" text="" styleClass="error"/>
-
-                <Hyperlink text="¿No tienes cuenta? Regístrate" onAction="#irRegistro" styleClass="hyper"/>
-
-            </VBox>
-
+        <VBox alignment="CENTER_LEFT" spacing="5">
+            <Label text="Email" style="-fx-font-weight: bold;"/>
+            <TextField fx:id="emailField" promptText="tu@email.com"/>
         </VBox>
-    </center>
 
-</BorderPane>
+        <VBox alignment="CENTER_LEFT" spacing="5">
+            <Label text="Contraseña" style="-fx-font-weight: bold;"/>
+            <PasswordField fx:id="passwordField" promptText="********"/>
+        </VBox>
+
+        <Button text="Iniciar Sesión" styleClass="button-primary" maxWidth="Infinity" prefHeight="40"/>
+    </VBox>
+</VBox>
+

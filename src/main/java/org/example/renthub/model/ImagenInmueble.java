@@ -2,14 +2,14 @@ package org.example.renthub.model;
 
 public class ImagenInmueble {
     private int id;
-    private Inmueble inmuebleId;
+    private Inmueble inmueble;
     private String url;
 
     public ImagenInmueble() { }
 
     public ImagenInmueble(int id, Inmueble inmuebleId, String url) {
         this.id = id;
-        this.inmuebleId = inmuebleId;
+        this.inmueble = inmuebleId;
         this.url = url;
     }
 
@@ -23,12 +23,18 @@ public class ImagenInmueble {
         this.id = id;
     }
 
-    public Inmueble getInmuebleId() {
-        return inmuebleId;
+    public Inmueble getInmueble() {
+        return inmueble;
     }
 
-    public void setInmuebleId(Inmueble inmuebleId) {
-        this.inmuebleId = inmuebleId;
+    public void setInmueble(Inmueble inmueble) {
+        if (this.inmueble != null) {
+            this.inmueble.removeImagen(this);
+        }
+        this.inmueble = inmueble;
+        if (inmueble != null) {
+            inmueble.addImagen(this);
+        }
     }
 
     public String getUrl() {
@@ -43,7 +49,7 @@ public class ImagenInmueble {
     public String toString() {
         return "ImagenInmueble{" +
                 "id=" + id +
-                ", inmuebleId=" + inmuebleId +
+                ", inmuebleId=" + inmueble +
                 ", url='" + url + '\'' +
                 '}';
     }

@@ -1,52 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.renthub.controller.InmuebleCardController"
-            styleClass="card-inmueble"
-            prefWidth="260" prefHeight="330">
+<VBox prefWidth="320" styleClass="property-card" stylesheets="@../css/huesped.css" xmlns:fx="http://javafx.com/fxml">
+    <StackPane styleClass="image-container">
+        <ImageView fx:id="imgVivienda" fitWidth="320" fitHeight="200" preserveRatio="false">
+            <clip>
+                <javafx.scene.shape.Rectangle width="320" height="200" arcWidth="30" arcHeight="30" />
+            </clip>
+        </ImageView>
+    </StackPane>
 
-    <children>
-        <VBox spacing="10" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0"
-              AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
+    <VBox spacing="8">
+        <padding>
+            <Insets top="15" right="15" bottom="15" left="15"/>
+        </padding>
 
-            <!-- Imagen del inmueble -->
-            <ImageView fx:id="imagenInmueble"
-                       fitHeight="150"
-                       preserveRatio="false"
-                       style="-fx-background-radius: 12;"
-                       VBox.vgrow="NEVER"/>
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label fx:id="lblTitulo" styleClass="property-title" wrapText="true" HBox.hgrow="ALWAYS" maxWidth="200"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="lblPrecio" styleClass="price-tag"/>
+        </HBox>
 
-            <!-- TÍTULO -->
-            <Label fx:id="lblTitulo"
-                   wrapText="true"
-                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-
-            <!-- CIUDAD -->
-            <Label fx:id="lblCiudad"
-                   wrapText="true"
-                   style="-fx-text-fill: #7F8C8D; -fx-font-size: 13px;"/>
-
-            <!-- PRECIO -->
-            <Label fx:id="lblPrecio"
-                   style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1B4F72;"/>
-
-            <!-- BOTÓN -->
-            <Button text="Ver detalles"
-                    styleClass="btn-primary"
-                    prefHeight="35"
-                    onAction="#verDetalles"/>
-        </VBox>
-    </children>
-
-</AnchorPane>
-
+        <HBox spacing="5" alignment="CENTER_LEFT">
+            <Label text="📍" style="-fx-font-size: 12;"/>
+            <Label fx:id="lblUbicacion" styleClass="property-location"/>
+        </HBox>
+    </VBox>
+</VBox>

@@ -1,40 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane prefHeight="900" prefWidth="1400" stylesheets="@../css/generales.css, @../css/huesped.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.renthub.controller.MenuPropietarioController">
+<VBox prefHeight="800.0" prefWidth="1200.0" stylesheets="@../css/propietario.css" xmlns:fx="http://javafx.com/fxml">
 
-    <!-- SIDEBAR -->
-    <left>
-        <VBox prefHeight="900.0" prefWidth="250.0" spacing="20" styleClass="sidebar">
-            <padding>
-                <Insets bottom="25" left="25" right="25" top="25" />
-            </padding>
+    <HBox spacing="20" alignment="CENTER_LEFT" styleClass="header">
+        <padding><Insets left="40" right="40" top="15" bottom="15"/></padding>
+        <Label text="🏠" style="-fx-font-size: 28; -fx-text-fill: #10B981;"/> <VBox>
+        <Label text="HomeRent" style="-fx-font-weight: bold; -fx-font-size: 18;"/>
+        <Label text="Panel de Propietario" style="-fx-text-fill: #6B7280; -fx-font-size: 12;"/>
+    </VBox>
+        <Region HBox.hgrow="ALWAYS" />
+        <HBox alignment="CENTER" spacing="15">
+            <Label text="👤 María García" style="-fx-font-weight: bold;"/>
+            <Button text="↪ Cerrar Sesión" styleClass="btn-logout"/>
+        </HBox>
+    </HBox>
 
-            <Label style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;" text="RentHub" />
+    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+        <VBox spacing="30">
+            <padding><Insets top="30" right="40" bottom="30" left="40"/></padding>
 
-            <Separator style="-fx-background-color: white;" />
+            <HBox alignment="CENTER">
+                <HBox fx:id="navContainer" styleClass="nav-container">
+                    <Button text="🏠 Mis Viviendas" styleClass="nav-button, nav-button-active" />
+                    <Button text="📅 Reservas" styleClass="nav-button" />
+                    <Button text="⭐ Reseñas" styleClass="nav-button" />
+                    <Button text=" Servicios" styleClass="nav-button" />
+                </HBox>
+            </HBox>
 
-            <Label styleClass="title" text="Menú Propietario" textFill="WHITE" />
+            <HBox alignment="CENTER_LEFT">
+                <VBox spacing="5">
+                    <Label text="Mis Viviendas" style="-fx-font-size: 26; -fx-font-weight: bold;"/>
+                    <Label text="Gestiona tus propiedades y disponibilidad" style="-fx-text-fill: #6B7280;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button text="+ Añadir Vivienda" styleClass="btn-add-property"/>
+            </HBox>
 
-            <!-- BOTONES DE NAVEGACIÓN -->
-            <Button fx:id="btnMisInmuebles" onAction="#abrirMisInmuebles" styleClass="sidebar-button" text="🏠 Mis Inmuebles" />
-
-            <Button fx:id="btnServicios" onAction="#abrirServicios" styleClass="sidebar-button" text="Servicios" />
-
-            <Button fx:id="btnPerfil" onAction="#abrirPerfil" styleClass="sidebar-button" text="👤 Mi Perfil" />
-
-            <Button fx:id="btnCerrarSesion" onAction="#cerrarSesion" style="-fx-text-fill: #FDEDEC;" styleClass="sidebar-button" text="⛔ Cerrar sesión" />
+            <TilePane fx:id="containerViviendas" hgap="25" vgap="25" prefColumns="3">
+            </TilePane>
         </VBox>
-    </left>
-
-
-    <!-- PANEL PRINCIPAL DONDE SE CARGAN LAS OTRAS PANTALLAS -->
-    <center>
-        <AnchorPane fx:id="panelContenido" style="-fx-background-color: #F8F9F9;">
-        </AnchorPane>
-    </center>
-
-</BorderPane>
+    </ScrollPane>
+</VBox>

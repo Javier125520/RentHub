@@ -8,7 +8,6 @@ public class ServicioExtra {
     private int idServicio;
     private String nombre;
     private String descripcion;
-
     private List<InmuebleServicio> inmuebles = new ArrayList<>();
 
     public ServicioExtra() {}
@@ -32,12 +31,6 @@ public class ServicioExtra {
     public List<InmuebleServicio> getInmuebles() { return inmuebles; }
     public void setInmuebles(List<InmuebleServicio> inmuebles) { this.inmuebles = inmuebles; }
 
-    public void addInmuebleServicio(InmuebleServicio is) {
-        if (!inmuebles.contains(is)) {
-            inmuebles.add(is);
-            is.setServicio(this);
-        }
-    }
 
     @Override
     public String toString() {

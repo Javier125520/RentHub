@@ -2,36 +2,72 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.renthub.controller.RegistroController"
-            stylesheets="@css/styles.css">
+<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/17.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.renthub.controller.RegistroController"
+      stylesheets="@css/styles.css">
 
-    <center>
-        <VBox alignment="CENTER" prefWidth="900" prefHeight="600" styleClass="background">
+    <VBox spacing="12" maxWidth="380" styleClass="card" alignment="TOP_CENTER">
+        <padding><Insets top="30" right="30" bottom="30" left="30"/></padding>
 
-            <VBox alignment="CENTER_LEFT" spacing="20" styleClass="card">
+        <Label text="🏠" style="-fx-font-size: 35; -fx-text-fill: #2563EB;"/>
+        <Label text="HomeRent" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
 
-                <Label text="Crear Cuenta" styleClass="card-title"/>
+        <HBox alignment="CENTER" style="-fx-background-color: #F3F4F6; -fx-background-radius: 20;">
+            <Button text="Iniciar Sesión" style="-fx-background-color: white; -fx-background-radius: 20;" prefWidth="140"/>
+            <Button text="Crear Cuenta" style="-fx-background-color: transparent;" prefWidth="140"/>
+        </HBox>
 
-                <TextField fx:id="txtNombre" promptText="Nombre completo" styleClass="input"/>
-                <TextField fx:id="txtCorreo" promptText="Correo electrónico" styleClass="input"/>
-                <PasswordField fx:id="txtPassword" promptText="Contraseña" styleClass="input"/>
-
-                <ChoiceBox fx:id="cbRol" styleClass="input"/>
-
-                <Button text="Registrar" onAction="#registrar" styleClass="btn-primary" maxWidth="Infinity"/>
-
-                <Label fx:id="lblError" text="" styleClass="error"/>
-
-                <Hyperlink text="¿Ya tienes cuenta? Inicia sesión"
-                           onAction="#irLogin" styleClass="hyper"/>
-
-            </VBox>
-
+        <VBox alignment="CENTER_LEFT" spacing="5">
+            <Label text="Nombre completo" style="-fx-font-weight: bold;"/>
+            <TextField promptText="Juan Pérez"/>
         </VBox>
-    </center>
 
-</BorderPane>
+        <VBox alignment="CENTER_LEFT" spacing="5">
+            <Label text="Email" style="-fx-font-weight: bold;"/>
+            <TextField promptText="tu@email.com"/>
+        </VBox>
+
+        <VBox alignment="CENTER_LEFT" spacing="5">
+            <Label text="Contraseña" style="-fx-font-weight: bold;"/>
+            <PasswordField promptText="********"/>
+        </VBox>
+
+        <VBox spacing="15">
+            <fx:define>
+                <ToggleGroup fx:id="roleGroup"/>
+            </fx:define>
+
+            <Label text="Tipo de cuenta" style="-fx-font-weight: bold;"/>
+
+            <RadioButton toggleGroup="$roleGroup" fx:id="rbHuesped" maxWidth="Infinity" selected="true" styleClass="radio-button">
+                <graphic>
+                    <HBox spacing="15" alignment="CENTER_LEFT">
+                        <Label text="👤" style="-fx-font-size: 20;"/>
+                        <VBox>
+                            <Label text="Huésped" styleClass="rol-titulo"/>
+                            <Label text="Busca y reserva viviendas" styleClass="rol-descripcion"/>
+                        </VBox>
+                    </HBox>
+                </graphic>
+            </RadioButton>
+
+            <RadioButton toggleGroup="$roleGroup" fx:id="rbPropietario" maxWidth="Infinity" styleClass="radio-button">
+                <graphic>
+                    <HBox spacing="15" alignment="CENTER_LEFT">
+                        <Label text="🏠" style="-fx-font-size: 20;"/>
+                        <VBox>
+                            <Label text="Propietario" styleClass="rol-titulo"/>
+                            <Label text="Publica y gestiona viviendas" styleClass="rol-descripcion"/>
+                        </VBox>
+                    </HBox>
+                </graphic>
+            </RadioButton>
+        </VBox>
+
+        <Button text="Crear Cuenta" styleClass="button-primary" maxWidth="Infinity" prefHeight="40"/>
+    </VBox>
+</VBox>
 

@@ -2,22 +2,25 @@ package org.example.renthub.DAO;
 
 import org.example.renthub.model.*;
 import org.example.renthub.connection.MySQLConnection;
+import org.example.renthub.model.Enum.EstadoPago;
+import org.example.renthub.model.Enum.MetodoPago;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PagoDAO extends Pago {
+public class PagoDAO {
 
-    // ========================= SQL =========================
+    // =========================
+    // SQL
+    // =========================
 
     private static final String INSERT =
-            "INSERT INTO pago (metodo, fecha_pago, monto, estado, reserva_id) " +
-                    "VALUES (?, ?, ?, ?, ?)";
+            "INSERT INTO pago (metodo, fecha_pago, monto, estado) VALUES (?, ?, ?, ?)";
 
     private static final String UPDATE =
-            "UPDATE pago SET metodo=?, fecha_pago=?, monto=?, estado=?, reserva_id=? " +
-                    "WHERE id=?";
+            "UPDATE pago SET metodo = ?, fecha_pago = ?, monto = ?, estado = ? WHERE id = ?";
 
     private static final String DELETE =
             "DELETE FROM pago WHERE id = ?";
@@ -25,193 +28,112 @@ public class PagoDAO extends Pago {
     private static final String SELECT_BY_ID =
             "SELECT * FROM pago WHERE id = ?";
 
-    private static final String SELECT_BY_RESERVA =
-            "SELECT * FROM pago WHERE reserva_id = ?";
-
     private static final String SELECT_ALL =
             "SELECT * FROM pago";
 
+    // =========================
+    // INSERT
+    // =========================
 
-    // ========================= CONSTRUCTORES =========================
-
-    public PagoDAO() {
-        super();
-    }
-
-    public PagoDAO(Pago p) {
-        super(
-                p.getId(),
-                p.getMetodo(),
-                p.getFechaPago(),
-                p.getMonto(),
-                p.getEstado()
-        );
-    }
-
-    public PagoDAO(int id) {
-        super();
-        loadById(id);
-    }
-
-    public PagoDAO(MetodoPago metodo, LocalDate fecha, double monto,
-                   EstadoPago estado) {
-
-        super(0, metodo, fecha, monto, estado);
-    }
-
-
-    // ========================= SAVE =========================
-
-    public boolean save() {
+    public boolean insert(Pago p) throws SQLException {
         Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return false;
 
         try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setString(1, getMetodo().name());
-            ps.setDate(2, Date.valueOf(getFechaPago()));
-            ps.setDouble(3, getMonto());
-            ps.setString(4, getEstado().name());
+            ps.setString(1, p.getMetodo().name());
+            ps.setDate(2, Date.valueOf(p.getFechaPago()));
+            ps.setDouble(3, p.getMonto());
+            ps.setString(4, p.getEstado().name());
 
-            int filas = ps.executeUpdate();
+            int rows = ps.executeUpdate();
 
-            if (filas > 0) {
+            if (rows > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) setId(rs.getInt(1));
+                if (rs.next()) {
+                    p.setId(rs.getInt(1));
+                }
+                return true;
             }
-
-            return filas > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
 
+    // =========================
+    // UPDATE
+    // =========================
 
-    // ========================= UPDATE =========================
-
-    public boolean update() {
+    public boolean update(Pago p) throws SQLException {
         Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return false;
 
         try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
 
-            ps.setString(1, getMetodo().name());
-            ps.setDate(2, Date.valueOf(getFechaPago()));
-            ps.setDouble(3, getMonto());
-            ps.setString(4, getEstado().name());
-            ps.setInt(5, getId());
+            ps.setString(1, p.getMetodo().name());
+            ps.setDate(2, Date.valueOf(p.getFechaPago()));
+            ps.setDouble(3, p.getMonto());
+            ps.setString(4, p.getEstado().name());
+            ps.setInt(5, p.getId());
 
             return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 
+    // =========================
+    // DELETE
+    // =========================
 
-    // ========================= DELETE =========================
-
-    public boolean delete() {
+    public boolean delete(int idPago) throws SQLException {
         Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return false;
 
         try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
-
-            ps.setInt(1, getId());
+            ps.setInt(1, idPago);
             return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 
+    // =========================
+    // CONSULTAS
+    // =========================
 
-    // ========================= LOAD BY ID =========================
-
-    public void loadById(int id) {
+    public Pago findById(int idPago) throws SQLException {
         Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return;
 
         try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID)) {
-
-            ps.setInt(1, id);
+            ps.setInt(1, idPago);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-
-                setId(rs.getInt("id"));
-                setMetodo(MetodoPago.valueOf(rs.getString("metodo")));
-                setFechaPago(rs.getDate("fecha_pago").toLocalDate());
-                setMonto(rs.getDouble("monto"));
-                setEstado(EstadoPago.valueOf(rs.getString("estado")));
-
+                return mapPago(rs);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        return null;
     }
 
-
-    // ========================= MÉTODOS ESTÁTICOS =========================
-
-    public static Pago getByReservaId(int reservaId) {
+    public List<Pago> findAll() throws SQLException {
+        List<Pago> pagos = new ArrayList<>();
         Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return null;
-
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_RESERVA)) {
-
-            ps.setInt(1, reservaId);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-
-                Pago p = new Pago();
-
-                p.setId(rs.getInt("id"));
-                p.setMetodo(MetodoPago.valueOf(rs.getString("metodo")));
-                p.setFechaPago(rs.getDate("fecha_pago").toLocalDate());
-                p.setMonto(rs.getDouble("monto"));
-                p.setEstado(EstadoPago.valueOf(rs.getString("estado")));
-                return p;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null; // puede no existir pago aún
-    }
-
-
-    public static List<Pago> getAll() {
-        List<Pago> lista = new ArrayList<>();
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return lista;
 
         try (PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-
-                Pago p = new Pago();
-
-                p.setId(rs.getInt("id"));
-                p.setMetodo(MetodoPago.valueOf(rs.getString("metodo")));
-                p.setFechaPago(rs.getDate("fecha_pago").toLocalDate());
-                p.setMonto(rs.getDouble("monto"));
-                p.setEstado(EstadoPago.valueOf(rs.getString("estado")));
-
-                lista.add(p);
+                pagos.add(mapPago(rs));
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        return pagos;
+    }
 
-        return lista;
+    // =========================
+    // MAPEADOR
+    // =========================
+
+    private Pago mapPago(ResultSet rs) throws SQLException {
+        return new Pago(
+                rs.getInt("id"),
+                MetodoPago.valueOf(rs.getString("metodo")),
+                rs.getDate("fecha_pago").toLocalDate(),
+                rs.getDouble("monto"),
+                EstadoPago.valueOf(rs.getString("estado"))
+        );
     }
 }
+

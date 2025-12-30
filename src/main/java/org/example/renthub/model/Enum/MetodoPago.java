@@ -1,4 +1,4 @@
-package org.example.renthub.model;
+package org.example.renthub.model.Enum;
 
 public enum MetodoPago {
     TARJETA,

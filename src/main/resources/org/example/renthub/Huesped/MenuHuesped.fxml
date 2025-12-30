@@ -1,107 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane prefHeight="900" prefWidth="1400" stylesheets="@../css/generales.css, @../css/huesped.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="org.example.renthub.controller.MenuHuespedController">
+<VBox prefHeight="800.0" prefWidth="1200.0" stylesheets="@../css/huesped.css"
+      xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      fx:controller="org.example.renthub.controller.MenuHuespedController">
 
-    <!-- TOP BAR -->
-    <top>
-        <VBox spacing="10">
+    <HBox styleClass="header" alignment="CENTER_LEFT" spacing="20">
+        <Label text="🏠" style="-fx-font-size: 24; -fx-text-fill: #2563EB;"/>
+        <VBox>
+            <Label text="HomeRent" style="-fx-font-weight: bold; -fx-font-size: 18;"/>
+            <Label text="Panel de Huésped" style="-fx-text-fill: #6B7280; -fx-font-size: 12;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS" />
+        <Label text="👤 Ana López" style="-fx-font-weight: bold;"/>
+        <Button text="↪ Cerrar Sesión" style="-fx-background-color: transparent; -fx-border-color: #E5E7EB; -fx-border-radius: 5;"/>
+    </HBox>
 
-            <HBox alignment="CENTER_LEFT" spacing="15" styleClass="topbar">
+    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+        <VBox spacing="30" alignment="TOP_CENTER">
+            <padding><Insets top="30" right="40" bottom="30" left="40"/></padding>
 
-                <padding>
-                    <Insets bottom="15" left="15" right="15" top="15" />
-                </padding>
-
-                <!-- BUSCAR -->
-                <TextField fx:id="txtBuscar" promptText="Buscar por título o ciudad" styleClass="search-field" HBox.hgrow="ALWAYS" />
-
-                <Button onAction="#buscar" styleClass="btn-primary" text="🔍" />
-
-                <Button fx:id="btnMostrarFiltros" onAction="#toggleFiltros" styleClass="btn-secondary" text="🧩 Filtros" />
+            <HBox alignment="CENTER" maxWidth="600" styleClass="nav-container">
+                <Button text="🏠 Viviendas" styleClass="nav-button, nav-button-active" />
+                <Button text="📅 Mis Reservas" styleClass="nav-button" />
+                <Button text="⭐ Mis Reseñas" styleClass="nav-button" />
             </HBox>
 
-            <!-- FILTROS -->
-            <VBox fx:id="panelFiltros" managed="false" spacing="20" styleClass="card" visible="false">
+            <VBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="Viviendas Disponibles" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+                <Label text="Encuentra tu alojamiento perfecto" style="-fx-text-fill: #6B7280;"/>
 
-                <padding>
-                    <Insets bottom="20" left="20" right="20" top="20" />
-                </padding>
-
-                <GridPane hgap="20" vgap="15">
-
-                    <Label text="Ciudad:" />
-                    <TextField fx:id="filtroCiudad" styleClass="text-input" GridPane.columnIndex="1" />
-
-                    <Label text="Capacidad:" GridPane.rowIndex="1" />
-                    <TextField fx:id="filtroCapacidad" styleClass="text-input" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                    <Label text="Habitaciones:" GridPane.rowIndex="2" />
-                    <TextField fx:id="filtroHabitaciones" styleClass="text-input" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-                    <Label text="Precio mínimo (€):" GridPane.rowIndex="3" />
-                    <TextField fx:id="filtroPrecioMin" styleClass="text-input" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
-                    <Label text="Precio máximo (€):" GridPane.rowIndex="4" />
-                    <TextField fx:id="filtroPrecioMax" styleClass="text-input" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-
-                    <Label text="Servicios:" GridPane.rowIndex="5" />
-                    <FlowPane fx:id="contenedorServicios" hgap="10" vgap="10" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-               <columnConstraints>
-                  <ColumnConstraints />
-                  <ColumnConstraints />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-               </rowConstraints>
-                </GridPane>
-
-                <HBox alignment="CENTER_RIGHT" spacing="15">
-                    <Button onAction="#limpiarFiltros" styleClass="btn-secondary" text="Limpiar" />
-                    <Button onAction="#aplicarFiltros" styleClass="btn-primary" text="Aplicar filtros" />
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField promptText="🔍 Buscar por nombre de vivienda..." HBox.hgrow="ALWAYS" styleClass="search-bar"/>
+                    <Button text="⚙ Filtros" style="-fx-background-color: white; -fx-border-color: #E5E7EB; -fx-border-radius: 5; -fx-padding: 10 20;"/>
                 </HBox>
-
+                <Label text="6 viviendas encontradas" style="-fx-text-fill: #6B7280; -fx-font-size: 12;"/>
             </VBox>
 
+            <TilePane hgap="25" vgap="25" prefColumns="3" alignment="CENTER">
+                <VBox prefWidth="350" styleClass="property-card">
+                </VBox>
+            </TilePane>
         </VBox>
-    </top>
-
-    <!-- SIDEBAR -->
-    <left>
-        <VBox spacing="20" styleClass="sidebar">
-            <padding>
-                <Insets bottom="20" left="20" right="20" top="20" />
-            </padding>
-            <Label style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;" text="RentHub" />
-
-            <Separator style="-fx-background-color: white;" />
-            <Label styleClass="title" text="Menú Huésped" textFill="WHITE" />
-
-            <Button onAction="#irInicio" styleClass="sidebar-button" text="🏠 Inicio" />
-            <Button onAction="#irMisReservas" styleClass="sidebar-button" text="📅 Mis reservas" />
-            <Button onAction="#irMisReseñas" styleClass="sidebar-button" text="⭐ Mis reseñas" />
-            <Button onAction="#irPerfil" styleClass="sidebar-button" text="👤 Mi perfil" />
-            <Button onAction="#cerrarSesion" styleClass="sidebar-button" text="⛔ Cerrar sesión" />
-        </VBox>
-    </left>
-
-    <!-- LISTA DE INMUEBLES -->
-    <center>
-        <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="scroll-pane">
-            <FlowPane fx:id="contenedorInmuebles" hgap="30" style="-fx-background-color: #FCFCFC;" vgap="30">
-                <padding>
-                    <Insets bottom="30" left="30" right="30" top="30" />
-                </padding>
-            </FlowPane>
-        </ScrollPane>
-    </center>
-
-</BorderPane>
+    </ScrollPane>
+</VBox>

@@ -1,5 +1,7 @@
 package org.example.renthub.model;
 
+import org.example.renthub.model.Enum.EstadoServicio;
+
 import java.util.Objects;
 
 public class InmuebleServicio {
@@ -12,39 +14,19 @@ public class InmuebleServicio {
 
     public InmuebleServicio() {}
 
-    public InmuebleServicio(int id, Inmueble inmueble, ServicioExtra servicio, double precioAdicional, boolean incluidoEnPrecio, EstadoServicio estadoServicio) {
+    public InmuebleServicio(int id, Inmueble inmueble, ServicioExtra servicio,
+                            double precioAdicional, boolean incluidoEnPrecio,
+                            EstadoServicio estado) {
         this.id = id;
-        this.setInmueble(inmueble);
-        this.setServicio(servicio);
+        setInmueble(inmueble);
+        setServicio(servicio);
         this.precioAdicional = precioAdicional;
         this.incluidoEnPrecio = incluidoEnPrecio;
-        this.estado = estadoServicio;
+        this.estado = estado;
     }
 
-    // getters y setters
+    // Getter y Setter
 
-
-    public Inmueble getInmueble() { return inmueble; }
-    public void setInmueble(Inmueble inmueble) {
-        if (this.inmueble != null && this.inmueble.getServicios().contains(this)) {
-            this.inmueble.getServicios().remove(this);
-        }
-        this.inmueble = inmueble;
-        if (inmueble != null && !inmueble.getServicios().contains(this)) {
-            inmueble.getServicios().add(this);
-        }
-    }
-
-    public ServicioExtra getServicio() { return servicio; }
-    public void setServicio(ServicioExtra servicio) {
-        if (this.servicio != null && this.servicio.getInmuebles().contains(this)) {
-            this.servicio.getInmuebles().remove(this);
-        }
-        this.servicio = servicio;
-        if (servicio != null && !servicio.getInmuebles().contains(this)) {
-            servicio.getInmuebles().add(this);
-        }
-    }
 
     public int getId() {
         return id;
@@ -78,7 +60,29 @@ public class InmuebleServicio {
         this.incluidoEnPrecio = incluidoEnPrecio;
     }
 
+    public void setInmueble(Inmueble inmueble) {
+        if (this.inmueble != null) {
+            this.inmueble.getServicios().remove(this);
+        }
+        this.inmueble = inmueble;
+        if (inmueble != null && !inmueble.getServicios().contains(this)) {
+            inmueble.getServicios().add(this);
+        }
+    }
 
+    public Inmueble getInmueble() { return inmueble; }
+
+    public void setServicio(ServicioExtra servicio) {
+        if (this.servicio != null) {
+            this.servicio.getInmuebles().remove(this);
+        }
+        this.servicio = servicio;
+        if (servicio != null && !servicio.getInmuebles().contains(this)) {
+            servicio.getInmuebles().add(this);
+        }
+    }
+
+    public ServicioExtra getServicio() { return servicio; }
 
     @Override
     public String toString() {
@@ -91,24 +95,17 @@ public class InmuebleServicio {
                 '}';
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         InmuebleServicio that = (InmuebleServicio) o;
-        // igualdad por pareja (inmueble, servicio) si ambos no null
-        return Objects.equals(inmueble == null ? null : inmueble.getIdInmueble(),
-                that.inmueble == null ? null : that.inmueble.getIdInmueble())
-                && Objects.equals(servicio == null ? null : servicio.getIdServicio(),
-                that.servicio == null ? null : that.servicio.getIdServicio());
+        return Objects.equals(inmueble, that.inmueble) && Objects.equals(servicio, that.servicio);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                inmueble == null ? null : inmueble.getIdInmueble(),
-                servicio == null ? null : servicio.getIdServicio()
-        );
+        return Objects.hash(inmueble, servicio);
     }
 }

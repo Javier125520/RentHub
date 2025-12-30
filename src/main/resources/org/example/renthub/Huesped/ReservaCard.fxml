@@ -1,107 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.renthub.controller.ReservaCardController"
-            prefHeight="240"
-            prefWidth="1100"
-            styleClass="card"
-            style="-fx-padding: 20; -fx-background-radius: 12;">
+<VBox prefWidth="950" styleClass="booking-card" stylesheets="@../css/huesped.css" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.renthub.controller.ReservaCardController">
+    <padding><Insets top="25" right="30" bottom="25" left="30"/></padding>
 
-    <!-- FOTO A LA IZQUIERDA -->
-    <left>
-        <ImageView fx:id="imgInmueble"
-                   fitHeight="200" fitWidth="260"
-                   preserveRatio="false"
-                   style="-fx-background-radius: 12;"/>
-    </left>
-
-    <!-- DATOS DE RESERVA -->
-    <center>
-        <VBox spacing="10" style="-fx-padding: 0 20 0 20;">
-
-            <!-- TITULO + CIUDAD -->
-            <HBox spacing="15" alignment="CENTER_LEFT">
-                <Label fx:id="lblTitulo" styleClass="subtitle"/>
-                <Label fx:id="lblCiudad" style="-fx-text-fill: #7F8C8D;"/>
-            </HBox>
-
-            <!-- FECHAS -->
-            <HBox spacing="10">
-                <Label text="Entrada:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="lblEntrada"/>
-
-                <Label text="Salida:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="lblSalida"/>
-            </HBox>
-
-            <!-- NOCHES -->
-            <HBox spacing="10">
-                <Label text="Noches:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="lblNoches"/>
-            </HBox>
-
-            <!-- PRECIOS -->
-            <HBox spacing="10">
-                <Label text="Precio/noche:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="lblPrecioNoche"/>
-
-                <Label text="Total:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="lblPrecioTotal"
-                       style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-            </HBox>
-
-            <!-- DIRECCIÓN -->
-            <HBox spacing="10">
-                <Label text="Dirección:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="lblDireccion" wrapText="true"/>
-            </HBox>
-
-            <!-- ESTADO -->
-            <HBox spacing="10">
-                <Label text="Estado:" style="-fx-font-weight: bold;"/>
-                <Label fx:id="lblEstado"/>
-            </HBox>
-
+    <HBox alignment="CENTER_LEFT">
+        <VBox spacing="5">
+            <Label fx:id="lblTitulo" text="Nombre de la Vivienda" styleClass="property-title-large"/>
+            <Label fx:id="lblUbicacion" text="📍 Ubicación" styleClass="text-muted"/>
         </VBox>
-    </center>
+        <Region HBox.hgrow="ALWAYS" />
+        <Label fx:id="lblEstadoBadge" text="Estado" styleClass="status-badge"/>
+    </HBox>
 
+    <Separator>
+        <VBox.margin><Insets top="20" bottom="20"/></VBox.margin>
+    </Separator>
 
-    <!-- BOTONES -->
-    <right>
-        <VBox spacing="15" alignment="CENTER_RIGHT">
-
-            <!-- PAGAR -->
-            <Button fx:id="btnPagar"
-                    text="Pagar ahora"
-                    prefWidth="150"
-                    styleClass="btn-primary"
-                    onAction="#pagarReserva"
-                    visible="false"
-                    managed="false"/>
-
-            <!-- EDITAR -->
-            <Button fx:id="btnEditar"
-                    text="Editar reserva"
-                    prefWidth="150"
-                    styleClass="btn-secondary"
-                    onAction="#editarReserva"
-                    visible="false"
-                    managed="false"/>
-
-            <!-- ELIMINAR -->
-            <Button fx:id="btnEliminar"
-                    text="Eliminar reserva"
-                    prefWidth="150"
-                    style="-fx-background-color: #E74C3C; -fx-text-fill: white;"
-                    onAction="#eliminarReserva"
-                    visible="false"
-                    managed="false"/>
-
+    <HBox spacing="80">
+        <VBox spacing="5">
+            <Label text="Fecha de entrada" styleClass="info-label"/>
+            <Label fx:id="lblFechaEntrada" text="--" styleClass="info-data"/>
         </VBox>
-    </right>
+        <VBox spacing="5">
+            <Label text="Fecha de salida" styleClass="info-label"/>
+            <Label fx:id="lblFechaSalida" text="--" styleClass="info-data"/>
+        </VBox>
+        <VBox spacing="5">
+            <Label text="Precio total" styleClass="info-label"/>
+            <Label fx:id="lblPrecioTotal" text="€0" styleClass="info-data-price"/>
+        </VBox>
+    </HBox>
 
-</BorderPane>
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <VBox.margin><Insets top="25"/></VBox.margin>
+
+        <Button fx:id="btnAccionPrincipal" text="Acción" styleClass="btn-main-dark"/>
+
+        <Button fx:id="btnEditar" text="✏ Editar" styleClass="btn-outline"/>
+        <Button fx:id="btnCancelar" text="🗑 Cancelar" styleClass="btn-danger"/>
+    </HBox>
+</VBox>

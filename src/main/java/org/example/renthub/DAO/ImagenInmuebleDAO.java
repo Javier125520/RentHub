@@ -8,186 +8,93 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImagenInmuebleDAO extends ImagenInmueble {
+public class ImagenInmuebleDAO {
 
-    // ========================= SQL =========================
+    // =========================
+    // SQL
+    // =========================
 
     private static final String INSERT =
-            "INSERT INTO imagen_inmueble (inmueble_id, url) VALUES (?, ?)";
-
-    private static final String DELETE =
-            "DELETE FROM imagen_inmueble WHERE id = ?";
+            "INSERT INTO imagen_inmueble (id_inmueble, url) VALUES (?, ?)";
 
     private static final String SELECT_BY_INMUEBLE =
-            "SELECT * FROM imagen_inmueble WHERE inmueble_id = ?";
+            "SELECT * FROM imagen_inmueble WHERE id_inmueble = ?";
 
-    private static final String SELECT_ALL =
-            "SELECT * FROM imagen_inmueble";
+    private static final String DELETE_BY_ID =
+            "DELETE FROM imagen_inmueble WHERE id = ?";
 
-    private static final String SELECT_BY_INMUEBLE_ID =
-            "SELECT * FROM imagen_inmueble WHERE inmueble_id = ?";
+    private static final String DELETE_BY_INMUEBLE =
+            "DELETE FROM imagen_inmueble WHERE id_inmueble = ?";
 
-    // ========================= CONSTRUCTORES =========================
+    // =========================
+    // INSERT
+    // =========================
 
-    public ImagenInmuebleDAO() {
-        super();
-    }
-
-    public ImagenInmuebleDAO(int id, Inmueble inmueble, String url) {
-        super(id, inmueble, url);
-    }
-
-    public ImagenInmuebleDAO(ImagenInmueble img) {
-        super(img.getId(), img.getInmuebleId(), img.getUrl());
-    }
-
-    public ImagenInmuebleDAO(int id) {
-        super();
-        loadById(id);
-    }
-
-    // ========================= MÉTODOS PRINCIPALES =========================
-
-    public boolean save() {
+    public boolean insert(ImagenInmueble img) throws SQLException {
         Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return false;
 
         try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, img.getInmueble().getIdInmueble());
+            ps.setString(2, img.getUrl());
 
-            ps.setInt(1, getInmuebleId().getIdInmueble());
-            ps.setString(2, getUrl());
+            int rows = ps.executeUpdate();
 
-            int filas = ps.executeUpdate();
-            if (filas > 0) {
+            if (rows > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) setId(rs.getInt(1));
+                if (rs.next()) {
+                    img.setId(rs.getInt(1));
+                }
+                return true;
             }
-
-            return filas > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
 
+    // =========================
+    // SELECT
+    // =========================
 
-    public boolean delete() {
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return false;
-
-        try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
-
-            ps.setInt(1, getId());
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-    // ========================= LOAD (USO INTERNO) =========================
-
-    private void loadById(int id) {
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return;
-
-        try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM imagen_inmueble WHERE id = ?");
-            ps.setInt(1, id);
-
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                setId(rs.getInt("id"));
-                setUrl(rs.getString("url"));
-                setInmuebleId(new InmuebleDAO(rs.getInt("inmueble_id")));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    // ========================= MÉTODOS ESTÁTICOS =========================
-
-    public static List<ImagenInmueble> getByInmueble(int inmuebleId) {
-        List<ImagenInmueble> lista = new ArrayList<>();
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return lista;
-
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_INMUEBLE)) {
-
-            ps.setInt(1, inmuebleId);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                ImagenInmueble img = new ImagenInmueble();
-                img.setId(rs.getInt("id"));
-                img.setUrl(rs.getString("url"));
-                img.setInmuebleId(new InmuebleDAO(rs.getInt("inmueble_id")));
-
-                lista.add(img);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return lista;
-    }
-
-
-    public static List<ImagenInmueble> getAll() {
-        List<ImagenInmueble> lista = new ArrayList<>();
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return lista;
-
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                ImagenInmueble img = new ImagenInmueble();
-                img.setId(rs.getInt("id"));
-                img.setUrl(rs.getString("url"));
-                img.setInmuebleId(new InmuebleDAO(rs.getInt("inmueble_id")));
-
-                lista.add(img);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return lista;
-    }
-
-    public static List<ImagenInmueble> getByInmuebleId(int id) {
+    public List<ImagenInmueble> findByInmueble(Inmueble inmueble) throws SQLException {
         List<ImagenInmueble> imagenes = new ArrayList<>();
         Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return imagenes;
 
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_INMUEBLE_ID)) {
-
-            ps.setInt(1, id);
+        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_INMUEBLE)) {
+            ps.setInt(1, inmueble.getIdInmueble());
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                ImagenInmueble img = new ImagenInmueble();
-                img.setId(rs.getInt("id"));
-                img.setUrl(rs.getString("url"));
-                img.setInmuebleId(new InmuebleDAO(rs.getInt("inmueble_id")));
-
+                ImagenInmueble img = new ImagenInmueble(
+                        rs.getInt("id"),
+                        inmueble,
+                        rs.getString("url")
+                );
                 imagenes.add(img);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
         return imagenes;
     }
+
+    // =========================
+    // DELETE
+    // =========================
+
+    public boolean deleteById(int idImagen) throws SQLException {
+        Connection conn = MySQLConnection.getConnection();
+
+        try (PreparedStatement ps = conn.prepareStatement(DELETE_BY_ID)) {
+            ps.setInt(1, idImagen);
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    public boolean deleteByInmueble(Inmueble inmueble) throws SQLException {
+        Connection conn = MySQLConnection.getConnection();
+
+        try (PreparedStatement ps = conn.prepareStatement(DELETE_BY_INMUEBLE)) {
+            ps.setInt(1, inmueble.getIdInmueble());
+            return ps.executeUpdate() > 0;
+        }
+    }
 }
+
 

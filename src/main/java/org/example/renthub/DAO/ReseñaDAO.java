@@ -2,261 +2,155 @@ package org.example.renthub.DAO;
 
 import org.example.renthub.model.*;
 import org.example.renthub.connection.MySQLConnection;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReseñaDAO extends Reseña {
+public class ReseñaDAO {
 
-    // ======================== SQL ========================
+    // =========================
+    // SQL
+    // =========================
 
     private static final String INSERT =
-            "INSERT INTO resena (puntuacion, comentario, fecha, inmueble_id, usuario_id) " +
+            "INSERT INTO reseña (puntuacion, comentario, fecha, id_inmueble, id_usuario) " +
                     "VALUES (?, ?, ?, ?, ?)";
 
     private static final String UPDATE =
-            "UPDATE resena SET puntuacion=?, comentario=?, fecha=?, inmueble_id=?, usuario_id=? " +
-                    "WHERE id=?";
+            "UPDATE reseña SET puntuacion = ?, comentario = ?, fecha = ?, id_inmueble = ?, id_usuario = ? " +
+                    "WHERE id = ?";
 
     private static final String DELETE =
-            "DELETE FROM resena WHERE id=?";
-
-    private static final String SELECT_BY_ID =
-            "SELECT * FROM resena WHERE id=?";
+            "DELETE FROM reseña WHERE id = ?";
 
     private static final String SELECT_BY_INMUEBLE =
-            "SELECT * FROM resena WHERE inmueble_id=? ORDER BY fecha DESC";
+            "SELECT * FROM reseña WHERE id_inmueble = ? ORDER BY fecha DESC";
 
     private static final String SELECT_BY_USUARIO =
-            "SELECT * FROM resena WHERE usuario_id=? ORDER BY fecha DESC";
+            "SELECT * FROM reseña WHERE id_usuario = ? ORDER BY fecha DESC";
 
-    private static final String SELECT_ALL =
-            "SELECT * FROM resena ORDER BY fecha DESC";
+    // =========================
+    // INSERT
+    // =========================
 
-
-    // ======================== CONSTRUCTORES ========================
-
-    public ReseñaDAO() {
-        super();
-    }
-
-    public ReseñaDAO(Reseña r) {
-        super(
-                r.getId(),
-                r.getPuntuacion(),
-                r.getComentario(),
-                r.getFecha(),
-                r.getInmueble(),
-                r.getHuesped()
-        );
-    }
-
-    public ReseñaDAO(int id) {
-        super();
-        loadById(id);
-    }
-
-    public ReseñaDAO(int puntuacion, String comentario,
-                     LocalDate fecha, Inmueble inmueble, Usuario usuario) {
-        super(0, puntuacion, comentario, fecha, inmueble, usuario);
-    }
-
-
-    // ======================== SAVE ========================
-
-    public boolean save() {
+    public boolean insert(Reseña r) throws SQLException {
         Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return false;
 
         try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setInt(1, getPuntuacion());
-            ps.setString(2, getComentario());
-            ps.setDate(3, Date.valueOf(getFecha()));
-            ps.setInt(4, getInmueble().getIdInmueble());
-            ps.setInt(5, getHuesped().getIdUsuario());
+            ps.setInt(1, r.getPuntuacion());
+            ps.setString(2, r.getComentario());
+            ps.setDate(3, Date.valueOf(r.getFecha()));
+            ps.setInt(4, r.getInmueble().getIdInmueble());
+            ps.setInt(5, r.getHuesped().getIdUsuario());
 
             int rows = ps.executeUpdate();
 
             if (rows > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) setId(rs.getInt(1));
+                if (rs.next()) {
+                    r.setId(rs.getInt(1));
+                }
+                return true;
             }
-
-            return rows > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
 
+    // =========================
+    // UPDATE
+    // =========================
 
-    // ======================== UPDATE ========================
-
-    public boolean update() {
+    public boolean update(Reseña r) throws SQLException {
         Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return false;
 
         try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
 
-            ps.setInt(1, getPuntuacion());
-            ps.setString(2, getComentario());
-            ps.setDate(3, Date.valueOf(getFecha()));
-            ps.setInt(4, getInmueble().getIdInmueble());
-            ps.setInt(5, getHuesped().getIdUsuario());
-            ps.setInt(6, getId());
+            ps.setInt(1, r.getPuntuacion());
+            ps.setString(2, r.getComentario());
+            ps.setDate(3, Date.valueOf(r.getFecha()));
+            ps.setInt(4, r.getInmueble().getIdInmueble());
+            ps.setInt(5, r.getHuesped().getIdUsuario());
+            ps.setInt(6, r.getId());
 
             return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 
+    // =========================
+    // DELETE
+    // =========================
 
-    // ======================== DELETE ========================
-
-    public boolean delete() {
+    public boolean delete(int idReseña) throws SQLException {
         Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return false;
 
         try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
-
-            ps.setInt(1, getId());
+            ps.setInt(1, idReseña);
             return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 
+    // =========================
+    // CONSULTAS
+    // =========================
 
-    // ======================== LOAD BY ID ========================
-
-    public void loadById(int id) {
+    public List<Reseña> findByInmueble(Inmueble inmueble) throws SQLException {
+        List<Reseña> resenas = new ArrayList<>();
         Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return;
-
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID)) {
-
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-
-                setId(rs.getInt("id"));
-                setPuntuacion(rs.getInt("puntuacion"));
-                setComentario(rs.getString("comentario"));
-                setFecha(rs.getDate("fecha").toLocalDate());
-
-                setInmueble(new InmuebleDAO(rs.getInt("inmueble_id")));
-                setHuesped(new UsuarioDAO(rs.getInt("usuario_id")));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    // ======================== MÉTODOS ESTÁTICOS ========================
-
-    public static List<Reseña> getByInmueble(int inmuebleId) {
-        List<Reseña> lista = new ArrayList<>();
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return lista;
 
         try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_INMUEBLE)) {
+            ps.setInt(1, inmueble.getIdInmueble());
 
-            ps.setInt(1, inmuebleId);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                Reseña r = new Reseña();
-
-                r.setId(rs.getInt("id"));
-                r.setPuntuacion(rs.getInt("puntuacion"));
-                r.setComentario(rs.getString("comentario"));
-                r.setFecha(rs.getDate("fecha").toLocalDate());
-                r.setInmueble(new InmuebleDAO(rs.getInt("inmueble_id")));
-                r.setHuesped(new UsuarioDAO(rs.getInt("usuario_id")));
-
-                lista.add(r);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    resenas.add(mapReseña(rs, inmueble, null));
+                }
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
-        return lista;
+        return resenas;
     }
 
-
-    public static List<Reseña> getByUsuario(int usuarioId) {
-        List<Reseña> lista = new ArrayList<>();
+    public List<Reseña> findByUsuario(Usuario usuario) throws SQLException {
+        List<Reseña> resenas = new ArrayList<>();
         Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return lista;
 
         try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_USUARIO)) {
+            ps.setInt(1, usuario.getIdUsuario());
 
-            ps.setInt(1, usuarioId);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                Reseña r = new Reseña();
-
-                r.setId(rs.getInt("id"));
-                r.setPuntuacion(rs.getInt("puntuacion"));
-                r.setComentario(rs.getString("comentario"));
-                r.setFecha(rs.getDate("fecha").toLocalDate());
-                r.setInmueble(new InmuebleDAO(rs.getInt("inmueble_id")));
-                r.setHuesped(new UsuarioDAO(rs.getInt("usuario_id")));
-
-                lista.add(r);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    resenas.add(mapReseña(rs, null, usuario));
+                }
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
-        return lista;
+        return resenas;
     }
 
+    // =========================
+    // MAPEADOR
+    // =========================
 
-    public static List<Reseña> getAll() {
-        List<Reseña> lista = new ArrayList<>();
-        Connection conn = MySQLConnection.getConnection();
-        if (conn == null) return lista;
+    private Reseña mapReseña(ResultSet rs, Inmueble inmueble, Usuario usuario) throws SQLException {
 
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-
-                Reseña r = new Reseña();
-
-                r.setId(rs.getInt("id"));
-                r.setPuntuacion(rs.getInt("puntuacion"));
-                r.setComentario(rs.getString("comentario"));
-                r.setFecha(rs.getDate("fecha").toLocalDate());
-                r.setInmueble(new InmuebleDAO(rs.getInt("inmueble_id")));
-                r.setHuesped(new UsuarioDAO(rs.getInt("usuario_id")));
-
-                lista.add(r);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (inmueble == null) {
+            inmueble = new Inmueble();
+            inmueble.setIdInmueble(rs.getInt("id_inmueble"));
         }
 
-        return lista;
+        if (usuario == null) {
+            usuario = new Usuario();
+            usuario.setIdUsuario(rs.getInt("id_usuario"));
+        }
+
+        return new Reseña(
+                rs.getInt("id"),
+                rs.getInt("puntuacion"),
+                rs.getString("comentario"),
+                rs.getDate("fecha").toLocalDate(),
+                inmueble,
+                usuario
+        );
     }
 }
 

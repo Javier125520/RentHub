@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="25" xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/propietario.css" fx:controller="org.example.renthub.controller.ReseñaCardPropietaioController">
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <VBox spacing="5">
+        <Label text="Reseñas de Mis Viviendas" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+        <Label text="Opiniones de los huéspedes sobre tus propiedades" style="-fx-text-fill: #6B7280;"/>
+    </VBox>
+
+    <HBox spacing="20" alignment="CENTER">
+        <VBox alignment="CENTER" spacing="10" styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER" spacing="5">
+                <Label text="⭐" style="-fx-font-size: 24; -fx-text-fill: #FBBF24;"/>
+                <Label fx:id="lblPromedio" text="4.0" style="-fx-font-size: 28; -fx-font-weight: bold;"/>
+            </HBox>
+            <Label text="Calificación promedio" styleClass="text-muted-small"/>
+        </VBox>
+
+        <VBox alignment="CENTER" spacing="10" styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <Label fx:id="lblTotalReseñas" text="1" style="-fx-font-size: 28; -fx-font-weight: bold;"/>
+            <Label text="Total de reseñas" styleClass="text-muted-small"/>
+        </VBox>
+
+        <VBox alignment="CENTER" spacing="10" styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <Label fx:id="lblViviendasReseñadas" text="3" style="-fx-font-size: 28; -fx-font-weight: bold;"/>
+            <Label text="Viviendas con reseñas" styleClass="text-muted-small"/>
+        </VBox>
+    </HBox>
+
+    <VBox fx:id="containerReseñas" spacing="15">
+        <VBox styleClass="review-card-owner">
+            <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+            <HBox alignment="CENTER_LEFT">
+                <VBox spacing="5">
+                    <Label text="Apartamento Moderno en el Centro" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
+                    <Label text="📍 Madrid, España" styleClass="text-muted-small"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <Label text="⭐ 4" style="-fx-font-weight: bold; -fx-text-fill: #FBBF24; -fx-font-size: 16;"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <VBox.margin><Insets top="15" bottom="10"/></VBox.margin>
+                <Label text="👤 Ana López" style="-fx-font-size: 12;"/>
+                <Label text="•" style="-fx-text-fill: #9CA3AF;"/>
+                <Label text="26 de diciembre de 2025" styleClass="text-muted-small"/>
+            </HBox>
+
+            <Label text="Muy bien" wrapText="true" style="-fx-font-size: 14; -fx-text-fill: #374151;"/>
+        </VBox>
+    </VBox>
+</VBox>

@@ -1,5 +1,8 @@
 package org.example.renthub.model;
 
+import org.example.renthub.model.Enum.EstadoPago;
+import org.example.renthub.model.Enum.MetodoPago;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -59,4 +62,5 @@ public class Pago {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

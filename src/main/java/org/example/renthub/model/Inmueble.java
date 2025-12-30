@@ -1,11 +1,14 @@
 package org.example.renthub.model;
 
+import org.example.renthub.model.Enum.TipoInmueble;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Inmueble {
     private int idInmueble;
+    private TipoInmueble tipoInmueble;
     private String titulo;
     private String descripcion;
     private String direccion;
@@ -14,20 +17,21 @@ public class Inmueble {
     private int numeroHabitaciones;
     private double precioNoche;
     private boolean disponible;
-    private ImagenInmueble fotoPrincipal;
+
 
     // Relación bidireccional
     private Usuario propietario;
     private List<Reserva> reservas = new ArrayList<>();
     private List<Reseña> resenas = new ArrayList<>();
     private List<InmuebleServicio> servicios = new ArrayList<>();
+    private List<ImagenInmueble> imagenes = new ArrayList<>();
+
 
     public Inmueble() {}
 
-    public Inmueble(int idInmueble, String titulo, String descripcion, String direccion, String ciudad,
-                    int capacidad, int numeroHabitaciones, double precioNoche, boolean disponible,
-                    Usuario propietario) {
+    public Inmueble(int idInmueble, TipoInmueble tipoInmueble, String titulo, String descripcion, String direccion, String ciudad, int capacidad, int numeroHabitaciones, double precioNoche, boolean disponible, Usuario propietario) {
         this.idInmueble = idInmueble;
+        this.tipoInmueble = tipoInmueble;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.direccion = direccion;
@@ -36,7 +40,7 @@ public class Inmueble {
         this.numeroHabitaciones = numeroHabitaciones;
         this.precioNoche = precioNoche;
         this.disponible = disponible;
-        this.setPropietario(propietario);
+        setPropietario(propietario);
     }
 
     // getters y setters
@@ -67,10 +71,17 @@ public class Inmueble {
     public boolean isDisponible() { return disponible; }
     public void setDisponible(boolean disponible) { this.disponible = disponible; }
 
+    public TipoInmueble getTipoInmueble() {
+        return tipoInmueble;
+    }
+
+    public void setTipoInmueble(TipoInmueble tipoInmueble) {
+        this.tipoInmueble = tipoInmueble;
+    }
+
     public Usuario getPropietario() { return propietario; }
     public void setPropietario(Usuario propietario) {
-        // mantener coherencia bidireccional
-        if (this.propietario != null && this.propietario.getInmuebles().contains(this)) {
+        if (this.propietario != null) {
             this.propietario.getInmuebles().remove(this);
         }
         this.propietario = propietario;
@@ -88,42 +99,29 @@ public class Inmueble {
     public List<InmuebleServicio> getServicios() { return servicios; }
     public void setServicios(List<InmuebleServicio> servicios) { this.servicios = servicios; }
 
-    public void addReserva(Reserva r) {
-        if (!reservas.contains(r)) {
-            reservas.add(r);
-            r.setInmueble(this);
+    public List<ImagenInmueble> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<ImagenInmueble> imagenes) {
+        this.imagenes = imagenes;
+    }
+
+    void addImagen(ImagenInmueble imagen) {
+        if (!imagenes.contains(imagen)) {
+            imagenes.add(imagen);
         }
     }
 
-    public void addResena(Reseña res) {
-        if (!resenas.contains(res)) {
-            resenas.add(res);
-            res.setInmueble(this);
-        }
-    }
-
-    public void addServicio(InmuebleServicio is) {
-        if (!servicios.contains(is)) {
-            servicios.add(is);
-            is.setInmueble(this);
-        }
-    }
-
-    public ImagenInmueble getFotoPrincipal() {
-        return fotoPrincipal;
-    }
-
-    public void setFotoPrincipal(ImagenInmueble fotoPrincipal) {
-        this.fotoPrincipal = fotoPrincipal;
+    void removeImagen(ImagenInmueble imagen) {
+        imagenes.remove(imagen);
     }
 
     @Override
     public String toString() {
-        // evitar desbordes incluyendo solo id y título del propietario
-        String propietarioInfo = (propietario == null) ? "null" :
-                ("Usuario{id=" + propietario.getIdUsuario() + ", nombre=" + propietario.getNombre() + "}");
         return "Inmueble{" +
-                "id=" + idInmueble +
+                "idInmueble=" + idInmueble +
+                ", tipoInmueble=" + tipoInmueble +
                 ", titulo='" + titulo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", direccion='" + direccion + '\'' +
@@ -132,7 +130,10 @@ public class Inmueble {
                 ", numeroHabitaciones=" + numeroHabitaciones +
                 ", precioNoche=" + precioNoche +
                 ", disponible=" + disponible +
-                ", propietario=" + propietarioInfo +
+                ", propietario=" + propietario +
+                ", reservas=" + reservas +
+                ", resenas=" + resenas +
+                ", servicios=" + servicios +
                 '}';
     }
 
