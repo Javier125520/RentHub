@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.renthub.controller.CardReservaController"
+      spacing="15"
+      styleClass="reserva-card">
+
+    <!-- Título y estado -->
+    <HBox>
+        <VBox spacing="5">
+            <Label fx:id="titulo" text="Apartamento Moderno en el Centro"
+                   styleClass="reserva-title"/>
+            <Label fx:id="ubicacion" text="Madrid, España"
+                   styleClass="reserva-location"/>
+        </VBox>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Label fx:id="estado" text="Pendiente de pago"
+               styleClass="badge-estado"/>
+    </HBox>
+
+    <!-- Fechas y precio -->
+    <GridPane hgap="40" vgap="5">
+        <VBox>
+            <Label text="Fecha de entrada" styleClass="reserva-label"/>
+            <Label fx:id="entrada" text="15 enero 2026"
+                   styleClass="reserva-value"/>
+        </VBox>
+
+        <VBox GridPane.columnIndex="1">
+            <Label text="Fecha de salida" styleClass="reserva-label"/>
+            <Label fx:id="salida" text="23 enero 2026"
+                   styleClass="reserva-value"/>
+        </VBox>
+
+        <VBox GridPane.columnIndex="2">
+            <Label text="Precio total" styleClass="reserva-label"/>
+            <Label fx:id="precioTotal" text="€680"
+                   styleClass="reserva-price"/>
+        </VBox>
+    </GridPane>
+
+    <!-- Botones -->
+    <HBox fx:id="accionesPago"
+          spacing="10">
+
+        <Button text="💳 Realizar Pago"
+                styleClass="btn-primary"/>
+
+        <Button text="✏ Editar"
+                styleClass="btn-secondary"/>
+
+        <Button text="🗑 Cancelar"
+                styleClass="btn-danger"/>
+    </HBox>
+
+    <!-- ACCIÓN: RESEÑA (OCULTA AL INICIO) -->
+    <HBox fx:id="accionResena"
+          spacing="10"
+          visible="false"
+          managed="false">
+
+        <Button text="💬 Añadir Reseña"
+                styleClass="btn-secondary"/>
+    </HBox>
+
+</VBox>

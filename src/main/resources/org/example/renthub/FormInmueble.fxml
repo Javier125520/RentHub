@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefWidth="500" prefHeight="750"
+            fx:controller="org.example.renthub.controller.FormInmuebleController"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@css/propietario.css">
+
+    <ScrollPane fitToWidth="true">
+        <content>
+            <VBox spacing="15" styleClass="container">
+                <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+                <!-- Título -->
+                <Label text="Añadir Nueva Vivienda" styleClass="title"/>
+                <Label text="Completa los detalles de tu propiedad" styleClass="subtitle"/>
+
+                <!-- Título vivienda -->
+                <VBox>
+                    <Label text="Título *"/>
+                    <TextField promptText="Ej: Apartamento moderno en el centro"/>
+                </VBox>
+
+                <!-- Tipo y Estado -->
+                <HBox spacing="10">
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="Tipo de inmueble *"/>
+                        <ComboBox promptText="Selecciona"/>
+                    </VBox>
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="Estado"/>
+                        <ComboBox promptText="Disponible"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Descripción -->
+                <VBox>
+                    <Label text="Descripción"/>
+                    <TextArea promptText="Describe tu vivienda..." prefRowCount="3"/>
+                </VBox>
+
+                <!-- Dirección -->
+                <VBox>
+                    <Label text="Dirección"/>
+                    <TextField promptText="Ej: Calle Mayor, 123"/>
+                </VBox>
+
+                <!-- Ciudad -->
+                <VBox>
+                    <Label text="Ciudad *"/>
+                    <TextField promptText="Ej: Madrid, España"/>
+                </VBox>
+
+                <!-- Precio y habitaciones -->
+                <HBox spacing="10">
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="Precio por noche (€) *"/>
+                        <TextField/>
+                    </VBox>
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="Habitaciones"/>
+                        <TextField/>
+                    </VBox>
+                </HBox>
+
+                <!-- Capacidad -->
+                <VBox>
+                    <Label text="Capacidad (huéspedes)"/>
+                    <TextField/>
+                </VBox>
+
+                <!-- Imágenes -->
+                <VBox spacing="5">
+                    <Label text="Imágenes"/>
+                    <Button text="Seleccionar imágenes" styleClass="secondary-button"/>
+                    <Label text="Ninguna imagen seleccionada" styleClass="hint"/>
+                </VBox>
+
+                <!-- Servicios Extras -->
+                <VBox spacing="10">
+                    <Label text="🔧 Servicios Extras" styleClass="section-title"/>
+
+                    <!-- Contenedor dinámico -->
+                    <VBox fx:id="serviciosExtrasContainer" spacing="10">
+                        <!-- El controller añadirá aquí los servicios -->
+                    </VBox>
+                </VBox>
+
+                <!-- Botones -->
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Button text="Cancelar" styleClass="cancel-button"/>
+                    <Button text="Añadir Vivienda" styleClass="primary-button"/>
+                </HBox>
+            </VBox>
+        </content>
+    </ScrollPane>
+</AnchorPane>

@@ -30,8 +30,7 @@ public class InmuebleServicioDAO {
         this.conn = conn;
     }
 
-    public boolean addServicio(Inmueble inmueble, ServicioExtra servicio, double precioAdicional)
-            throws SQLException {
+    public boolean addServicio(Inmueble inmueble, ServicioExtra servicio, double precioAdicional) throws SQLException {
 
         try (PreparedStatement ps = conn.prepareStatement(INSERT)) {
             ps.setInt(1, inmueble.getIdInmueble());
@@ -41,8 +40,7 @@ public class InmuebleServicioDAO {
         }
     }
 
-    public boolean removeServicio(Inmueble inmueble, ServicioExtra servicio)
-            throws SQLException {
+    public boolean removeServicio(Inmueble inmueble, ServicioExtra servicio) throws SQLException {
 
         try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
             ps.setInt(1, inmueble.getIdInmueble());
@@ -51,8 +49,7 @@ public class InmuebleServicioDAO {
         }
     }
 
-    public List<InmuebleServicio> getServiciosByInmueble(Inmueble inmueble)
-            throws SQLException {
+    public List<InmuebleServicio> getServiciosByInmueble(Inmueble inmueble) throws SQLException {
 
         List<InmuebleServicio> lista = new ArrayList<>();
 

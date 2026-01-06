@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="org.example.renthub.controller.PagoController"
+           stylesheets="@css/huesped.css"
+           styleClass="overlay">
+
+    <VBox spacing="20" styleClass="dialog">
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT">
+            <VBox spacing="4">
+                <Label text="Realizar Pago" styleClass="dialog-title"/>
+                <Label text="Confirma el pago de tu reserva" styleClass="dialog-subtitle"/>
+            </VBox>
+
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="✕" onAction="#onCancelar" styleClass="close-btn"/>
+        </HBox>
+
+        <!-- Detalles -->
+        <VBox spacing="10" styleClass="card">
+            <Label text="Detalles de la reserva:" styleClass="section-title"/>
+            <Label fx:id="lblFechas"/>
+            <Label fx:id="lblInmueble"/>
+        </VBox>
+
+        <!-- Totales -->
+        <VBox spacing="8" styleClass="card">
+            <HBox>
+                <Label text="Subtotal"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblSubtotal"/>
+            </HBox>
+
+            <HBox>
+                <Label text="IVA (21%)"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblIva"/>
+            </HBox>
+
+            <Separator/>
+
+            <HBox>
+                <Label text="Total a pagar" styleClass="total-label"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblTotal" styleClass="total-amount"/>
+            </HBox>
+        </VBox>
+
+        <!-- Método de pago -->
+        <VBox spacing="10">
+            <Label text="Método de pago" styleClass="section-title"/>
+
+            <HBox spacing="12">
+                <ToggleButton text="💳  Tarjeta" toggleGroup="$metodoPagoGroup"
+                              styleClass="pay-method" selected="true"/>
+                <ToggleButton text="🏦  Transferencia" toggleGroup="$metodoPagoGroup"
+                              styleClass="pay-method"/>
+                <ToggleButton text="💵  Efectivo" toggleGroup="$metodoPagoGroup"
+                              styleClass="pay-method"/>
+            </HBox>
+
+            <Label text="Este es un simulador. En una aplicación real se integraría un procesador de pagos."
+                   styleClass="hint"/>
+        </VBox>
+
+        <!-- Acciones -->
+        <HBox alignment="CENTER_RIGHT" spacing="12">
+            <Button text="Cancelar" onAction="#onCancelar" styleClass="btn-outline"/>
+            <Button text="Confirmar Pago" onAction="#onConfirmarPago" styleClass="btn-primary"/>
+        </HBox>
+
+    </VBox>
+</StackPane>
+
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.renthub.controller.MenuHuespedController"
+            stylesheets="@css/huesped.css"
+            styleClass="root">
+
+    <!-- HEADER -->
+    <top>
+        <HBox styleClass="header" alignment="CENTER_LEFT" spacing="15">
+            <Label text="🏠 HomeRent" styleClass="logo"/>
+
+            <VBox>
+                <Label text="Panel de Huésped" styleClass="subtitle"/>
+            </VBox>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label fx:id="lblUsuario" styleClass="user-name"/>
+            <Button text="Cerrar sesión" styleClass="btn-outline" onAction="#onLogout"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="25" styleClass="content">
+
+            <!-- TABS -->
+            <HBox spacing="15" alignment="CENTER" styleClass="tabs">
+                <Button text="🏠 Viviendas" styleClass="tab-active" onAction="#verViviendas"/>
+                <Button text="📅 Mis Reservas" styleClass="tab" onAction="#verReservas"/>
+                <Button text="⭐ Mis Reseñas" styleClass="tab" onAction="#verReseñas"/>
+            </HBox>
+
+            <StackPane fx:id="contentPane" VBox.vgrow="ALWAYS"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>
+

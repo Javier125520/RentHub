@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      spacing="12"
+      alignment="CENTER_LEFT"
+      styleClass="servicio-card">
+
+    <!-- Checkbox -->
+    <CheckBox fx:id="checkServicio"/>
+
+    <!-- Contenido -->
+    <VBox spacing="4">
+        <Label fx:id="lblNombreServicio"
+               text="Piscina"
+               styleClass="servicio-title"/>
+
+        <Label fx:id="lblDescripcionServicio"
+               text="Piscina muy buena"
+               styleClass="servicio-description"/>
+    </VBox>
+
+</HBox>
+

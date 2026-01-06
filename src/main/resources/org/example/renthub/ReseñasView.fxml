@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.renthub.controller.ResenasViewController"
+      spacing="20"
+      styleClass="content">
+
+    <!-- TÍTULO -->
+    <VBox spacing="5">
+        <Label text="Mis Reseñas" styleClass="title"/>
+        <Label text="Reseñas que has publicado" styleClass="description"/>
+    </VBox>
+
+    <!-- LISTADO DE RESEÑAS -->
+    <ScrollPane fitToWidth="true" styleClass="scroll">
+        <VBox fx:id="contenedorResenas" spacing="20"/>
+    </ScrollPane>
+
+</VBox>
+

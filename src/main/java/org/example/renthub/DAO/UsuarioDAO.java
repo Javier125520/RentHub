@@ -16,10 +16,10 @@ public class UsuarioDAO {
     // SQL
     // =========================
     private static final String INSERT =
-            "INSERT INTO usuario (nombre, correo, contrasena, rol) VALUES (?, ?, ?, ?)";
+            "INSERT INTO usuario (nombre, correo, contraseña, rol) VALUES (?, ?, ?, ?)";
 
     private static final String UPDATE =
-            "UPDATE usuario SET nombre = ?, correo = ?, contrasena = ?, rol = ? WHERE id_usuario = ?";
+            "UPDATE usuario SET nombre = ?, correo = ?, contraseña = ?, rol = ? WHERE id_usuario = ?";
 
     private static final String DELETE =
             "DELETE FROM usuario WHERE id_usuario = ?";
@@ -34,7 +34,7 @@ public class UsuarioDAO {
             "SELECT * FROM usuario WHERE correo = ?";
 
     private static final String LOGIN =
-            "SELECT * FROM usuario WHERE correo = ? AND contrasena = ?";
+            "SELECT * FROM usuario WHERE correo = ? AND contraseña = ?";
 
     private static final String EXISTS_CORREO =
             "SELECT COUNT(*) FROM usuario WHERE correo = ?";
@@ -188,7 +188,7 @@ public class UsuarioDAO {
                 rs.getInt("id_usuario"),
                 rs.getString("nombre"),
                 rs.getString("correo"),
-                rs.getString("contrasena"),
+                rs.getString("contraseña"),
                 RolUsuario.valueOf(rs.getString("rol"))
         );
     }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.renthub.controller.ViviendasController">
+
+    <Label text="Viviendas Disponibles" styleClass="title"/>
+    <Label text="Encuentra tu alojamiento perfecto" styleClass="description"/>
+
+    <HBox spacing="10">
+        <TextField promptText="🔍 Buscar vivienda..." styleClass="search"/>
+        <Button text="⚙ Filtros" styleClass="btn-outline"/>
+    </HBox>
+
+    <ScrollPane fitToWidth="true">
+        <FlowPane fx:id="contenedorInmuebles"
+                  hgap="25"
+                  vgap="25"
+                  prefWrapLength="1000"/>
+    </ScrollPane>
+
+</VBox>
+

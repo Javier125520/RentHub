@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.renthub.controller.CardInmuebleHuespedController"
+      prefWidth="300"
+      spacing="12"
+      styleClass="card">
+
+    <ImageView fx:id="imagen"
+               fitWidth="300"
+               fitHeight="180"
+               preserveRatio="false"
+               styleClass="card-image"/>
+
+    <VBox spacing="8">
+        <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+        <HBox alignment="CENTER_LEFT">
+            <Label fx:id="titulo" styleClass="card-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="precio" styleClass="price-badge"/>
+        </HBox>
+
+        <Label fx:id="ubicacion" styleClass="location"/>
+
+        <Label fx:id="descripcion"
+               wrapText="true"
+               styleClass="card-description"/>
+
+        <HBox spacing="15">
+            <Label fx:id="habitaciones"/>
+            <Label fx:id="capacidad"/>
+        </HBox>
+
+        <HBox spacing="8">
+            <Label styleClass="tag"/>
+            <Label styleClass="tag"/>
+            <Label styleClass="tag"/>
+        </HBox>
+
+        <Button text="📅 Reservar"
+                styleClass="btn-primary"
+                onAction="#onReservar"/>
+    </VBox>
+
+</VBox>
+
+

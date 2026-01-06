@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.renthub.controller.MisViviendasController"
+      spacing="20"
+      styleClass="view">
+
+    <!-- TÍTULO -->
+    <HBox alignment="CENTER_LEFT">
+        <VBox spacing="5">
+            <Label text="Mis Viviendas" styleClass="title"/>
+            <Label text="Gestiona tus propiedades" styleClass="description"/>
+        </VBox>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Button text="+ Añadir Vivienda" styleClass="btn-primary"/>
+    </HBox>
+
+    <!-- CARDS -->
+    <ScrollPane fitToWidth="true" styleClass="scroll">
+        <FlowPane fx:id="contenedorViviendas"
+                  hgap="25"
+                  vgap="25"
+                  prefWrapLength="1100"/>
+    </ScrollPane>
+
+</VBox>
+

@@ -2,7 +2,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.text.Text?>
 
 <VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/17.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
@@ -18,7 +17,7 @@
 
         <HBox alignment="CENTER" style="-fx-background-color: #F3F4F6; -fx-background-radius: 20;">
             <Button text="Iniciar Sesión" style="-fx-background-color: white; -fx-background-radius: 20;" prefWidth="140"/>
-            <Button text="Crear Cuenta" style="-fx-background-color: transparent;" prefWidth="140"/>
+            <Button text="Crear Cuenta" onAction="#irARegistro" style="-fx-background-color: transparent;" prefWidth="140"/>
         </HBox>
 
         <VBox alignment="CENTER_LEFT" spacing="5">
@@ -31,7 +30,7 @@
             <PasswordField fx:id="passwordField" promptText="********"/>
         </VBox>
 
-        <Button text="Iniciar Sesión" styleClass="button-primary" maxWidth="Infinity" prefHeight="40"/>
+        <Button text="Iniciar Sesión" onAction="#onLogin" styleClass="button-primary" maxWidth="Infinity" prefHeight="40"/>
     </VBox>
 </VBox>
 

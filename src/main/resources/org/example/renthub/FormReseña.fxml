@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="480"
+            stylesheets="@css/huesped.css">
+
+    <VBox spacing="18" styleClass="modal-container">
+        <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+
+        <!-- Header -->
+        <VBox spacing="4">
+            <Label text="Añadir Reseña"
+                   styleClass="modal-title"/>
+
+            <Label text="Comparte tu experiencia en esta vivienda"
+                   styleClass="modal-subtitle"/>
+        </VBox>
+
+        <!-- Calificación -->
+        <VBox spacing="8">
+            <Label text="Calificación"
+                   styleClass="section-label"/>
+
+            <HBox spacing="6">
+                <!-- Estrellas (visual) -->
+                <Label text="★" styleClass="star"/>
+                <Label text="★" styleClass="star"/>
+                <Label text="★" styleClass="star"/>
+                <Label text="★" styleClass="star"/>
+                <Label text="★" styleClass="star"/>
+            </HBox>
+        </VBox>
+
+        <!-- Comentario -->
+        <VBox spacing="8">
+            <Label text="Comentario"
+                   styleClass="section-label"/>
+
+            <TextArea promptText="Escribe tu reseña aquí..."
+                      prefRowCount="4"/>
+        </VBox>
+
+        <!-- Botones -->
+        <HBox spacing="12"
+              alignment="CENTER_RIGHT">
+
+            <Button text="Cancelar"
+                    styleClass="btn-secondary"/>
+
+            <Button text="Publicar Reseña"
+                    styleClass="btn-primary"/>
+        </HBox>
+
+    </VBox>
+
+</AnchorPane>
+
+

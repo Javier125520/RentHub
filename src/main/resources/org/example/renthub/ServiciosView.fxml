@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.renthub.controller.ServiciosController"
+      spacing="25"
+      styleClass="content">
+
+    <!-- TÍTULO -->
+    <VBox spacing="5">
+        <HBox alignment="CENTER_LEFT">
+            <VBox spacing="4">
+                <Label text="Mis Servicios" styleClass="title"/>
+                <Label text="Gestiona los servicios que ofreces en tus viviendas"
+                       styleClass="description"/>
+            </VBox>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="➕  Nuevo Servicio"
+                    styleClass="button-primary"
+                    onAction="#onNuevoServicio"/>
+        </HBox>
+    </VBox>
+
+    <!-- LISTADO DE SERVICIOS -->
+    <ScrollPane fitToWidth="true" styleClass="scroll">
+        <FlowPane fx:id="contenedorServicios"
+                  hgap="25"
+                  vgap="25"
+                  prefWrapLength="900"/>
+    </ScrollPane>
+
+</VBox>

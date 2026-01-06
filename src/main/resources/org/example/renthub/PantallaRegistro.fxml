@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
@@ -13,26 +12,27 @@
         <padding><Insets top="30" right="30" bottom="30" left="30"/></padding>
 
         <Label text="🏠" style="-fx-font-size: 35; -fx-text-fill: #2563EB;"/>
-        <Label text="HomeRent" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+        <Label text="RentHub" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+        <Label text="Plataforma de alquiler de viviendas" style="-fx-text-fill: #6B7280;"/>
 
         <HBox alignment="CENTER" style="-fx-background-color: #F3F4F6; -fx-background-radius: 20;">
-            <Button text="Iniciar Sesión" style="-fx-background-color: white; -fx-background-radius: 20;" prefWidth="140"/>
-            <Button text="Crear Cuenta" style="-fx-background-color: transparent;" prefWidth="140"/>
+            <Button text="Iniciar Sesión" onAction="#IrAInicioSesion" style="-fx-background-color: transparent;" prefWidth="140"/>
+            <Button text="Crear Cuenta" style="-fx-background-color: white; -fx-background-radius: 20;" prefWidth="140"/>
         </HBox>
 
         <VBox alignment="CENTER_LEFT" spacing="5">
             <Label text="Nombre completo" style="-fx-font-weight: bold;"/>
-            <TextField promptText="Juan Pérez"/>
+            <TextField fx:id="nombreField" promptText="Juan Pérez"/>
         </VBox>
 
         <VBox alignment="CENTER_LEFT" spacing="5">
             <Label text="Email" style="-fx-font-weight: bold;"/>
-            <TextField promptText="tu@email.com"/>
+            <TextField fx:id="emailField" promptText="tu@email.com"/>
         </VBox>
 
         <VBox alignment="CENTER_LEFT" spacing="5">
             <Label text="Contraseña" style="-fx-font-weight: bold;"/>
-            <PasswordField promptText="********"/>
+            <PasswordField fx:id="passwordField" promptText="********"/>
         </VBox>
 
         <VBox spacing="15">
@@ -67,7 +67,7 @@
             </RadioButton>
         </VBox>
 
-        <Button text="Crear Cuenta" styleClass="button-primary" maxWidth="Infinity" prefHeight="40"/>
+        <Button text="Crear Cuenta" onAction="#onRegistrar" styleClass="button-primary" maxWidth="Infinity" prefHeight="40"/>
     </VBox>
 </VBox>
 

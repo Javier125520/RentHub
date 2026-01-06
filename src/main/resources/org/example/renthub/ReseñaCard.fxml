@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.renthub.controller.CardResenaController"
+      styleClass="card-resena"
+      spacing="15">
+
+    <!-- CABECERA -->
+    <HBox alignment="CENTER_LEFT">
+        <VBox spacing="3">
+            <Label fx:id="lblTituloInmueble" styleClass="card-title"/>
+            <HBox spacing="5">
+                <Label text="📍" styleClass="icon-muted"/>
+                <Label fx:id="lblUbicacion" styleClass="text-muted"/>
+            </HBox>
+        </VBox>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <!-- VALORACIÓN -->
+        <HBox spacing="5" alignment="CENTER">
+            <Label fx:id="lblEstrellas" styleClass="star"/>
+            <Label fx:id="lblPuntuacion" styleClass="star-number"/>
+        </HBox>
+    </HBox>
+
+    <!-- COMENTARIO -->
+    <Label fx:id="lblComentario"
+           wrapText="true"
+           styleClass="card-text"/>
+
+    <!-- FECHA -->
+    <Label fx:id="lblFecha" styleClass="text-muted"/>
+
+    <!-- ACCIONES -->
+    <HBox spacing="10">
+        <Button text="✏ Editar" styleClass="btn-outline" onAction="#onEditar"/>
+        <Button text="🗑 Eliminar" styleClass="btn-danger" onAction="#onEliminar"/>
+    </HBox>
+
+</VBox>
+
