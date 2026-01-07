@@ -33,7 +33,7 @@
                 <Button text="🏠 Mis Viviendas" styleClass="tab-active" onAction="#verViviendas"/>
                 <Button text="🛠 Servicios" styleClass="tab" onAction="#verServicios"/>
                 <Button text="📅 Reservas" styleClass="tab" onAction="#verReservas"/>
-                <Button text="⭐ Reseñas" styleClass="tab" onAction="#verReseñas"/>
+                <Button text="⭐ Reseñas" styleClass="tab" onAction="#verResenas"/>
             </HBox>
 
             <!-- AQUÍ SE CAMBIA EL CONTENIDO -->

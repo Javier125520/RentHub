@@ -488,4 +488,115 @@
     -fx-background-color: #BE123C;
 }
 
+/*==========*/
+
+/* =========================
+   Modal base
+   ========================= */
+
+.modal-container {
+    -fx-background-color: white;
+    -fx-background-radius: 18;
+}
+
+.modal-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.modal-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6b7280;
+}
+
+/* =========================
+   Cards
+   ========================= */
+
+.card {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+    -fx-padding: 16;
+}
+
+.card-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+/* =========================
+   Información personal
+   ========================= */
+
+.info-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+
+.info-value {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* =========================
+   Estadísticas
+   ========================= */
+
+.stat-card {
+    -fx-background-radius: 14;
+    -fx-padding: 14;
+}
+
+.stat-label {
+    -fx-font-size: 12px;
+}
+
+.stat-value {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.stat-blue {
+    -fx-background-color: #eef6ff;
+}
+
+.stat-green {
+    -fx-background-color: #ecfdf3;
+}
+
+.stat-yellow {
+    -fx-background-color: #fefce8;
+}
+
+.stat-purple {
+    -fx-background-color: #f5f3ff;
+}
+
+/* =========================
+   Actividad
+   ========================= */
+
+.activity-text {
+    -fx-font-size: 13px;
+}
+
+/* =========================
+   Botones
+   ========================= */
+
+.btn-secondary {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 12;
+    -fx-padding: 10 16;
+}
+
+.btn-danger {
+    -fx-background-color: #dc2626;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-padding: 10 16;
+}
+
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="15"
+      styleClass="review-card">
+
+    <!-- CABECERA -->
+    <HBox alignment="CENTER_LEFT">
+        <VBox spacing="5">
+            <Label text="Casa en la montaña" styleClass="card-title"/>
+            <Label text="📍" styleClass="location"/>
+        </VBox>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Label text="⭐ 5" styleClass="rating"/>
+    </HBox>
+
+    <!-- USUARIO -->
+    <Label text="👤 Javier Guerrero Hurtado · 07 de enero de 2026"
+           styleClass="review-meta"/>
+
+    <!-- COMENTARIO -->
+    <Label text="Muy bien"
+           wrapText="true"
+           styleClass="review-text"/>
+
+</VBox>

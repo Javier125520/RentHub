@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.renthub.controller.ReservaCardController"
+      spacing="15"
+      styleClass="card">
+
+    <!-- CABECERA -->
+    <HBox alignment="CENTER_LEFT">
+        <VBox spacing="4">
+            <Label fx:id="lblVivienda" text="Chalet en el Campo" styleClass="card-title"/>
+            <Label fx:id="lblUbicacion" text="Córdoba, España" styleClass="card-location"/>
+        </VBox>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Label fx:id="lblEstado" text="CONFIRMADA" styleClass="status confirmed"/>
+    </HBox>
+
+    <Separator/>
+
+    <!-- INFO PRINCIPAL -->
+    <GridPane hgap="40" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints minWidth="200"/>
+            <ColumnConstraints minWidth="200"/>
+            <ColumnConstraints minWidth="200"/>
+            <ColumnConstraints minWidth="200"/>
+        </columnConstraints>
+
+        <VBox spacing="4" GridPane.columnIndex="0">
+            <Label text="Huésped" styleClass="card-label"/>
+            <Label fx:id="lblHuesped" text="Javier Guerrero Hurtado" styleClass="card-text"/>
+            <Label fx:id="lblEmail" text="correo@gmail.com" styleClass="card-subtext"/>
+        </VBox>
+
+        <VBox spacing="4" GridPane.columnIndex="1">
+            <Label text="Check-in" styleClass="card-label"/>
+            <Label fx:id="lblCheckIn" text="15 ene 2026" styleClass="card-text"/>
+        </VBox>
+
+        <VBox spacing="4" GridPane.columnIndex="2">
+            <Label text="Check-out" styleClass="card-label"/>
+            <Label fx:id="lblCheckOut" text="18 ene 2026" styleClass="card-text"/>
+        </VBox>
+
+        <VBox spacing="4" GridPane.columnIndex="3">
+            <Label text="Ingreso total" styleClass="card-label"/>
+            <Label fx:id="lblIngreso" text="€90" styleClass="card-price"/>
+        </VBox>
+    </GridPane>
+
+    <Label fx:id="lblFechaReserva"
+           text="Reserva creada el 07 de enero de 2026"
+           styleClass="card-footer"/>
+
+</VBox>

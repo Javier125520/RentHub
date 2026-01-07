@@ -5,22 +5,25 @@
 
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.renthub.controller.ReservasViewController"
-      spacing="20">
+      fx:controller="org.example.renthub.controller.MisReservasViewController"
+      spacing="25"
+      styleClass="content">
 
     <!-- TÍTULO -->
     <VBox spacing="5">
-        <Label text="Mis Reservas" styleClass="title"/>
-        <Label text="Consulta y gestiona tus reservas" styleClass="description"/>
+        <Label text="Reservas de Mis Viviendas" styleClass="title"/>
+        <Label text="Reservas realizadas en tus propiedades" styleClass="description"/>
     </VBox>
 
-    <!-- CONTADOR -->
-    <Label text="3 reservas realizadas" styleClass="results"/>
-
     <!-- LISTA DE RESERVAS -->
-    <ScrollPane fitToWidth="true" styleClass="scroll">
-        <VBox fx:id="contenedorReservas" spacing="20"/>
-    </ScrollPane>
+    <VBox fx:id="reservasContainer" spacing="20"/>
+
+    <!-- RESUMEN -->
+    <VBox styleClass="income-summary" spacing="8">
+        <Label text="Resumen de Ingresos" styleClass="income-title"/>
+        <Label fx:id="lblTotalIngresos" text="€0" styleClass="income-total"/>
+        <Label fx:id="lblTotalReservas" text="Total de reservas pagadas: 0" styleClass="income-sub"/>
+    </VBox>
 
 </VBox>
 

@@ -5,20 +5,35 @@
 
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.renthub.controller.ResenasViewController"
-      spacing="20"
+      spacing="25"
       styleClass="content">
 
-    <!-- TÍTULO -->
+    <!-- TITULO -->
     <VBox spacing="5">
-        <Label text="Mis Reseñas" styleClass="title"/>
-        <Label text="Reseñas que has publicado" styleClass="description"/>
+        <Label text="Reseñas de Mis Viviendas" styleClass="title"/>
+        <Label text="Opiniones de los huéspedes sobre tus propiedades" styleClass="description"/>
     </VBox>
 
+    <!-- RESUMEN -->
+    <HBox spacing="20">
+        <VBox styleClass="stat-card" alignment="CENTER" spacing="5">
+            <Label text="⭐ 5.0" styleClass="stat-value"/>
+            <Label text="Calificación promedio" styleClass="stat-label"/>
+        </VBox>
+
+        <VBox styleClass="stat-card" alignment="CENTER" spacing="5">
+            <Label text="1" styleClass="stat-value"/>
+            <Label text="Total de reseñas" styleClass="stat-label"/>
+        </VBox>
+
+        <VBox styleClass="stat-card" alignment="CENTER" spacing="5">
+            <Label text="1" styleClass="stat-value"/>
+            <Label text="Viviendas con reseñas" styleClass="stat-label"/>
+        </VBox>
+    </HBox>
+
     <!-- LISTADO DE RESEÑAS -->
-    <ScrollPane fitToWidth="true" styleClass="scroll">
-        <VBox fx:id="contenedorResenas" spacing="20"/>
-    </ScrollPane>
+    <VBox fx:id="contenedorReseñas" spacing="20"/>
 
 </VBox>
 

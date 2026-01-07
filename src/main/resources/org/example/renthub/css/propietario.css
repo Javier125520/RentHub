@@ -187,4 +187,263 @@
     -fx-background-color: #FCA5A5;
 }
 
+/*=====*/
+
+/* =========================
+   Modal base
+   ========================= */
+
+.modal-container {
+    -fx-background-color: white;
+    -fx-background-radius: 18;
+}
+
+.modal-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.modal-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6b7280;
+}
+
+/* =========================
+   Cards
+   ========================= */
+
+.card {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+    -fx-padding: 16;
+}
+
+.card-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+/* =========================
+   Información
+   ========================= */
+
+.info-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+
+.info-value {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* =========================
+   Estadísticas
+   ========================= */
+
+.stat-card {
+    -fx-background-radius: 14;
+    -fx-padding: 14;
+}
+
+.stat-label {
+    -fx-font-size: 12px;
+}
+
+.stat-value {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.stat-blue {
+    -fx-background-color: #eef6ff;
+}
+
+.stat-green {
+    -fx-background-color: #ecfdf3;
+}
+
+.stat-yellow {
+    -fx-background-color: #fefce8;
+}
+
+.stat-purple {
+    -fx-background-color: #f5f3ff;
+}
+
+/* =========================
+   Actividad
+   ========================= */
+
+.activity-text {
+    -fx-font-size: 13px;
+}
+
+/* =========================
+   Botones
+   ========================= */
+
+.btn-secondary {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 12;
+    -fx-padding: 10 16;
+}
+
+.btn-danger {
+    -fx-background-color: #dc2626;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-padding: 10 16;
+}
+
+/*========*/
+
+/* ===== CONTENIDO ===== */
+.content {
+    -fx-padding: 30;
+}
+
+/* ===== TITULOS ===== */
+.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.description {
+    -fx-text-fill: #6b7280;
+}
+
+/* ===== CARD RESERVA ===== */
+.reservation-card {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-border-color: #e5e7eb;
+}
+
+/* ===== TEXTOS ===== */
+.card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.location {
+    -fx-text-fill: #6b7280;
+}
+
+.label {
+    -fx-font-weight: bold;
+}
+
+.subtext {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 11px;
+}
+
+.price {
+    -fx-font-weight: bold;
+}
+
+/* ===== BADGES ===== */
+.badge-confirmed {
+    -fx-background-color: #e5f7ed;
+    -fx-text-fill: #16a34a;
+    -fx-padding: 4 10;
+    -fx-background-radius: 20;
+    -fx-font-size: 11px;
+}
+
+/* ===== RESUMEN ===== */
+.income-summary {
+    -fx-background-color: #ecfdf3;
+    -fx-padding: 20;
+    -fx-background-radius: 12;
+}
+
+.income-title {
+    -fx-font-weight: bold;
+}
+
+.income-total {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.income-sub {
+    -fx-text-fill: #6b7280;
+}
+
+/*=========*/
+
+/* CONTENIDO */
+.content {
+    -fx-padding: 30;
+}
+
+/* TITULOS */
+.title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.description {
+    -fx-text-fill: #6b7280;
+}
+
+/* STATS */
+.stat-card {
+    -fx-background-color: white;
+    -fx-padding: 25;
+    -fx-pref-width: 300;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-border-color: #e5e7eb;
+}
+
+.stat-value {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.stat-label {
+    -fx-text-fill: #6b7280;
+}
+
+/* REVIEW CARD */
+.review-card {
+    -fx-background-color: white;
+    -fx-padding: 25;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-border-color: #e5e7eb;
+}
+
+.card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.location {
+    -fx-text-fill: #6b7280;
+}
+
+.rating {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #facc15;
+}
+
+.review-meta {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 12px;
+}
+
+.review-text {
+    -fx-font-size: 14px;
+}
+
+
 

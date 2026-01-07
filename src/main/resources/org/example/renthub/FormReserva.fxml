@@ -5,7 +5,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/17.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.renthub.controller.ReservaModalController"
+      fx:controller="org.example.renthub.controller.FormReservaController"
       stylesheets="@css/huesped.css"
       spacing="20"
       styleClass="modal-card"

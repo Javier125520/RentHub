@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.renthub.controller.FormServicioController"
+            styleClass="modal-overlay">
+
+    <VBox spacing="20"
+          AnchorPane.topAnchor="0"
+          AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0"
+          alignment="CENTER">
+
+        <!-- MODAL -->
+        <VBox spacing="18"
+              styleClass="modal-card"
+              maxWidth="520">
+
+            <!-- HEADER -->
+            <HBox alignment="CENTER_LEFT">
+                <VBox spacing="4">
+                    <Label fx:id="lblTitulo"
+                           text="Añadir Nuevo Servicio"
+                           styleClass="modal-title"/>
+                    <Label fx:id="lblSubtitulo"
+                           text="Crea un nuevo servicio global que podrás asociar a tus propiedades"
+                           styleClass="modal-subtitle"/>
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="✕"
+                        onAction="#cerrar"
+                        styleClass="btn-close"/>
+            </HBox>
+
+            <!-- NOMBRE -->
+            <VBox spacing="6">
+                <Label text="Nombre del Servicio *" styleClass="form-label"/>
+                <TextField fx:id="txtNombre"
+                           promptText="Ej: WiFi de alta velocidad"
+                           styleClass="form-input"/>
+            </VBox>
+
+            <!-- DESCRIPCIÓN -->
+            <VBox spacing="6">
+                <Label text="Descripción" styleClass="form-label"/>
+                <TextArea fx:id="txtDescripcion"
+                          promptText="Describe el servicio..."
+                          prefRowCount="3"
+                          styleClass="form-textarea"/>
+            </VBox>
+
+            <!-- BOTONES -->
+            <HBox spacing="12" alignment="CENTER_RIGHT">
+                <Button text="Cancelar"
+                        onAction="#cerrar"
+                        styleClass="btn-outline"/>
+                <Button fx:id="btnGuardar"
+                        text="Añadir Servicio"
+                        onAction="#guardar"
+                        styleClass="btn-primary"/>
+            </HBox>
+
+        </VBox>
+    </VBox>
+</AnchorPane>
