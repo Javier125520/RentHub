@@ -5,6 +5,7 @@
 
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
+        fx:controller="org.example.renthub.controller.CardServicioExtraController"
       spacing="12"
       alignment="CENTER_LEFT"
       styleClass="servicio-card">

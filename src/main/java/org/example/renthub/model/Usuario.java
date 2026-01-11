@@ -1,6 +1,6 @@
 package org.example.renthub.model;
 
-import org.example.renthub.model.Enum.RolUsuario;
+import org.example.renthub.model.enums.RolUsuario;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package org.example.renthub.model;
 
-import org.example.renthub.model.Enum.TipoInmueble;
+import org.example.renthub.model.enums.TipoInmueble;
 
 import java.util.ArrayList;
 import java.util.List;

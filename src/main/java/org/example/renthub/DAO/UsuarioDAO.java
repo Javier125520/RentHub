@@ -1,7 +1,7 @@
 package org.example.renthub.DAO;
 
 import org.example.renthub.connection.MySQLConnection;
-import org.example.renthub.model.Enum.RolUsuario;
+import org.example.renthub.model.enums.RolUsuario;
 import org.example.renthub.model.Usuario;
 
 import java.sql.*;

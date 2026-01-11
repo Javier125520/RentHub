@@ -1,6 +1,6 @@
 package org.example.renthub.model;
 
-import org.example.renthub.model.Enum.EstadoServicio;
+import org.example.renthub.model.enums.EstadoServicio;
 
 import java.util.Objects;
 
@@ -10,18 +10,16 @@ public class InmuebleServicio {
     private ServicioExtra servicio;
     private EstadoServicio estado;
     private double precioAdicional;
-    private boolean incluidoEnPrecio;
 
     public InmuebleServicio() {}
 
     public InmuebleServicio(int id, Inmueble inmueble, ServicioExtra servicio,
-                            double precioAdicional, boolean incluidoEnPrecio,
+                            double precioAdicional,
                             EstadoServicio estado) {
         this.id = id;
         setInmueble(inmueble);
         setServicio(servicio);
         this.precioAdicional = precioAdicional;
-        this.incluidoEnPrecio = incluidoEnPrecio;
         this.estado = estado;
     }
 
@@ -50,14 +48,6 @@ public class InmuebleServicio {
 
     public void setPrecioAdicional(double precioAdicional) {
         this.precioAdicional = precioAdicional;
-    }
-
-    public boolean isIncluidoEnPrecio() {
-        return incluidoEnPrecio;
-    }
-
-    public void setIncluidoEnPrecio(boolean incluidoEnPrecio) {
-        this.incluidoEnPrecio = incluidoEnPrecio;
     }
 
     public void setInmueble(Inmueble inmueble) {

@@ -7,9 +7,9 @@ public class ImagenInmueble {
 
     public ImagenInmueble() { }
 
-    public ImagenInmueble(int id, Inmueble inmuebleId, String url) {
+    public ImagenInmueble(int id, Inmueble inmueble, String url) {
         this.id = id;
-        this.inmueble = inmuebleId;
+        this.inmueble = inmueble;
         this.url = url;
     }
 

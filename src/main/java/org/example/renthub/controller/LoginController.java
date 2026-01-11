@@ -10,9 +10,11 @@ import org.example.renthub.DAO.UsuarioDAO;
 import org.example.renthub.model.Usuario;
 import org.example.renthub.connection.MySQLConnection;
 import java.sql.Connection;
-import org.example.renthub.model.Enum.RolUsuario;
+import org.example.renthub.model.enums.RolUsuario;
 import java.io.IOException;
 import javafx.scene.Scene;
+import org.example.renthub.services.Sesion;
+
 public class LoginController {
 
     @FXML
@@ -44,6 +46,8 @@ public class LoginController {
                 mostrarAlerta("Error", "Correo o contraseña incorrectos");
                 return;
             }
+
+            Sesion.setUsuario(usuario);
 
             // Redirigir según rol
             if (usuario.getRol() == RolUsuario.HUESPED) {

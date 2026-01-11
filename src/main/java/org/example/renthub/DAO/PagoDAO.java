@@ -2,11 +2,10 @@ package org.example.renthub.DAO;
 
 import org.example.renthub.model.*;
 import org.example.renthub.connection.MySQLConnection;
-import org.example.renthub.model.Enum.EstadoPago;
-import org.example.renthub.model.Enum.MetodoPago;
+import org.example.renthub.model.enums.EstadoPago;
+import org.example.renthub.model.enums.MetodoPago;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

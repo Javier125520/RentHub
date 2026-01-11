@@ -2,8 +2,7 @@ package org.example.renthub.DAO;
 
 
 import org.example.renthub.model.*;
-import org.example.renthub.connection.MySQLConnection;
-import org.example.renthub.model.Enum.EstadoServicio;
+import org.example.renthub.model.enums.EstadoServicio;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,13 +14,13 @@ public class InmuebleServicioDAO {
     private final Connection conn;
 
     private static final String INSERT =
-            "INSERT INTO inmueble_servicio (id_inmueble, id_servicio, precio_adicional) VALUES (?, ?, ?)";
+            "INSERT INTO inmueble_servicio (id_inmueble, id_servicio, precio_adicional, estado_servicio) VALUES (?, ?, ?)";
 
     private static final String DELETE =
             "DELETE FROM inmueble_servicio WHERE id_inmueble = ? AND id_servicio = ?";
 
     private static final String SELECT_BY_INMUEBLE =
-            "SELECT isv.id, isv.precio_adicional, isv.incluido_en_precio, isv.estado, s.* " +
+            "SELECT isv.id, isv.precio_adicional, isv.estado, s.* " +
                     "FROM inmueble_servicio isv " +
                     "JOIN servicio_extra s ON s.id_servicio = isv.id_servicio " +
                     "WHERE isv.id_inmueble = ?";
@@ -30,12 +29,13 @@ public class InmuebleServicioDAO {
         this.conn = conn;
     }
 
-    public boolean addServicio(Inmueble inmueble, ServicioExtra servicio, double precioAdicional) throws SQLException {
+    public boolean addServicio(Inmueble inmueble, ServicioExtra servicio, double precioAdicional, EstadoServicio estado) throws SQLException {
 
         try (PreparedStatement ps = conn.prepareStatement(INSERT)) {
             ps.setInt(1, inmueble.getIdInmueble());
             ps.setInt(2, servicio.getIdServicio());
             ps.setDouble(3, precioAdicional);
+            ps.setString(4, estado.name());
             return ps.executeUpdate() > 0;
         }
     }
@@ -69,7 +69,6 @@ public class InmuebleServicioDAO {
                         inmueble,
                         servicio,
                         rs.getDouble("precio_adicional"),
-                        rs.getBoolean("incluido_en_precio"),
                         EstadoServicio.valueOf(rs.getString("estado"))
                 );
 
@@ -77,6 +76,9 @@ public class InmuebleServicioDAO {
             }
         }
         return lista;
+    }
+
+    public void deleteByInmueble(Inmueble inmueble) {
     }
 }
 

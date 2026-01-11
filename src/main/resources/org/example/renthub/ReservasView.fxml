@@ -5,7 +5,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.renthub.controller.MisReservasViewController"
+      fx:controller="org.example.renthub.controller.ReservasViewController"
       spacing="25"
       styleClass="content">
 

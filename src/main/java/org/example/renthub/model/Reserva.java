@@ -1,6 +1,6 @@
 package org.example.renthub.model;
 
-import org.example.renthub.model.Enum.EstadoReserva;
+import org.example.renthub.model.enums.EstadoReserva;
 
 import java.time.LocalDate;
 import java.util.Objects;

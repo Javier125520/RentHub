@@ -7,12 +7,14 @@ import javafx.scene.layout.FlowPane;
 import org.example.renthub.DAO.InmuebleDAO;
 import org.example.renthub.model.Inmueble;
 import org.example.renthub.model.Usuario;
-import org.example.renthub.utils.Sesion;
+import org.example.renthub.services.Sesion;
+import org.example.renthub.utils.Ventanas;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
-public class MisViviendasController {
+public class MisViviendasViewController {
 
     @FXML
     private FlowPane contenedorViviendas;
@@ -21,25 +23,29 @@ public class MisViviendasController {
 
     @FXML
     public void initialize() {
-        cargarViviendas();
+        try {
+            cargarViviendas();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void cargarViviendas() {
+    private void cargarViviendas() throws SQLException {
         contenedorViviendas.getChildren().clear();
 
-        Usuario propietario = Sesion.getUsuarioActual();
+        Usuario propietario = Sesion.getUsuario();
 
-        List<Inmueble> viviendas = inmuebleDAO.findByPropietario(propietario.getId());
+        List<Inmueble> viviendas = inmuebleDAO.findByPropietario(propietario.getIdUsuario());
 
         for (Inmueble inmueble : viviendas) {
             try {
                 FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/org/example/renthub/view/cards/CardViviendaPropietario.fxml")
+                        getClass().getResource("/org/example/renthub/InmuebleCardPropietario.fxml")
                 );
 
                 Node card = loader.load();
 
-                CardViviendaPropietarioController controller = loader.getController();
+                CardInmueblePropietarioController controller = loader.getController();
                 controller.setInmueble(inmueble);
                 controller.setParentController(this);
 
@@ -52,11 +58,9 @@ public class MisViviendasController {
     }
 
     @FXML
-    private void onNuevaVivienda() {
-        // Abrir modal o cambiar vista
-        // Ejemplo:
+    private void onNuevaVivienda() throws SQLException {
         Ventanas.abrirModal(
-                "/org/example/renthub/view/forms/FormVivienda.fxml",
+                "/org/example/renthub/FormInmueble.fxml",
                 "Añadir Vivienda"
         );
 
@@ -64,7 +68,7 @@ public class MisViviendasController {
         cargarViviendas();
     }
 
-    public void refrescar() {
+    public void refrescar() throws SQLException {
         cargarViviendas();
     }
 }

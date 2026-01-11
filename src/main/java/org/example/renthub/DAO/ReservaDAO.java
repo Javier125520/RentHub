@@ -1,7 +1,7 @@
 package org.example.renthub.DAO;
 
 import org.example.renthub.connection.MySQLConnection;
-import org.example.renthub.model.Enum.EstadoReserva;
+import org.example.renthub.model.enums.EstadoReserva;
 import org.example.renthub.model.Inmueble;
 import org.example.renthub.model.Reserva;
 import org.example.renthub.model.Usuario;

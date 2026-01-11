@@ -3,7 +3,7 @@ package org.example.renthub.DAO;
 
 import org.example.renthub.model.*;
 import org.example.renthub.connection.MySQLConnection;
-import org.example.renthub.model.Enum.TipoInmueble;
+import org.example.renthub.model.enums.TipoInmueble;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -19,11 +19,11 @@ public class InmuebleDAO {
     // =========================
 
     private static final String INSERT =
-            "INSERT INTO inmueble (tipo_inmueble, titulo, descripcion, direccion, ciudad, capacidad, numero_habitaciones, precio_noche, disponible, propietario_id) " +
+            "INSERT INTO inmueble (tipo_inmueble, titulo, descripcion, direccion, ciudad, capacidad, numero_habitaciones, precio_noche, disponible, id_propietario) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String UPDATE =
-            "UPDATE inmueble SET tipo_inmueble=?, titulo=?, descripcion=?, direccion=?, ciudad=?, capacidad=?, numero_habitaciones=?, precio_noche=?, disponible=?, propietario_id=? " +
+            "UPDATE inmueble SET tipo_inmueble=?, titulo=?, descripcion=?, direccion=?, ciudad=?, capacidad=?, numero_habitaciones=?, precio_noche=?, disponible=?, id_propietario=? " +
                     "WHERE id_inmueble=?";
 
     private static final String DELETE =
@@ -31,6 +31,9 @@ public class InmuebleDAO {
 
     private static final String SELECT_BY_ID =
             "SELECT * FROM inmueble WHERE id_inmueble=?";
+
+    private static final String FIND_INMUEBLES_BY_PROPIETARIO =
+            "SELECT * FROM inmueble WHERE id_propietario=?";
 
     // =========================
     // CONSTRUCTORES
@@ -110,6 +113,21 @@ public class InmuebleDAO {
             }
         }
         return null;
+    }
+
+    public List<Inmueble> findByPropietario(int idPropietario) throws SQLException {
+        List<Inmueble> inmuebles = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(FIND_INMUEBLES_BY_PROPIETARIO)) {
+            ps.setInt(1, idPropietario);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                inmuebles.add(mapInmueble(rs));
+            }
+        }
+
+        return inmuebles;
     }
 
     // =========================
@@ -222,8 +240,9 @@ public class InmuebleDAO {
         i.setDisponible(rs.getBoolean("disponible"));
 
         Usuario propietario = new Usuario();
-        propietario.setIdUsuario(rs.getInt("propietario_id"));
+        propietario.setIdUsuario(rs.getInt("id_propietario"));
         i.setPropietario(propietario);
+        i.setImagenes(ImagenInmuebleDAO.getInstance().findByInmueble(i));
 
         return i;
     }

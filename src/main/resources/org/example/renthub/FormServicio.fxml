@@ -54,6 +54,14 @@
                           styleClass="form-textarea"/>
             </VBox>
 
+            <!-- Estado -->
+            <VBox spacing="6">
+                <Label text="Estado del Servicio *" styleClass="form-label"/>
+                <ComboBox fx:id="cmbEstado"
+                          promptText="Selecciona"
+                          styleClass="form-combobox"/>
+            </VBox>
+
             <!-- BOTONES -->
             <HBox spacing="12" alignment="CENTER_RIGHT">
                 <Button text="Cancelar"

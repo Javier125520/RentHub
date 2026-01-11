@@ -4,15 +4,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane prefWidth="500" prefHeight="750"
-            fx:controller="org.example.renthub.controller.FormInmuebleController"
+<AnchorPane fx:controller="org.example.renthub.controller.FormInmuebleController"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             stylesheets="@css/propietario.css">
 
-    <ScrollPane fitToWidth="true">
+    <ScrollPane fitToWidth="true"
+                AnchorPane.topAnchor="0"
+                AnchorPane.bottomAnchor="0"
+                AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0">
         <content>
-            <VBox spacing="15" styleClass="container">
+            <VBox spacing="15" styleClass="container" maxWidth="Infinity">
                 <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
 
                 <!-- Título -->
@@ -22,62 +25,62 @@
                 <!-- Título vivienda -->
                 <VBox>
                     <Label text="Título *"/>
-                    <TextField promptText="Ej: Apartamento moderno en el centro"/>
+                    <TextField promptText="Ej: Apartamento moderno en el centro" fx:id="txtTitulo"/>
                 </VBox>
 
                 <!-- Tipo y Estado -->
                 <HBox spacing="10">
                     <VBox HBox.hgrow="ALWAYS">
                         <Label text="Tipo de inmueble *"/>
-                        <ComboBox promptText="Selecciona"/>
+                        <ComboBox promptText="Selecciona" fx:id="cmbTipo"/>
                     </VBox>
                     <VBox HBox.hgrow="ALWAYS">
                         <Label text="Estado"/>
-                        <ComboBox promptText="Disponible"/>
+                        <ComboBox promptText="Disponible" fx:id="cmbEstado"/>
                     </VBox>
                 </HBox>
 
                 <!-- Descripción -->
                 <VBox>
                     <Label text="Descripción"/>
-                    <TextArea promptText="Describe tu vivienda..." prefRowCount="3"/>
+                    <TextArea promptText="Describe tu vivienda..." prefRowCount="3" fx:id="txtDescripcion"/>
                 </VBox>
 
                 <!-- Dirección -->
                 <VBox>
                     <Label text="Dirección"/>
-                    <TextField promptText="Ej: Calle Mayor, 123"/>
+                    <TextField promptText="Ej: Calle Mayor, 123" fx:id="txtDireccion"/>
                 </VBox>
 
                 <!-- Ciudad -->
                 <VBox>
                     <Label text="Ciudad *"/>
-                    <TextField promptText="Ej: Madrid, España"/>
+                    <TextField promptText="Ej: Madrid, España" fx:id="txtCiudad"/>
                 </VBox>
 
                 <!-- Precio y habitaciones -->
                 <HBox spacing="10">
                     <VBox HBox.hgrow="ALWAYS">
                         <Label text="Precio por noche (€) *"/>
-                        <TextField/>
+                        <Spinner fx:id="spPrecio"/>
                     </VBox>
                     <VBox HBox.hgrow="ALWAYS">
                         <Label text="Habitaciones"/>
-                        <TextField/>
+                        <Spinner fx:id="spHabitaciones"/>
                     </VBox>
                 </HBox>
 
                 <!-- Capacidad -->
                 <VBox>
                     <Label text="Capacidad (huéspedes)"/>
-                    <TextField/>
+                    <Spinner fx:id="spCapacidad"/>
                 </VBox>
 
                 <!-- Imágenes -->
                 <VBox spacing="5">
                     <Label text="Imágenes"/>
-                    <Button text="Seleccionar imágenes" styleClass="secondary-button"/>
-                    <Label text="Ninguna imagen seleccionada" styleClass="hint"/>
+                    <Button text="Seleccionar imágenes" styleClass="secondary-button" onAction="#onSeleccionarImagenes"/>
+                    <Label text="Ninguna imagen seleccionada" styleClass="hint" fx:id="lblImagenes"/>
                 </VBox>
 
                 <!-- Servicios Extras -->
@@ -92,8 +95,8 @@
 
                 <!-- Botones -->
                 <HBox spacing="10" alignment="CENTER_RIGHT">
-                    <Button text="Cancelar" styleClass="cancel-button"/>
-                    <Button text="Añadir Vivienda" styleClass="primary-button"/>
+                    <Button text="Cancelar" styleClass="cancel-button" onAction="#onCancelar"/>
+                    <Button text="Añadir Vivienda" styleClass="primary-button" onAction="#onGuardar"/>
                 </HBox>
             </VBox>
         </content>

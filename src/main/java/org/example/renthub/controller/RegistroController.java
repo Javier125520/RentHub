@@ -7,7 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.renthub.DAO.UsuarioDAO;
-import org.example.renthub.model.Enum.RolUsuario;
+import org.example.renthub.model.enums.RolUsuario;
 import org.example.renthub.model.Usuario;
 import org.example.renthub.utils.Utiles;
 import org.example.renthub.connection.MySQLConnection;

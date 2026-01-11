@@ -10,21 +10,35 @@ import java.util.List;
 
 public class ImagenInmuebleDAO {
 
+    private final Connection conn;
+
     // =========================
     // SQL
     // =========================
 
     private static final String INSERT =
-            "INSERT INTO imagen_inmueble (id_inmueble, url) VALUES (?, ?)";
+            "INSERT INTO imagen_inmueble (inmueble_id, url) VALUES (?, ?)";
 
     private static final String SELECT_BY_INMUEBLE =
-            "SELECT * FROM imagen_inmueble WHERE id_inmueble = ?";
+            "SELECT * FROM imagen_inmueble WHERE inmueble_id = ?";
 
     private static final String DELETE_BY_ID =
             "DELETE FROM imagen_inmueble WHERE id = ?";
 
     private static final String DELETE_BY_INMUEBLE =
-            "DELETE FROM imagen_inmueble WHERE id_inmueble = ?";
+            "DELETE FROM imagen_inmueble WHERE inmueble_id = ?";
+
+    // =========================
+    // CONSTRUCTOR
+    // =========================
+
+    public ImagenInmuebleDAO(Connection conn) {
+        this.conn = MySQLConnection.getConnection();
+    }
+
+    public static ImagenInmuebleDAO getInstance() {
+        return new ImagenInmuebleDAO(MySQLConnection.getConnection());
+    }
 
     // =========================
     // INSERT
