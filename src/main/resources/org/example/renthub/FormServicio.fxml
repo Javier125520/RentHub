@@ -6,6 +6,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.renthub.controller.FormServicioController"
+            stylesheets="@css/propietario.css"
             styleClass="modal-overlay">
 
     <VBox spacing="20"
@@ -54,22 +55,14 @@
                           styleClass="form-textarea"/>
             </VBox>
 
-            <!-- Estado -->
-            <VBox spacing="6">
-                <Label text="Estado del Servicio *" styleClass="form-label"/>
-                <ComboBox fx:id="cmbEstado"
-                          promptText="Selecciona"
-                          styleClass="form-combobox"/>
-            </VBox>
-
             <!-- BOTONES -->
             <HBox spacing="12" alignment="CENTER_RIGHT">
                 <Button text="Cancelar"
-                        onAction="#cerrar"
+                        onAction="#onCerrar"
                         styleClass="btn-outline"/>
                 <Button fx:id="btnGuardar"
                         text="Añadir Servicio"
-                        onAction="#guardar"
+                        onAction="#onGuardar"
                         styleClass="btn-primary"/>
             </HBox>
 

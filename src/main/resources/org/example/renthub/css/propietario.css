@@ -540,3 +540,108 @@
     -fx-text-fill: #6b7280;
     -fx-font-size: 13px;
 }
+
+/*=FormServicio=*/
+
+/* ===== OVERLAY OSCURO ===== */
+.modal-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.45);
+}
+
+/* ===== TARJETA DEL MODAL ===== */
+.modal-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 14;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.20), 25, 0, 0, 5);
+}
+
+/* ===== TÍTULOS ===== */
+.modal-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+}
+
+.modal-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #64748b;
+}
+
+/* ===== BOTÓN CERRAR (X) ===== */
+.btn-close {
+    -fx-background-color: transparent;
+    -fx-font-size: 16px;
+    -fx-text-fill: #64748b;
+    -fx-cursor: hand;
+}
+
+.btn-close:hover {
+    -fx-text-fill: #0f172a;
+}
+
+/* ===== LABELS ===== */
+.form-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+}
+
+/* ===== INPUTS ===== */
+.form-input {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 12;
+    -fx-font-size: 13px;
+}
+
+.form-input:focused {
+    -fx-border-color: #6366f1;
+    -fx-background-color: #ffffff;
+}
+
+/* ===== TEXTAREA ===== */
+.form-textarea {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 12;
+    -fx-font-size: 13px;
+}
+
+.form-textarea:focused {
+    -fx-border-color: #6366f1;
+    -fx-background-color: #ffffff;
+}
+
+/* ===== BOTÓN PRIMARIO ===== */
+.btn-primary {
+    -fx-background-color: #0f172a;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 10 18;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #1e293b;
+}
+
+/* ===== BOTÓN OUTLINE ===== */
+.btn-outline {
+    -fx-background-color: transparent;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 10;
+    -fx-padding: 10 18;
+    -fx-text-fill: #0f172a;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.btn-outline:hover {
+    -fx-background-color: #f1f5f9;
+}

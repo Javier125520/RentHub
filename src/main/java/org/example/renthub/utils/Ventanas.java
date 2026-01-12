@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 
 public class Ventanas {
 
-    // Abrir modal SIN datos (Añadir)
     public static void abrirModal(String fxml, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -17,14 +16,18 @@ public class Ventanas {
 
             Parent root = loader.load();
 
+            Scene scene = new Scene(root);
+
             Stage stage = new Stage();
             stage.setTitle(titulo);
-
-            Scene scene = new Scene(root, 520, 600);
             stage.setScene(scene);
 
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false); // opcional
+            stage.setResizable(false);
+
+            // 🔑 Ajusta el stage al contenido real
+            stage.sizeToScene();
+
             stage.showAndWait();
 
         } catch (Exception e) {
@@ -32,6 +35,7 @@ public class Ventanas {
             e.printStackTrace();
         }
     }
+
 
     // Abrir modal CON datos (Editar)
     public static <T> void abrirModalConDatos(String fxml, String titulo, T datos) {
@@ -41,20 +45,23 @@ public class Ventanas {
             );
             Parent root = loader.load();
 
-            // El controller debe tener setDatos(...)
             Object controller = loader.getController();
             controller.getClass()
                     .getMethod("setDatos", datos.getClass())
                     .invoke(controller, datos);
 
+            Scene scene = new Scene(root);
+
             Stage stage = new Stage();
             stage.setTitle(titulo);
-
-            Scene scene = new Scene(root, 520, 600);
             stage.setScene(scene);
 
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
+
+            // 🔑 Ajusta el stage al contenido real
+            stage.sizeToScene();
+
             stage.showAndWait();
 
         } catch (Exception e) {

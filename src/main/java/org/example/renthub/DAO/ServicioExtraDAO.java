@@ -31,8 +31,8 @@ public class ServicioExtraDAO {
     // =========================
     // Constructor
     // =========================
-    public ServicioExtraDAO(Connection conn) {
-        this.conn = conn;
+    public ServicioExtraDAO() {
+        this.conn = MySQLConnection.getConnection();
     }
 
     // =========================

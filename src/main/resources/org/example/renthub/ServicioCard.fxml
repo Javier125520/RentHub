@@ -16,8 +16,6 @@
             <Label fx:id="lblNombre" styleClass="service-title"/>
             <Label fx:id="lblDescripcion" styleClass="service-description"/>
         </VBox>
-        <Label fx:id="blbEstado"
-               styleClass="service-estado"/>
     </HBox>
 
     <Separator/>

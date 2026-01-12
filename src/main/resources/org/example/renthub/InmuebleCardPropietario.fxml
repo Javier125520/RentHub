@@ -40,9 +40,9 @@
             <Label fx:id="lblPrecio" styleClass="badge"/>
         </HBox>
 
-        <Label fx:id="lblDireccion" styleClass="card-location"/>
-
         <Label fx:id="blbCiudad" styleClass="card-location"/>
+
+        <Label fx:id="lblDireccion" styleClass="card-location"/>
 
         <Label fx:id="lblTipo" styleClass="tag"/>
         <Label fx:id="lblDescripcion" wrapText="true" styleClass="card-desc"/>

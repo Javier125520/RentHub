@@ -10,6 +10,9 @@
             stylesheets="@css/propietario.css">
 
     <ScrollPane fitToWidth="true"
+                vbarPolicy="AS_NEEDED"
+                hbarPolicy="NEVER"
+                prefViewportHeight="650"
                 AnchorPane.topAnchor="0"
                 AnchorPane.bottomAnchor="0"
                 AnchorPane.leftAnchor="0"

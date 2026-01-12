@@ -45,7 +45,7 @@ public class FormInmuebleController {
     // =========================
     private final Connection conn = MySQLConnection.getConnection();
     private final InmuebleDAO inmuebleDAO = new InmuebleDAO(conn);
-    private final ServicioExtraDAO servicioDAO = new ServicioExtraDAO(conn);
+    private final ServicioExtraDAO servicioDAO = new ServicioExtraDAO();
     private final InmuebleServicioDAO inmuebleServicioDAO = new InmuebleServicioDAO(conn);
     private final ImagenInmuebleDAO imagenDAO = new ImagenInmuebleDAO(conn);
 
@@ -80,7 +80,7 @@ public class FormInmuebleController {
         try {
             for (ServicioExtra s : servicioDAO.findAll()) {
                 FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/org/example/renthub/ServicioExtraCheck.fxml")
+                        getClass().getResource("/org/example/renthub/ServicioExtraCard.fxml")
                 );
                 VBox nodo = loader.load();
 
@@ -135,17 +135,16 @@ public class FormInmuebleController {
             Usuario propietario = Sesion.getUsuario();
             inmueble.setPropietario(propietario);
 
-            // INSERT / UPDATE
             if (inmueble.getIdInmueble() == 0) {
                 inmuebleDAO.insert(inmueble);
             } else {
                 inmuebleDAO.update(inmueble);
                 inmuebleServicioDAO.deleteByInmueble(inmueble);
-                imagenDAO.deleteByInmueble(inmueble);
             }
 
             guardarServicios();
             guardarImagenes();
+
 
             cerrar();
 
