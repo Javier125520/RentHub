@@ -3,101 +3,104 @@ package org.example.renthub.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.renthub.model.Usuario;
+import org.example.renthub.services.Sesion;
+import org.example.renthub.utils.Ventanas;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MenuHuespedController implements Initializable {
+
+public class MenuHuespedController {
 
     @FXML
     private Label lblUsuario;
 
     @FXML
-    private FlowPane contenedorInmuebles;
+    private StackPane contenidoCentral;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // Usuario de ejemplo (luego vendrá de sesión)
-        lblUsuario.setText("Ana López");
+    private Usuario usuario;
 
-        cargarInmuebles();
+    // =========================
+    // INIT
+    // =========================
+    @FXML
+    public void initialize() {
+        usuario = Sesion.getUsuario();
+        if (usuario != null) {
+            lblUsuario.setText(usuario.getNombre());
+        }
+
+        lblUsuario.setStyle("-fx-cursor: hand;");
+        lblUsuario.setOnMouseClicked(evt -> abrirPerfil());
+
+        // Vista por defecto
+        verViviendas();
     }
 
-    /* =========================
-       NAVEGACIÓN
-       ========================= */
-
+    // =========================
+    // NAVEGACIÓN
+    // =========================
     @FXML
     private void verViviendas() {
-        contenedorInmuebles.getChildren().clear();
-        cargarInmuebles();
+        cargarVista("ViviendasView.fxml");
     }
 
     @FXML
     private void verReservas() {
-        contenedorInmuebles.getChildren().clear();
-        // Aquí luego cargas cards de reservas
+        cargarVista("MisReservasView.fxml");
     }
 
     @FXML
     private void verReseñas() {
-        contenedorInmuebles.getChildren().clear();
-        // Aquí luego cargas cards de reseñas
+        cargarVista("MisReseñasView.fxml");
     }
 
-    /* =========================
-       CARGA DE INMUEBLES
-       ========================= */
+    private void abrirPerfil() {
+    }
 
-    private void cargarInmuebles() {
+    // =========================
+    // LOGOUT
+    // =========================
+    @FXML
+    private void onLogout() {
         try {
-            for (int i = 0; i < 6; i++) {
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/org/example/renthub/InmuebleCardHuesped.fxml")
-                );
-                VBox card = loader.load();
-
-                CardInmuebleHuespedController controller = loader.getController();
-                controller.setDatos(
-                        "Apartamento Moderno",
-                        "Madrid, España",
-                        "Hermoso apartamento completamente equipado",
-                        "85 €/noche",
-                        "2 hab · 4 huéspedes"
-                );
-
-                contenedorInmuebles.getChildren().add(card);
-            }
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/org/example/renthub/PantallaLogin.fxml")
+            );
+            contenidoCentral.getScene().setRoot(loader.load());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /* =========================
-       LOGOUT
-       ========================= */
-
-    @FXML
-    private void onLogout() {
-        cambiarPantalla("login.fxml");
-    }
-
-    private void cambiarPantalla(String fxml) {
+    // =========================
+    // MÉTODO AUXILIAR
+    // =========================
+    private void cargarVista(String fxml) {
         try {
-            Stage stage = (Stage) lblUsuario.getScene().getWindow();
-            Parent root = FXMLLoader.load(
-                    getClass().getResource("/org/example/renthub/view/" + fxml)
-            );
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
+            String path = "/org/example/renthub/" + fxml;
+            URL resource = getClass().getResource(path);
+
+            FXMLLoader loader = new FXMLLoader(resource);
+            Parent view = loader.load();
+
+            contenidoCentral.getChildren().setAll(view);
+
+        } catch (Exception e) {
+            System.err.println("Error al cargar vista: " + fxml);
             e.printStackTrace();
         }
     }
 }
+
 

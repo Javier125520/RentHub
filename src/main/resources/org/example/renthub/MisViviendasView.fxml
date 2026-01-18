@@ -18,7 +18,7 @@
 
         <Region HBox.hgrow="ALWAYS"/>
 
-        <Button text="+ Añadir Vivienda" styleClass="btn-primary" onAction="#onNuevaVivienda"/>
+        <Button text="+ Añadir Vivienda" styleClass="btn-primary" onAction="#onNuevoInmueble"/>
     </HBox>
 
     <!-- CARDS -->

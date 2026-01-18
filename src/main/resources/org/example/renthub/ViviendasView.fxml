@@ -6,16 +6,96 @@
 <VBox spacing="20"
       xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.renthub.controller.ViviendasController">
+      fx:controller="org.example.renthub.controller.ViviendasViewController">
 
     <Label text="Viviendas Disponibles" styleClass="title"/>
     <Label text="Encuentra tu alojamiento perfecto" styleClass="description"/>
 
-    <HBox spacing="10">
-        <TextField promptText="🔍 Buscar vivienda..." styleClass="search"/>
-        <Button text="⚙ Filtros" styleClass="btn-outline"/>
+    <!-- BUSCADOR + BOTÓN -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="🔍 Buscar vivienda..." styleClass="search"/>
+        <Button text="⚙ Filtros"
+                styleClass="btn-outline"
+                onAction="#abrirFiltros"/>
     </HBox>
 
+    <!-- PANEL DE FILTROS (OCULTO) -->
+    <VBox fx:id="panelFiltros"
+          spacing="15"
+          visible="false"
+          managed="false"
+          styleClass="filtros-card">
+
+        <HBox spacing="15">
+            <!-- PRECIO MÍNIMO -->
+            <VBox>
+                <Label text="Precio mínimo (€/noche)"/>
+                <TextField fx:id="txtPrecioMin"
+                           promptText="0"/>
+            </VBox>
+
+            <!-- PRECIO MÁXIMO -->
+            <VBox>
+                <Label text="Precio máximo (€/noche)"/>
+                <TextField fx:id="txtPrecioMax"
+                           promptText="1000"/>
+            </VBox>
+
+            <!-- UBICACIÓN -->
+            <VBox>
+                <Label text="Ciudad"/>
+                <TextField fx:id="txtCiudad"
+                           promptText="Madrid, Barcelona..."/>
+            </VBox>
+
+            <!-- HABITACIONES -->
+            <VBox>
+                <Label text="Número Habitaciones"/>
+                <Spinner fx:id="spHabitaciones"/>
+            </VBox>
+
+            <!-- HUÉSPEDES -->
+            <VBox>
+                <Label text="Huéspedes"/>
+                <Spinner fx:id="spCapacidad"/>
+            </VBox>
+
+            <Separator/>
+
+            <!-- SERVICIOS -->
+            <HBox spacing="10" styleClass="servicios-filtro">
+
+                <Label text="Servicios requeridos" styleClass="form-label"/>
+
+                <FlowPane fx:id="contenedorServiciosFiltro"
+                          hgap="15"
+                          vgap="10"/>
+            </HBox>
+
+            <Separator/>
+
+            <!-- FECHAS DE RESERVA -->
+            <HBox spacing="10">
+                <Label text="Fechas de reserva" styleClass="form-label"/>
+
+                <HBox spacing="15">
+                    <VBox>
+                        <Label text="Fecha de entrada"/>
+                        <DatePicker fx:id="dpFechaEntrada"
+                                    promptText="dd/mm/aaaa"/>
+                    </VBox>
+
+                    <VBox>
+                        <Label text="Fecha de salida"/>
+                        <DatePicker fx:id="dpFechaSalida"
+                                    promptText="dd/mm/aaaa"/>
+                    </VBox>
+                </HBox>
+            </HBox>
+        </HBox>
+    </VBox>
+
+    <!-- LISTA DE INMUEBLES -->
     <ScrollPane fitToWidth="true">
         <FlowPane fx:id="contenedorInmuebles"
                   hgap="25"
@@ -24,4 +104,5 @@
     </ScrollPane>
 
 </VBox>
+
 

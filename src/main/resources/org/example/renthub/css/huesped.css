@@ -600,3 +600,40 @@
 }
 
 
+.filtros-card {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+    -fx-padding: 16;
+}
+
+.servicios-filtro {
+    -fx-background-color: #f3f4f6;
+    -fx-border-radius: 12;
+    -fx-padding: 8 12;
+}
+
+.info-row {
+    -fx-spacing: 10;
+}
+
+.carousel-btn left {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+
+.carousel-btn right {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+
+.carousel {
+    -fx-background-color: transparent;
+}
+
+.service-chip {
+    -fx-background-color: #eef2ff;
+    -fx-text-fill: #4338ca;
+    -fx-padding: 6 10;
+    -fx-background-radius: 15;
+    -fx-font-size: 11px;
+}

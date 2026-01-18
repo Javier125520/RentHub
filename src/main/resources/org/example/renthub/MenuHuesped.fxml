@@ -34,7 +34,7 @@
                 <Button text="⭐ Mis Reseñas" styleClass="tab" onAction="#verReseñas"/>
             </HBox>
 
-            <StackPane fx:id="contentPane" VBox.vgrow="ALWAYS"/>
+            <StackPane fx:id="contenidoCentral" VBox.vgrow="ALWAYS"/>
 
         </VBox>
     </center>

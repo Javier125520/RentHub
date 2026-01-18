@@ -24,13 +24,13 @@ public class MisViviendasViewController {
     @FXML
     public void initialize() {
         try {
-            cargarViviendas();
+            cargarInmuebles();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void cargarViviendas() throws SQLException {
+    private void cargarInmuebles() throws SQLException {
         contenedorViviendas.getChildren().clear();
 
         Usuario propietario = Sesion.getUsuario();
@@ -58,18 +58,18 @@ public class MisViviendasViewController {
     }
 
     @FXML
-    private void onNuevaVivienda() throws SQLException {
+    private void onNuevoInmueble() throws SQLException {
         Ventanas.abrirModal(
                 "/org/example/renthub/FormInmueble.fxml",
                 "Añadir Vivienda"
         );
 
         // Al cerrar el modal, refrescamos
-        cargarViviendas();
+        cargarInmuebles();
     }
 
     public void refrescar() throws SQLException {
-        cargarViviendas();
+        cargarInmuebles();
     }
 }
 

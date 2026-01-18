@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
@@ -11,43 +12,72 @@
       spacing="12"
       styleClass="card">
 
-    <ImageView fx:id="imagen"
-               fitWidth="300"
-               fitHeight="180"
-               preserveRatio="false"
-               styleClass="card-image"/>
+    <StackPane styleClass="carousel">
+
+        <ImageView fx:id="imagen"
+                   fitWidth="300"
+                   fitHeight="180"
+                   preserveRatio="false"
+                   styleClass="card-image"/>
+
+        <Button text="❮"
+                onAction="#imagenAnterior"
+                styleClass="carousel-btn left"
+                StackPane.alignment="CENTER_LEFT"/>
+
+        <Button text="❯"
+                onAction="#imagenSiguiente"
+                styleClass="carousel-btn right"
+                StackPane.alignment="CENTER_RIGHT"/>
+    </StackPane>
 
     <VBox spacing="8">
-        <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+        <padding>
+            <Insets top="12" right="12" bottom="12" left="12"/>
+        </padding>
 
+        <!-- TÍTULO + PRECIO -->
         <HBox alignment="CENTER_LEFT">
             <Label fx:id="titulo" styleClass="card-title"/>
             <Region HBox.hgrow="ALWAYS"/>
             <Label fx:id="precio" styleClass="price-badge"/>
         </HBox>
 
-        <Label fx:id="ubicacion" styleClass="location"/>
+        <!-- CIUDAD -->
+        <HBox spacing="6" alignment="CENTER_LEFT">
+            <Label text="📍"/>
+            <Label fx:id="ciudad" styleClass="location"/>
+        </HBox>
 
+        <!-- DIRECCIÓN -->
+        <HBox spacing="6" alignment="CENTER_LEFT">
+            <Label fx:id="direccion" styleClass="location"/>
+        </HBox>
+
+        <!-- DESCRIPCIÓN -->
         <Label fx:id="descripcion"
                wrapText="true"
                styleClass="card-description"/>
 
-        <HBox spacing="15">
+        <!-- INFO -->
+        <HBox spacing="15" styleClass="info-row">
             <Label fx:id="habitaciones"/>
             <Label fx:id="capacidad"/>
         </HBox>
 
-        <HBox spacing="8">
-            <Label styleClass="tag"/>
-            <Label styleClass="tag"/>
-            <Label styleClass="tag"/>
-        </HBox>
+        <!-- SERVICIOS -->
+        <FlowPane fx:id="contenedorServicios"
+                  hgap="8"
+                  vgap="8"/>
 
+        <!-- BOTÓN -->
         <Button text="📅 Reservar"
+                maxWidth="Infinity"
                 styleClass="btn-primary"
                 onAction="#onReservar"/>
     </VBox>
 
 </VBox>
+
 
 

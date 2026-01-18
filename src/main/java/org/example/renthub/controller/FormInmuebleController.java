@@ -62,7 +62,7 @@ public class FormInmuebleController {
     public void initialize() {
 
         cmbTipo.getItems().setAll(TipoInmueble.values());
-        cmbEstado.getItems().setAll("DISPONIBLE", "NO_DISPONIBLE");
+        cmbEstado.getItems().setAll("DISPONIBLE", "NO DISPONIBLE");
 
         spPrecio.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(10, 10000, 50, 5));
         spHabitaciones.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 20, 1));
@@ -87,14 +87,15 @@ public class FormInmuebleController {
                 CardServicioExtraController controller = loader.getController();
                 controller.setServicio(s);
 
+                nodo.setUserData(controller);
+
                 serviciosExtrasContainer.getChildren().add(nodo);
             }
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
+
 
     // =========================
     // IMÁGENES
@@ -131,6 +132,8 @@ public class FormInmuebleController {
             inmueble.setPrecioNoche(spPrecio.getValue());
             inmueble.setNumeroHabitaciones(spHabitaciones.getValue());
             inmueble.setCapacidad(spCapacidad.getValue());
+            boolean disponible = "DISPONIBLE".equals(cmbEstado.getValue());
+            inmueble.setDisponible(disponible);
 
             Usuario propietario = Sesion.getUsuario();
             inmueble.setPropietario(propietario);
@@ -158,7 +161,9 @@ public class FormInmuebleController {
     // SERVICIOS SELECCIONADOS
     // =========================
     private void guardarServicios() throws Exception {
+
         for (var node : serviciosExtrasContainer.getChildren()) {
+
             CardServicioExtraController c =
                     (CardServicioExtraController) node.getUserData();
 
@@ -166,12 +171,38 @@ public class FormInmuebleController {
                 inmuebleServicioDAO.addServicio(
                         inmueble,
                         c.getServicio(),
-                        0.0,
-                        EstadoServicio.DISPONIBLE
+                        c.getPrecio(),
+                        EstadoServicio.valueOf(String.valueOf(c.getEstado()))
                 );
             }
         }
     }
+
+    private void marcarServiciosSeleccionados() throws SQLException {
+
+        List<InmuebleServicio> serviciosInmueble =
+                inmuebleServicioDAO.findByInmueble(inmueble);
+
+        for (var node : serviciosExtrasContainer.getChildren()) {
+
+            CardServicioExtraController c =
+                    (CardServicioExtraController) node.getUserData();
+
+            for (InmuebleServicio is : serviciosInmueble) {
+                if (is.getServicio().getIdServicio()
+                        == c.getServicio().getIdServicio()) {
+
+                    c.marcarSeleccionado(
+                            is.getPrecioAdicional(),
+                            is.getEstado()
+                    );
+                }
+            }
+        }
+    }
+
+
+
 
     // =========================
     // GUARDAR IMÁGENES
@@ -188,7 +219,7 @@ public class FormInmuebleController {
     // =========================
     // EDITAR
     // =========================
-    public void setDatos(Inmueble inmueble) {
+    public void setDatos(Inmueble inmueble) throws SQLException {
         this.inmueble = inmueble;
 
         txtTitulo.setText(inmueble.getTitulo());
@@ -199,8 +230,11 @@ public class FormInmuebleController {
         spPrecio.getValueFactory().setValue(inmueble.getPrecioNoche());
         spHabitaciones.getValueFactory().setValue(inmueble.getNumeroHabitaciones());
         spCapacidad.getValueFactory().setValue(inmueble.getCapacidad());
+        cmbEstado.setValue(inmueble.isDisponible() ? "DISPONIBLE" : "NO DISPONIBLE");
+
 
         lblImagenes.setText(inmueble.getImagenes().size() + " imágenes existentes");
+        marcarServiciosSeleccionados();
     }
 
     // =========================

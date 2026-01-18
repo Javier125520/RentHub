@@ -90,8 +90,6 @@ public class CardInmueblePropietarioController {
         ImagenInmueble img = imagenes.get(indiceImagen);
         File file = new File(img.getUrl());
 
-        System.out.println("Cargando imagen: " + file.getAbsolutePath());
-
         if (file.exists()) {
             Image image = new Image(
                     file.toURI().toString(),

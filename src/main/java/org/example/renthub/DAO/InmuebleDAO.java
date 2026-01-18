@@ -32,8 +32,11 @@ public class InmuebleDAO {
     private static final String SELECT_BY_ID =
             "SELECT * FROM inmueble WHERE id_inmueble=?";
 
-    private static final String FIND_INMUEBLES_BY_PROPIETARIO =
+    private static final String SELECT_INMUEBLES_BY_PROPIETARIO =
             "SELECT * FROM inmueble WHERE id_propietario=?";
+
+    private static final String SELECT_INMUEBLES_DISPONIBLES =
+            "SELECT * FROM inmueble WHERE disponible=TRUE";
 
     // =========================
     // CONSTRUCTORES
@@ -118,8 +121,22 @@ public class InmuebleDAO {
     public List<Inmueble> findByPropietario(int idPropietario) throws SQLException {
         List<Inmueble> inmuebles = new ArrayList<>();
 
-        try (PreparedStatement ps = conn.prepareStatement(FIND_INMUEBLES_BY_PROPIETARIO)) {
+        try (PreparedStatement ps = conn.prepareStatement(SELECT_INMUEBLES_BY_PROPIETARIO)) {
             ps.setInt(1, idPropietario);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                inmuebles.add(mapInmueble(rs));
+            }
+        }
+
+        return inmuebles;
+    }
+
+    public List<Inmueble> findDisponibles() throws SQLException {
+        List<Inmueble> inmuebles = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(SELECT_INMUEBLES_DISPONIBLES)) {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -135,14 +152,18 @@ public class InmuebleDAO {
     // =========================
 
     public List<Inmueble> buscar(
+            String titulo,
             String ciudad,
             Double precioMin,
             Double precioMax,
             Integer capacidad,
+            Integer numeroHabitaciones,
             LocalDate fechaEntrada,
             LocalDate fechaSalida,
             List<Integer> serviciosIncluidos
     ) throws SQLException {
+
+
 
         StringBuilder sql = new StringBuilder(
                 "SELECT DISTINCT i.* FROM inmueble i "
@@ -156,6 +177,11 @@ public class InmuebleDAO {
         sql.append("WHERE i.disponible = TRUE ");
 
         List<Object> params = new ArrayList<>();
+
+        if (titulo != null && !titulo.isBlank()) {
+            sql.append("AND i.titulo LIKE ? ");
+            params.add("%" + titulo + "%");
+        }
 
         if (ciudad != null && !ciudad.isBlank()) {
             sql.append("AND i.ciudad LIKE ? ");
@@ -175,6 +201,11 @@ public class InmuebleDAO {
         if (capacidad != null) {
             sql.append("AND i.capacidad >= ? ");
             params.add(capacidad);
+        }
+
+        if (numeroHabitaciones != null) {
+            sql.append("AND i.numero_habitaciones >= ? ");
+            params.add(numeroHabitaciones);
         }
 
         if (fechaEntrada != null && fechaSalida != null) {

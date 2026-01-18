@@ -3,26 +3,51 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox xmlns="http://javafx.com/javafx"
+<VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-        fx:controller="org.example.renthub.controller.CardServicioExtraController"
-      spacing="12"
-      alignment="CENTER_LEFT"
+      fx:controller="org.example.renthub.controller.CardServicioExtraController"
+      spacing="10"
       styleClass="servicio-card">
 
-    <!-- Checkbox -->
-    <CheckBox fx:id="checkServicio"/>
+    <!-- FILA PRINCIPAL -->
+    <HBox spacing="12" alignment="CENTER_LEFT">
 
-    <!-- Contenido -->
-    <VBox spacing="4">
-        <Label fx:id="lblNombreServicio"
-               text="Piscina"
-               styleClass="servicio-title"/>
+        <CheckBox fx:id="checkServicio"
+                  onAction="#onToggleServicio"/>
 
-        <Label fx:id="lblDescripcionServicio"
-               text="Piscina muy buena"
-               styleClass="servicio-description"/>
+        <VBox spacing="4">
+            <Label fx:id="lblNombreServicio"
+                   text="Piscina"
+                   styleClass="servicio-title"/>
+
+            <Label fx:id="lblDescripcionServicio"
+                   text="Piscina muy buena"
+                   styleClass="servicio-description"/>
+        </VBox>
+    </HBox>
+
+    <!-- CONFIGURACIÓN (OCULTA POR DEFECTO) -->
+    <VBox fx:id="configuracionBox"
+          spacing="10"
+          visible="false"
+          managed="false"
+          styleClass="servicio-config">
+
+        <Separator/>
+
+        <HBox spacing="10">
+            <VBox>
+                <Label text="Precio adicional (€)"/>
+                <Spinner fx:id="spPrecio"/>
+            </VBox>
+
+            <VBox>
+                <Label text="Estado"/>
+                <ComboBox fx:id="cmbEstado"/>
+            </VBox>
+        </HBox>
+
     </VBox>
+</VBox>
 
-</HBox>
 
