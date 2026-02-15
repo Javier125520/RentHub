@@ -4,23 +4,26 @@ import org.example.renthub.model.enums.EstadoPago;
 import org.example.renthub.model.enums.MetodoPago;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Pago {
     private int id;
     private MetodoPago metodo;
-    private LocalDate fechaPago;
+    private LocalDateTime fechaPago;
     private double monto;
     private EstadoPago estado;
+    private Reserva reserva;
 
     public Pago() {}
 
-    public Pago(int id, MetodoPago metodo, LocalDate fechaPago, double monto, EstadoPago estado) {
+    public Pago(int id, MetodoPago metodo, LocalDateTime fechaPago, double monto, EstadoPago estado, Reserva reserva) {
         this.id = id;
         this.metodo = metodo;
         this.fechaPago = fechaPago;
         this.monto = monto;
         this.estado = estado;
+        this.setReserva(reserva);
     }
 
     // getters y setters
@@ -30,14 +33,20 @@ public class Pago {
     public MetodoPago getMetodo() { return metodo; }
     public void setMetodo(MetodoPago metodo) { this.metodo = metodo; }
 
-    public LocalDate getFechaPago() { return fechaPago; }
-    public void setFechaPago(LocalDate fechaPago) { this.fechaPago = fechaPago; }
+    public LocalDateTime getFechaPago() { return fechaPago; }
+    public void setFechaPago(LocalDateTime fechaPago) { this.fechaPago = fechaPago; }
 
     public double getMonto() { return monto; }
     public void setMonto(double monto) { this.monto = monto; }
 
     public EstadoPago getEstado() { return estado; }
     public void setEstado(EstadoPago estado) { this.estado = estado; }
+
+    public Reserva getReserva() { return reserva; }
+
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
+    }
 
     @Override
     public String toString() {

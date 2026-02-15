@@ -38,6 +38,9 @@ public class InmuebleDAO {
     private static final String SELECT_INMUEBLES_DISPONIBLES =
             "SELECT * FROM inmueble WHERE disponible=TRUE";
 
+    private static final String SELECT_BY_RESERVA =
+            "SELECT i.* FROM inmueble i JOIN reserva r ON i.id_inmueble = r.inmueble_id WHERE r.id_reserva = ?";
+
     // =========================
     // CONSTRUCTORES
     // =========================
@@ -145,6 +148,18 @@ public class InmuebleDAO {
         }
 
         return inmuebles;
+    }
+
+    public Inmueble findByReserva(int idReserva) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_RESERVA)) {
+            ps.setInt(1, idReserva);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return mapInmueble(rs);
+            }
+        }
+        return null;
     }
 
     // =========================

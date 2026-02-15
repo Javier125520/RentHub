@@ -5,7 +5,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/17.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.renthub.controller.CardReservaController"
+      fx:controller="org.example.renthub.controller.CardReservaHuespedController"
       spacing="15"
       styleClass="reserva-card">
 
@@ -49,13 +49,13 @@
     <HBox fx:id="accionesPago"
           spacing="10">
 
-        <Button text="💳 Realizar Pago"
+        <Button onAction="#realizarPago" text="💳 Realizar Pago"
                 styleClass="btn-primary"/>
 
-        <Button text="✏ Editar"
+        <Button onAction="#editarReserva" text="✏ Editar"
                 styleClass="btn-secondary"/>
 
-        <Button text="🗑 Cancelar"
+        <Button onAction="#cancelarReserva" text="🗑 Cancelar"
                 styleClass="btn-danger"/>
     </HBox>
 
@@ -65,7 +65,7 @@
           visible="false"
           managed="false">
 
-        <Button text="💬 Añadir Reseña"
+        <Button onAction="#añadirResena" text="💬 Añadir Reseña"
                 styleClass="btn-secondary"/>
     </HBox>
 

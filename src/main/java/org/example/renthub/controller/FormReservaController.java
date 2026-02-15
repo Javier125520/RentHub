@@ -9,6 +9,7 @@ import org.example.renthub.connection.MySQLConnection;
 import org.example.renthub.model.Inmueble;
 import org.example.renthub.model.Reserva;
 import org.example.renthub.model.Usuario;
+import org.example.renthub.model.enums.EstadoReserva;
 import org.example.renthub.services.Sesion;
 
 import java.sql.Connection;
@@ -46,20 +47,26 @@ public class FormReservaController {
     // =========================
     @FXML
     public void initialize() {
-
-        // Recalcular cuando cambian fechas
-        fechaInicio.valueProperty().addListener((obs, oldV, newV) -> calcularTotal());
-        fechaFin.valueProperty().addListener((obs, oldV, newV) -> calcularTotal());
+        // Escuchamos cambios, pero protegemos el cálculo
+        fechaInicio.valueProperty().addListener((obs, o, n) -> calcularTotal());
+        fechaFin.valueProperty().addListener((obs, o, n) -> calcularTotal());
     }
 
-    // =========================
-    // SET INMUEBLE
-    // =========================
     public void setInmueble(Inmueble inmueble) {
         this.inmueble = inmueble;
 
         lblTitulo.setText("Reservar " + inmueble.getTitulo());
-        lblPrecio.setText(String.format("Precio: %.2f € / noche", inmueble.getPrecioNoche()));
+        lblPrecio.setText(String.format("%.2f € / noche", inmueble.getPrecioNoche()));
+    }
+
+    public void setReserva (Reserva reserva) {
+        this.inmueble = reserva.getInmueble();
+
+        lblTitulo.setText("Modificar reserva de " + inmueble.getTitulo());
+        lblPrecio.setText(String.format("%.2f € / noche", inmueble.getPrecioNoche()));
+
+        fechaInicio.setValue(reserva.getFechaEntrada());
+        fechaFin.setValue(reserva.getFechaSalida());
     }
 
     // =========================
@@ -117,8 +124,16 @@ public class FormReservaController {
             reserva.setFechaEntrada(inicio);
             reserva.setFechaSalida(fin);
             reserva.setPrecioTotal(total);
+            reserva.setEstado(EstadoReserva.PENDIENTE);
 
             reservaDAO.insert(reserva);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Reserva confirmada");
+            alert.setHeaderText("¡Reserva realizada con éxito!");
+            alert.setContentText("Tu reserva se ha guardado correctamente.");
+            alert.showAndWait();
+
 
             cerrar();
 

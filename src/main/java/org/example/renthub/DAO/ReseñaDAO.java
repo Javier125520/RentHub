@@ -14,11 +14,11 @@ public class ReseñaDAO {
     // =========================
 
     private static final String INSERT =
-            "INSERT INTO reseña (puntuacion, comentario, fecha, id_inmueble, id_usuario) " +
+            "INSERT INTO reseña (puntuacion, comentario, fecha, id_inmueble, id_huesped) " +
                     "VALUES (?, ?, ?, ?, ?)";
 
     private static final String UPDATE =
-            "UPDATE reseña SET puntuacion = ?, comentario = ?, fecha = ?, id_inmueble = ?, id_usuario = ? " +
+            "UPDATE reseña SET puntuacion = ?, comentario = ?, fecha = ?, id_inmueble = ?, id_huesped = ? " +
                     "WHERE id = ?";
 
     private static final String DELETE =

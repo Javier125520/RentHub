@@ -14,7 +14,6 @@ public class Reserva {
 
     private Inmueble inmueble;
     private Usuario huesped;
-    private Pago pago; // opcional, puede ser null hasta que se realice
 
     public Reserva() {}
 
@@ -66,17 +65,6 @@ public class Reserva {
         }
     }
 
-    public Pago getPago() {
-        return pago;
-    }
-
-    public void setPago(Pago pago) {
-        if (this.pago != null) {
-            throw new IllegalStateException("La reserva ya tiene un pago asociado");
-        }
-        this.pago = pago;
-    }
-
     @Override
     public String toString() {
         return "Reserva{" +
@@ -87,7 +75,6 @@ public class Reserva {
                 ", estado=" + estado +
                 ", inmueble=" + inmueble +
                 ", huesped=" + huesped +
-                ", pago=" + pago +
                 '}';
     }
 

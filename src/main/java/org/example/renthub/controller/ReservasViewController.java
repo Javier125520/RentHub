@@ -1,4 +1,4 @@
 package org.example.renthub.controller;
 
-public class CardReservaController {
+public class ReservasViewController {
 }

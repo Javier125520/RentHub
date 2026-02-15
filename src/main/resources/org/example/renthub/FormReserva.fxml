@@ -16,7 +16,6 @@
         <Label fx:id="lblTitulo" text="Reservar Apartamento Moderno en el Centro"
                styleClass="modal-title"/>
         <Region HBox.hgrow="ALWAYS"/>
-        <Button text="✕" onAction="#cerrar" styleClass="btn-close"/>
     </HBox>
 
     <Label fx:id="lblPrecio" styleClass="modal-price"/>

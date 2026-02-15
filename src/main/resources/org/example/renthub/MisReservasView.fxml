@@ -15,12 +15,12 @@
     </VBox>
 
     <!-- CONTADOR -->
-    <Label text="3 reservas realizadas" styleClass="results"/>
+    <Label fx:id="lblContador" styleClass="results"/>
+
 
     <!-- LISTA DE RESERVAS -->
     <ScrollPane fitToWidth="true" styleClass="scroll">
-        <VBox fx:id="
-" spacing="20"/>
+        <VBox fx:id="contenedorReservas" spacing="20"/>
     </ScrollPane>
 
 </VBox>

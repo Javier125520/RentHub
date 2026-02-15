@@ -55,19 +55,31 @@
 
         <!-- Método de pago -->
         <VBox spacing="10">
+
+            <fx:define>
+                <ToggleGroup fx:id="metodoPagoGroup"/>
+            </fx:define>
+
             <Label text="Método de pago" styleClass="section-title"/>
 
             <HBox spacing="12">
-                <ToggleButton text="💳  Tarjeta" toggleGroup="$metodoPagoGroup"
-                              styleClass="pay-method" selected="true"/>
-                <ToggleButton text="🏦  Transferencia" toggleGroup="$metodoPagoGroup"
+                <ToggleButton text="💳  Tarjeta"
+                              userData="TARJETA"
+                              toggleGroup="$metodoPagoGroup"
+                              styleClass="pay-method"
+                              selected="true"/>
+
+                <ToggleButton text="🏦  Transferencia"
+                              userData="TRANSFERENCIA"
+                              toggleGroup="$metodoPagoGroup"
                               styleClass="pay-method"/>
-                <ToggleButton text="💵  Efectivo" toggleGroup="$metodoPagoGroup"
+
+                <ToggleButton text="💵  Efectivo"
+                              userData="EFECTIVO"
+                              toggleGroup="$metodoPagoGroup"
                               styleClass="pay-method"/>
             </HBox>
 
-            <Label text="Este es un simulador. En una aplicación real se integraría un procesador de pagos."
-                   styleClass="hint"/>
         </VBox>
 
         <!-- Acciones -->

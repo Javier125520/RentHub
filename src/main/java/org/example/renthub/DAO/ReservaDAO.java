@@ -20,30 +20,46 @@ public class ReservaDAO {
     // =========================
 
     private static final String INSERT =
-            "INSERT INTO reserva (fecha_entrada, fecha_salida, precio_total, estado, usuario_id, inmueble_id) " +
+            "INSERT INTO reserva (fecha_inicio, fecha_fin, precio, estado, id_huesped, id_inmueble) " +
                     "VALUES (?, ?, ?, ?, ?, ?)";
+
+    private static final String UPDATE =
+            "UPDATE reserva SET fecha_inicio = ?, fecha_fin = ?, precio = ?" +
+            "WHERE id_reserva = ?";
 
     private static final String DELETE =
             "DELETE FROM reserva WHERE id_reserva = ?";
+
+    private static final String CANCELAR =
+            "UPDATE reserva SET estado = 'CANCELADA' WHERE id_reserva = ?";
 
     private static final String SELECT_BY_ID =
             "SELECT * FROM reserva WHERE id_reserva = ?";
 
     private static final String SELECT_BY_USUARIO =
-            "SELECT * FROM reserva WHERE usuario_id = ?";
+            "SELECT r.*, i.id_inmueble, i.titulo, i.ciudad, i.direccion " +
+            "FROM reserva r " +
+            "JOIN inmueble i ON r.id_inmueble = i.id_inmueble " +
+            "WHERE r.id_huesped = ?";
 
     private static final String SELECT_BY_INMUEBLE =
-            "SELECT * FROM reserva WHERE inmueble_id = ?";
+            "SELECT * FROM reserva WHERE id_inmueble = ?";
+
+    private static final String UPDATE_ESTADO =
+            "UPDATE reserva SET estado = ? WHERE id_reserva = ?";
 
     private static final String CHECK_DISPONIBILIDAD =
             """
             SELECT COUNT(*) 
             FROM reserva
-            WHERE inmueble_id = ?
+            WHERE id_inmueble = ?
               AND estado <> 'CANCELADA'
-              AND fecha_entrada < ?
-              AND fecha_salida > ?
+              AND fecha_inicio < ?
+              AND fecha_fin > ?
             """;
+
+    private static final String CONFIRMAR =
+            "UPDATE reserva SET estado = ? WHERE id_reserva = ?";
 
     // =========================
     // CONSTRUCTORES
@@ -92,10 +108,29 @@ public class ReservaDAO {
         }
     }
 
+    public boolean update(Reserva r) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
+
+            ps.setDate(1, Date.valueOf(r.getFechaEntrada()));
+            ps.setDate(2, Date.valueOf(r.getFechaSalida()));
+            ps.setDouble(3, r.getPrecioTotal());
+            ps.setInt(4, r.getIdReserva());
+
+            return ps.executeUpdate() > 0;
+        }
+    }
+
     public boolean delete(int idReserva) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
             ps.setInt(1, idReserva);
             return ps.executeUpdate() > 0;
+        }
+    }
+
+    public void cancelarReserva(int idReserva) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(CANCELAR)) {
+            ps.setInt(1, idReserva);
+            ps.executeUpdate();
         }
     }
 
@@ -147,10 +182,6 @@ public class ReservaDAO {
         return reservas;
     }
 
-    // =========================
-    // DISPONIBILIDAD
-    // =========================
-
     public boolean estaDisponible(int idInmueble, LocalDate entrada, LocalDate salida)
             throws SQLException {
 
@@ -168,6 +199,29 @@ public class ReservaDAO {
         return false;
     }
 
+    public void updateEstado(int idReserva, EstadoReserva estadoReserva) {
+        try (PreparedStatement ps = conn.prepareStatement(UPDATE_ESTADO)) {
+            ps.setString(1, estadoReserva.name());
+            ps.setInt(2, idReserva);
+            int filas = ps.executeUpdate();
+            System.out.println("Filas afectadas: " + filas);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void confirmarReserva(int idReserva) throws SQLException {
+
+        try (PreparedStatement ps = conn.prepareStatement(CONFIRMAR)) {
+
+            ps.setString(1, "CONFIRMADA");
+            ps.setInt(2, idReserva);
+
+            ps.executeUpdate();
+        }
+    }
+
+
     // =========================
     // MAPEADOR
     // =========================
@@ -177,17 +231,20 @@ public class ReservaDAO {
         Reserva r = new Reserva();
 
         r.setIdReserva(rs.getInt("id_reserva"));
-        r.setFechaEntrada(rs.getDate("fecha_entrada").toLocalDate());
-        r.setFechaSalida(rs.getDate("fecha_salida").toLocalDate());
-        r.setPrecioTotal(rs.getDouble("precio_total"));
+        r.setFechaEntrada(rs.getDate("fecha_inicio").toLocalDate());
+        r.setFechaSalida(rs.getDate("fecha_fin").toLocalDate());
+        r.setPrecioTotal(rs.getDouble("precio"));
         r.setEstado(EstadoReserva.valueOf(rs.getString("estado")));
 
         Usuario u = new Usuario();
-        u.setIdUsuario(rs.getInt("usuario_id"));
+        u.setIdUsuario(rs.getInt("id_huesped"));
         r.setHuesped(u);
 
         Inmueble i = new Inmueble();
-        i.setIdInmueble(rs.getInt("inmueble_id"));
+        i.setIdInmueble(rs.getInt("id_inmueble"));
+        i.setTitulo(rs.getString("titulo"));
+        i.setCiudad(rs.getString("ciudad"));
+        i.setDireccion(rs.getString("direccion"));
         r.setInmueble(i);
 
         return r;

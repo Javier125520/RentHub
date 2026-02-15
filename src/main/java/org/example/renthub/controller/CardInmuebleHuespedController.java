@@ -1,15 +1,22 @@
 package org.example.renthub.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.example.renthub.model.ImagenInmueble;
 import org.example.renthub.model.Inmueble;
 import org.example.renthub.model.InmuebleServicio;
 import org.example.renthub.model.ServicioExtra;
+import org.example.renthub.utils.Ventanas;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -140,8 +147,28 @@ public class CardInmuebleHuespedController {
     // =========================
     @FXML
     private void onReservar() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/org/example/renthub/FormReserva.fxml")
+            );
 
+            VBox root = loader.load();
+
+            FormReservaController controller = loader.getController();
+            controller.setInmueble(inmueble); // 🔑 AQUÍ ESTÁ LA CLAVE
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Reservar inmueble");
+            stage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
 }
 
 

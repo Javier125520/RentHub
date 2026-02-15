@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Reseña {
     private int id;
-    private int puntuacion; // 1..5
+    private int puntuacion;
     private String comentario;
     private LocalDate fecha;
 

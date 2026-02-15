@@ -16,7 +16,7 @@ public class PagoDAO {
     // =========================
 
     private static final String INSERT =
-            "INSERT INTO pago (metodo, fecha_pago, monto, estado) VALUES (?, ?, ?, ?)";
+            "INSERT INTO pago (metodo, fecha_pago, monto, estado, id_reserva) VALUES (?, ?, ?, ?, ?)";
 
     private static final String UPDATE =
             "UPDATE pago SET metodo = ?, fecha_pago = ?, monto = ?, estado = ? WHERE id = ?";
@@ -40,9 +40,10 @@ public class PagoDAO {
         try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, p.getMetodo().name());
-            ps.setDate(2, Date.valueOf(p.getFechaPago()));
+            ps.setTimestamp(2, Timestamp.valueOf(p.getFechaPago()));
             ps.setDouble(3, p.getMonto());
             ps.setString(4, p.getEstado().name());
+            ps.setInt(5, p.getReserva().getIdReserva());
 
             int rows = ps.executeUpdate();
 
@@ -67,7 +68,7 @@ public class PagoDAO {
         try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
 
             ps.setString(1, p.getMetodo().name());
-            ps.setDate(2, Date.valueOf(p.getFechaPago()));
+            ps.setTimestamp(2, Timestamp.valueOf(p.getFechaPago()));
             ps.setDouble(3, p.getMonto());
             ps.setString(4, p.getEstado().name());
             ps.setInt(5, p.getId());
@@ -129,9 +130,10 @@ public class PagoDAO {
         return new Pago(
                 rs.getInt("id"),
                 MetodoPago.valueOf(rs.getString("metodo")),
-                rs.getDate("fecha_pago").toLocalDate(),
+                rs.getTimestamp("fecha_pago").toLocalDateTime(),
                 rs.getDouble("monto"),
-                EstadoPago.valueOf(rs.getString("estado"))
+                EstadoPago.valueOf(rs.getString("estado")),
+                new ReservaDAO().findById(rs.getInt("id_reserva"))
         );
     }
 }
