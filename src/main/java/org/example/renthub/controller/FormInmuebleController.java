@@ -12,7 +12,6 @@ import org.example.renthub.model.enums.EstadoServicio;
 import org.example.renthub.model.enums.TipoInmueble;
 import org.example.renthub.connection.MySQLConnection;
 import org.example.renthub.services.Sesion;
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;

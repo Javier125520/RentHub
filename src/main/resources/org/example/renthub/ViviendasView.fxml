@@ -13,7 +13,7 @@
 
     <!-- BUSCADOR + BOTÓN -->
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <TextField fx:id="searchField" promptText="🔍 Buscar vivienda..." styleClass="search"/>
+        <TextField fx:id="searchField" promptText="🔍 Buscar vivienda..." styleClass="search" onAction="#aplicarFiltros"/>
         <Button text="⚙ Filtros"
                 styleClass="btn-outline"
                 onAction="#abrirFiltros"/>

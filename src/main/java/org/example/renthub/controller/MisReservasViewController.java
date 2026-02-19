@@ -53,7 +53,7 @@ public class MisReservasViewController {
         }
 
         try {
-            List<Reserva> reservas = reservaDAO.findByUsuario(usuario.getIdUsuario());
+            List<Reserva> reservas = reservaDAO.findByHuesped(usuario.getIdUsuario());
 
             lblContador.setText(reservas.size() + " reservas realizadas");
 

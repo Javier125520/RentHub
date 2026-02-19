@@ -645,3 +645,24 @@
 .btn-outline:hover {
     -fx-background-color: #f1f5f9;
 }
+
+.status {
+    -fx-padding: 6 12;
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+}
+
+.confirmed {
+    -fx-background-color: #d4edda;
+    -fx-text-fill: #155724;
+}
+
+.pending {
+    -fx-background-color: #fff3cd;
+    -fx-text-fill: #856404;
+}
+
+.cancelled {
+    -fx-background-color: #f8d7da;
+    -fx-text-fill: #721c24;
+}

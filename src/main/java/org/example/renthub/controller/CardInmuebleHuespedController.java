@@ -64,7 +64,7 @@ public class CardInmuebleHuespedController {
     // =========================
     private void cargarDatos() {
         titulo.setText(inmueble.getTitulo());
-        precio.setText(String.format("%.2f € / noche", inmueble.getPrecioNoche()));
+        precio.setText(String.format("%.2f € / noche", inmueble.calcularPrecioFinalPorNoche()));
         ciudad.setText(inmueble.getCiudad());
         direccion.setText(inmueble.getDireccion());
         descripcion.setText(inmueble.getDescripcion());

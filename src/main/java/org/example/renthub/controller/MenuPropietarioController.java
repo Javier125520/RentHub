@@ -65,7 +65,11 @@ public class MenuPropietarioController {
     }
 
     private void abrirPerfil() {
-
+        cargarVista("PerfilPropietario.fxml");
+         btnMisViviendas.getStyleClass().remove("tab-active");
+         btnServicios.getStyleClass().remove("tab-active");
+         btnReservas.getStyleClass().remove("tab-active");
+         btnResenas.getStyleClass().remove("tab-active");
     }
 
     /* =========================

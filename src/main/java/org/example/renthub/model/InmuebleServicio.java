@@ -13,9 +13,7 @@ public class InmuebleServicio {
 
     public InmuebleServicio() {}
 
-    public InmuebleServicio(int id, Inmueble inmueble, ServicioExtra servicio,
-                            double precioAdicional,
-                            EstadoServicio estado) {
+    public InmuebleServicio(int id, Inmueble inmueble, ServicioExtra servicio, double precioAdicional, EstadoServicio estado) {
         this.id = id;
         setInmueble(inmueble);
         setServicio(servicio);

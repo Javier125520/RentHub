@@ -55,7 +55,7 @@ public class CardInmueblePropietarioController {
         lblTitulo.setText(inmueble.getTitulo());
         lblDireccion.setText(inmueble.getDireccion());
         blbCiudad.setText(inmueble.getCiudad());
-        lblPrecio.setText("€" + inmueble.getPrecioNoche() + "/noche");
+        lblPrecio.setText("€" + inmueble.calcularPrecioFinalPorNoche() + "/noche");
         lblTipo.setText(inmueble.getTipoInmueble().toString());
         lblDescripcion.setText(inmueble.getDescripcion());
         habitaciones.setText("🛏 " + inmueble.getNumeroHabitaciones());

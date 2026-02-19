@@ -5,6 +5,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="org.example.renthub.controller.ResenasViewController"
       spacing="25"
       styleClass="content">
 
@@ -15,19 +16,19 @@
     </VBox>
 
     <!-- RESUMEN -->
-    <HBox spacing="20">
+    <HBox spacing="20" alignment="CENTER">
         <VBox styleClass="stat-card" alignment="CENTER" spacing="5">
-            <Label text="⭐ 5.0" styleClass="stat-value"/>
+            <Label fx:id="lblPromedio" text="⭐ 5.0" styleClass="stat-value"/>
             <Label text="Calificación promedio" styleClass="stat-label"/>
         </VBox>
 
         <VBox styleClass="stat-card" alignment="CENTER" spacing="5">
-            <Label text="1" styleClass="stat-value"/>
+            <Label fx:id="lblTotalResenas" text="1" styleClass="stat-value"/>
             <Label text="Total de reseñas" styleClass="stat-label"/>
         </VBox>
 
         <VBox styleClass="stat-card" alignment="CENTER" spacing="5">
-            <Label text="1" styleClass="stat-value"/>
+            <Label fx:id="lblViviendas" text="1" styleClass="stat-value"/>
             <Label text="Viviendas con reseñas" styleClass="stat-label"/>
         </VBox>
     </HBox>

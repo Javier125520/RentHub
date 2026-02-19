@@ -22,10 +22,22 @@ public class FormResenaController {
 
     private Reserva reserva;
     private int puntuacionSeleccionada = 0;
+    private Reseña resena;
+    private boolean modoEdicion = false;
 
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
     }
+
+    public void setResena(Reseña resena) {
+        this.resena = resena;
+        this.modoEdicion = true;
+
+        // cargar datos en el form
+        txtComentario.setText(resena.getComentario());
+        puntuacionSeleccionada = resena.getPuntuacion();
+        actualizarVisualEstrellas();    }
+
 
     @FXML
     private void initialize() {
@@ -60,7 +72,7 @@ public class FormResenaController {
     }
 
     @FXML
-    private void onPublicar() {
+    private void onGuardar() {
 
         if (puntuacionSeleccionada == 0) {
             mostrarAlerta("Selecciona una puntuación");
@@ -69,21 +81,28 @@ public class FormResenaController {
 
         try {
 
-            Reseña resena = new Reseña();
-            resena.setPuntuacion(puntuacionSeleccionada);
-            resena.setComentario(txtComentario.getText());
-            resena.setFecha(LocalDate.now());
-
-            // 🔥 RELACIONES SEGÚN TU MODELO
-            resena.setInmueble(reserva.getInmueble());
-            resena.setHuesped(reserva.getHuesped());
-
             ReseñaDAO dao = new ReseñaDAO();
-            dao.insert(resena);
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Reseña publicada correctamente");
-            alert.showAndWait();
+            if (modoEdicion) {
+
+                // 🔥 UPDATE
+                resena.setComentario(txtComentario.getText());
+                resena.setPuntuacion(puntuacionSeleccionada);
+
+                dao.update(resena);
+
+            } else {
+
+                // 🔥 INSERT
+                Reseña nueva = new Reseña();
+                nueva.setPuntuacion(puntuacionSeleccionada);
+                nueva.setComentario(txtComentario.getText());
+                nueva.setFecha(LocalDate.now());
+                nueva.setInmueble(reserva.getInmueble());
+                nueva.setHuesped(reserva.getHuesped());
+
+                dao.insert(nueva);
+            }
 
             cerrar();
 
@@ -91,6 +110,10 @@ public class FormResenaController {
             e.printStackTrace();
         }
     }
+
+    // =========================
+    // CANCELAR
+    // =========================
 
     @FXML
     private void onCancelar() {

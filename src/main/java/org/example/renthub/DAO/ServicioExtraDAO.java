@@ -72,22 +72,6 @@ public class ServicioExtraDAO {
         }
     }
 
-    // =========================
-    // CONSULTAS
-    // =========================
-
-    public ServicioExtra findById(int idServicio) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID)) {
-            ps.setInt(1, idServicio);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return mapServicio(rs);
-            }
-        }
-        return null;
-    }
-
     public List<ServicioExtra> findAll() throws SQLException {
         List<ServicioExtra> servicios = new ArrayList<>();
 

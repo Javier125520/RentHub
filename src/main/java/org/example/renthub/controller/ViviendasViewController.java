@@ -134,7 +134,6 @@ public class ViviendasViewController {
                     serviciosIds.add(s.getIdServicio());
                 }
             }
-
             List<Inmueble> resultados = inmuebleDAO.buscar(
                     busqueda,
                     ubicacion,

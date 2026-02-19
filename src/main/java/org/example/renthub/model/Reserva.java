@@ -2,6 +2,7 @@ package org.example.renthub.model;
 
 import org.example.renthub.model.enums.EstadoReserva;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -11,18 +12,20 @@ public class Reserva {
     private LocalDate fechaSalida;
     private double PrecioTotal;
     private EstadoReserva estado;
+    private Timestamp fechaRegistro;
 
     private Inmueble inmueble;
     private Usuario huesped;
 
     public Reserva() {}
 
-    public Reserva(int idReserva, LocalDate fechaEntrada, LocalDate fechaSalida, double total, EstadoReserva estado, Inmueble inmueble, Usuario huesped) {
+    public Reserva(int idReserva, LocalDate fechaEntrada, LocalDate fechaSalida, double total, EstadoReserva estado, Timestamp fechaRegistro, Inmueble inmueble, Usuario huesped) {
         this.idReserva = idReserva;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.PrecioTotal = total;
         this.estado = estado;
+        this.fechaRegistro = fechaRegistro;
         this.setInmueble(inmueble);
         this.setHuesped(huesped);
     }
@@ -42,6 +45,9 @@ public class Reserva {
 
     public EstadoReserva getEstado() { return estado; }
     public void setEstado(EstadoReserva estado) { this.estado = estado; }
+
+    public Timestamp getFechaRegistro() { return fechaRegistro; }
+    public void setFechaRegistro(Timestamp fechaRegistro) { this.fechaRegistro = fechaRegistro; }
 
     public Inmueble getInmueble() { return inmueble; }
     public void setInmueble(Inmueble inmueble) {

@@ -79,19 +79,6 @@ public class UsuarioDAO {
         }
     }
 
-    public boolean update(Usuario u) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
-
-            ps.setString(1, u.getNombre());
-            ps.setString(2, u.getCorreo());
-            ps.setString(3, u.getContrasena());
-            ps.setString(4, u.getRol().name());
-            ps.setInt(5, u.getIdUsuario());
-
-            return ps.executeUpdate() > 0;
-        }
-    }
-
     public boolean delete(int idUsuario) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
             ps.setInt(1, idUsuario);
@@ -99,22 +86,6 @@ public class UsuarioDAO {
         }
     }
 
-    // =========================
-    // CONSULTAS
-    // =========================
-
-    public Usuario findById(int idUsuario) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID)) {
-            ps.setInt(1, idUsuario);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapUsuario(rs);
-                }
-            }
-        }
-        return null;
-    }
 
     public Usuario findByCorreo(String correo) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_CORREO)) {
@@ -127,56 +98,6 @@ public class UsuarioDAO {
             }
         }
         return null;
-    }
-
-    public List<Usuario> findAll() throws SQLException {
-        List<Usuario> usuarios = new ArrayList<>();
-
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                usuarios.add(mapUsuario(rs));
-            }
-        }
-        return usuarios;
-    }
-
-    // =========================
-    // LOGIN
-    // =========================
-
-    public Usuario login(String correo, String contrasena) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement(LOGIN)) {
-
-            ps.setString(1, correo);
-            ps.setString(2, contrasena);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapUsuario(rs);
-                }
-            }
-        }
-        return null;
-    }
-
-    // =========================
-    // VALIDACIONES
-    // =========================
-
-    public boolean existsByCorreo(String correo) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement(EXISTS_CORREO)) {
-
-            ps.setString(1, correo);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0;
-                }
-            }
-        }
-        return false;
     }
 
     // =========================

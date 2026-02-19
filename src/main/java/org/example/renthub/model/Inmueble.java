@@ -1,5 +1,6 @@
 package org.example.renthub.model;
 
+import org.example.renthub.model.enums.EstadoServicio;
 import org.example.renthub.model.enums.TipoInmueble;
 
 import java.util.ArrayList;
@@ -116,6 +117,19 @@ public class Inmueble {
     void removeImagen(ImagenInmueble imagen) {
         imagenes.remove(imagen);
     }
+
+    public double calcularPrecioFinalPorNoche() {
+        double total = precioNoche;
+
+        for (InmuebleServicio is : servicios) {
+            if (is.getEstado() == EstadoServicio.DISPONIBLE) {
+                total += is.getPrecioAdicional();
+            }
+        }
+
+        return total;
+    }
+
 
     @Override
     public String toString() {

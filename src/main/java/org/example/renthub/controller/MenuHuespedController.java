@@ -2,22 +2,14 @@ package org.example.renthub.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import org.example.renthub.model.Usuario;
 import org.example.renthub.services.Sesion;
-import org.example.renthub.utils.Ventanas;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
 
 
 public class MenuHuespedController {
@@ -66,6 +58,7 @@ public class MenuHuespedController {
     }
 
     private void abrirPerfil() {
+        cargarVista("PerfilHuesped.fxml");
     }
 
     // =========================
@@ -93,6 +86,11 @@ public class MenuHuespedController {
 
             FXMLLoader loader = new FXMLLoader(resource);
             Parent view = loader.load();
+
+            if (fxml.equals("MisReseñasView.fxml")) {
+                MisResenasViewController controller = loader.getController();
+                controller.setUsuario(usuario);
+            }
 
             contenidoCentral.getChildren().setAll(view);
 

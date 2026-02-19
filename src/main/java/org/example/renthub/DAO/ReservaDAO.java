@@ -36,11 +36,20 @@ public class ReservaDAO {
     private static final String SELECT_BY_ID =
             "SELECT * FROM reserva WHERE id_reserva = ?";
 
-    private static final String SELECT_BY_USUARIO =
-            "SELECT r.*, i.id_inmueble, i.titulo, i.ciudad, i.direccion " +
-            "FROM reserva r " +
-            "JOIN inmueble i ON r.id_inmueble = i.id_inmueble " +
-            "WHERE r.id_huesped = ?";
+    private static final String SELECT_BY_HUESPED =
+            "SELECT r.*, i.id_inmueble, i.titulo, i.ciudad, i.direccion, i.precio_noche " +
+                    "FROM reserva r " +
+                    "JOIN inmueble i ON r.id_inmueble = i.id_inmueble " +
+                    "WHERE r.id_huesped = ?";
+
+    private static final String SELECT_BY_PROPIETARIO =
+            "SELECT r.*, " +
+                    "i.id_inmueble, i.titulo, i.ciudad, i.direccion, i.precio_noche, " +
+                    "u.nombre, u.correo " +
+                    "FROM reserva r " +
+                    "JOIN inmueble i ON r.id_inmueble = i.id_inmueble " +
+                    "JOIN usuario u ON r.id_huesped = u.id_usuario " +
+                    "WHERE i.id_propietario = ?";
 
     private static final String SELECT_BY_INMUEBLE =
             "SELECT * FROM reserva WHERE id_inmueble = ?";
@@ -73,9 +82,6 @@ public class ReservaDAO {
         this.conn = conn;
     }
 
-    // =========================
-    // CRUD
-    // =========================
 
     public boolean insert(Reserva r) throws SQLException {
 
@@ -134,27 +140,12 @@ public class ReservaDAO {
         }
     }
 
-    // =========================
-    // CONSULTAS
-    // =========================
 
-    public Reserva findById(int idReserva) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID)) {
-            ps.setInt(1, idReserva);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return mapReserva(rs);
-            }
-        }
-        return null;
-    }
-
-    public List<Reserva> findByUsuario(int idUsuario) throws SQLException {
+    public List<Reserva> findByHuesped(int idUsuario) throws SQLException {
 
         List<Reserva> reservas = new ArrayList<>();
 
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_USUARIO)) {
+        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_HUESPED)) {
             ps.setInt(1, idUsuario);
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -166,18 +157,20 @@ public class ReservaDAO {
         return reservas;
     }
 
-    public List<Reserva> findByInmueble(int idInmueble) throws SQLException {
+    public List<Reserva> findByPropietario(int idUsuario) {
 
         List<Reserva> reservas = new ArrayList<>();
 
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_INMUEBLE)) {
-            ps.setInt(1, idInmueble);
+        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_PROPIETARIO)) {
+            ps.setInt(1, idUsuario);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     reservas.add(mapReserva(rs));
                 }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return reservas;
     }
@@ -199,17 +192,6 @@ public class ReservaDAO {
         return false;
     }
 
-    public void updateEstado(int idReserva, EstadoReserva estadoReserva) {
-        try (PreparedStatement ps = conn.prepareStatement(UPDATE_ESTADO)) {
-            ps.setString(1, estadoReserva.name());
-            ps.setInt(2, idReserva);
-            int filas = ps.executeUpdate();
-            System.out.println("Filas afectadas: " + filas);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void confirmarReserva(int idReserva) throws SQLException {
 
         try (PreparedStatement ps = conn.prepareStatement(CONFIRMAR)) {
@@ -221,10 +203,97 @@ public class ReservaDAO {
         }
     }
 
+    public int countByHuesped(int idUsuario) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM reserva WHERE id_huesped = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
 
-    // =========================
-    // MAPEADOR
-    // =========================
+    public int countPagadasByHuesped(int idUsuario) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM reserva WHERE id_huesped = ? AND estado = 'CONFIRMADA'";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public int countPendientesByHuesped(int idUsuario) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM reserva WHERE id_huesped = ? AND estado = 'PENDIENTE'";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public Reserva findUltimaByHuesped(int idUsuario) throws SQLException {
+        String sql = "SELECT * FROM reserva WHERE id_huesped = ? ORDER BY fecha_registro DESC LIMIT 1";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return mapReserva(rs);
+            }
+        }
+        return null;
+    }
+
+    public int countByPropietario(int idUsuario) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM reserva r JOIN inmueble i ON r.id_inmueble = i.id_inmueble WHERE i.id_propietario = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public int countPendientesByPropietario(int idUsuario) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM reserva r JOIN inmueble i ON r.id_inmueble = i.id_inmueble WHERE i.id_propietario = ? AND r.estado = 'PENDIENTE'";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public Reserva findUltimaByPropietario(int idUsuario) throws SQLException {
+        String sql = """
+                SELECT r.*, i.id_inmueble, i.titulo, i.ciudad, i.direccion, i.precio_noche, u.nombre, u.correo
+                FROM reserva r
+                JOIN inmueble i ON r.id_inmueble = i.id_inmueble
+                JOIN usuario u ON r.id_huesped = u.id_usuario
+                WHERE i.id_propietario = ?
+                ORDER BY r.fecha_registro DESC
+                LIMIT 1
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return mapReserva(rs);
+            }
+        }
+        return null;
+    }
 
     private Reserva mapReserva(ResultSet rs) throws SQLException {
 
@@ -235,9 +304,16 @@ public class ReservaDAO {
         r.setFechaSalida(rs.getDate("fecha_fin").toLocalDate());
         r.setPrecioTotal(rs.getDouble("precio"));
         r.setEstado(EstadoReserva.valueOf(rs.getString("estado")));
+        r.setFechaRegistro(Timestamp.valueOf(rs.getTimestamp("fecha_registro").toLocalDateTime()));
 
         Usuario u = new Usuario();
         u.setIdUsuario(rs.getInt("id_huesped"));
+        try {
+            u.setNombre(rs.getString("nombre"));
+            u.setCorreo(rs.getString("correo"));
+        } catch (SQLException e) {
+            // Si no se encuentran las columnas, se ignora y se deja el usuario con solo el ID
+        }
         r.setHuesped(u);
 
         Inmueble i = new Inmueble();
@@ -245,6 +321,7 @@ public class ReservaDAO {
         i.setTitulo(rs.getString("titulo"));
         i.setCiudad(rs.getString("ciudad"));
         i.setDireccion(rs.getString("direccion"));
+        i.setPrecioNoche(rs.getDouble("precio_noche"));
         r.setInmueble(i);
 
         return r;

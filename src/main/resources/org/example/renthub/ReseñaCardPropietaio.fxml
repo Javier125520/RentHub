@@ -5,28 +5,32 @@
 
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.renthub.controller.CardResenaPropietarioController"
       spacing="15"
       styleClass="review-card">
 
     <!-- CABECERA -->
     <HBox alignment="CENTER_LEFT">
         <VBox spacing="5">
-            <Label text="Casa en la montaña" styleClass="card-title"/>
-            <Label text="📍" styleClass="location"/>
+            <Label fx:id="lblVivienda" text="Casa en la montaña" styleClass="card-title"/>
+            <Label fx:id="lblUbicacion" text="📍 Córdoba" styleClass="location"/>
         </VBox>
 
         <Region HBox.hgrow="ALWAYS"/>
 
-        <Label text="⭐ 5" styleClass="rating"/>
+        <Label fx:id="lblPuntuacion" text="⭐ 5" styleClass="rating"/>
     </HBox>
 
     <!-- USUARIO -->
-    <Label text="👤 Javier Guerrero Hurtado · 07 de enero de 2026"
+    <Label fx:id="lblMeta"
+           text="👤 Usuario · 07 de enero de 2026"
            styleClass="review-meta"/>
 
     <!-- COMENTARIO -->
-    <Label text="Muy bien"
+    <Label fx:id="lblComentario"
+           text="Comentario"
            wrapText="true"
            styleClass="review-text"/>
 
 </VBox>
+

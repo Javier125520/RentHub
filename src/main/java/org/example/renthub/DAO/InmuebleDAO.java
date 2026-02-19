@@ -38,8 +38,7 @@ public class InmuebleDAO {
     private static final String SELECT_INMUEBLES_DISPONIBLES =
             "SELECT * FROM inmueble WHERE disponible=TRUE";
 
-    private static final String SELECT_BY_RESERVA =
-            "SELECT i.* FROM inmueble i JOIN reserva r ON i.id_inmueble = r.inmueble_id WHERE r.id_reserva = ?";
+    private static final String COUNT_BY_PROPIETARIO = "SELECT COUNT(*) FROM inmueble WHERE id_propietario = ?";
 
     // =========================
     // CONSTRUCTORES
@@ -53,9 +52,6 @@ public class InmuebleDAO {
         this.conn = conn;
     }
 
-    // =========================
-    // CRUD
-    // =========================
 
     public boolean insert(Inmueble i) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
@@ -150,21 +146,16 @@ public class InmuebleDAO {
         return inmuebles;
     }
 
-    public Inmueble findByReserva(int idReserva) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_RESERVA)) {
-            ps.setInt(1, idReserva);
+    public int countByPropietario(int idPropietario) throws SQLException {;
+        try (PreparedStatement ps = conn.prepareStatement(COUNT_BY_PROPIETARIO)) {
+            ps.setInt(1, idPropietario);
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
-                return mapInmueble(rs);
+                return rs.getInt(1);
             }
         }
-        return null;
+        return 0;
     }
-
-    // =========================
-    // BÚSQUEDA FLEXIBLE (OPCIÓN 2)
-    // =========================
 
     public List<Inmueble> buscar(
             String titulo,
@@ -186,7 +177,7 @@ public class InmuebleDAO {
 
         // join solo si hay servicios
         if (serviciosIncluidos != null && !serviciosIncluidos.isEmpty()) {
-            sql.append("JOIN inmueble_servicio isv ON i.id_inmueble = isv.inmueble_id ");
+            sql.append("JOIN inmueble_servicio isv ON i.id_inmueble = isv.id_inmueble ");
         }
 
         sql.append("WHERE i.disponible = TRUE ");
@@ -226,10 +217,10 @@ public class InmuebleDAO {
         if (fechaEntrada != null && fechaSalida != null) {
             sql.append("""
                 AND i.id_inmueble NOT IN (
-                    SELECT r.inmueble_id
+                    SELECT r.id_inmueble
                     FROM reserva r
-                    WHERE r.fecha_entrada < ?
-                      AND r.fecha_salida > ?
+                    WHERE r.fecha_inicio < ?
+                      AND r.fecha_fin > ?
                 )
                 """);
             params.add(Date.valueOf(fechaSalida));
@@ -237,16 +228,22 @@ public class InmuebleDAO {
         }
 
         if (serviciosIncluidos != null && !serviciosIncluidos.isEmpty()) {
-            sql.append("AND isv.servicio_id IN (");
+
+            sql.append("AND isv.id_servicio IN (");
+
             for (int i = 0; i < serviciosIncluidos.size(); i++) {
                 sql.append("?");
                 if (i < serviciosIncluidos.size() - 1) {
                     sql.append(",");
                 }
             }
-            sql.append(") AND isv.incluido_en_precio = TRUE ");
+
+            sql.append(") ");
+
             params.addAll(serviciosIncluidos);
         }
+
+
 
         List<Inmueble> resultado = new ArrayList<>();
 
@@ -266,10 +263,6 @@ public class InmuebleDAO {
         return resultado;
     }
 
-    // =========================
-    // MAPEADOR
-    // =========================
-
     private Inmueble mapInmueble(ResultSet rs) throws SQLException {
 
         Inmueble i = new Inmueble();
@@ -288,10 +281,18 @@ public class InmuebleDAO {
         Usuario propietario = new Usuario();
         propietario.setIdUsuario(rs.getInt("id_propietario"));
         i.setPropietario(propietario);
+
         i.setImagenes(ImagenInmuebleDAO.getInstance().findByInmueble(i));
+
+        // 🔥 AÑADE ESTO
+        InmuebleServicioDAO inmuebleServicioDAO = new InmuebleServicioDAO(conn);
+        i.setServicios(
+                inmuebleServicioDAO.findByInmueble(i)
+        );
 
         return i;
     }
+
 }
 
 

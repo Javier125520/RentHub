@@ -18,17 +18,8 @@ public class PagoDAO {
     private static final String INSERT =
             "INSERT INTO pago (metodo, fecha_pago, monto, estado, id_reserva) VALUES (?, ?, ?, ?, ?)";
 
-    private static final String UPDATE =
-            "UPDATE pago SET metodo = ?, fecha_pago = ?, monto = ?, estado = ? WHERE id = ?";
-
     private static final String DELETE =
             "DELETE FROM pago WHERE id = ?";
-
-    private static final String SELECT_BY_ID =
-            "SELECT * FROM pago WHERE id = ?";
-
-    private static final String SELECT_ALL =
-            "SELECT * FROM pago";
 
     // =========================
     // INSERT
@@ -59,25 +50,6 @@ public class PagoDAO {
     }
 
     // =========================
-    // UPDATE
-    // =========================
-
-    public boolean update(Pago p) throws SQLException {
-        Connection conn = MySQLConnection.getConnection();
-
-        try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
-
-            ps.setString(1, p.getMetodo().name());
-            ps.setTimestamp(2, Timestamp.valueOf(p.getFechaPago()));
-            ps.setDouble(3, p.getMonto());
-            ps.setString(4, p.getEstado().name());
-            ps.setInt(5, p.getId());
-
-            return ps.executeUpdate() > 0;
-        }
-    }
-
-    // =========================
     // DELETE
     // =========================
 
@@ -90,51 +62,5 @@ public class PagoDAO {
         }
     }
 
-    // =========================
-    // CONSULTAS
-    // =========================
-
-    public Pago findById(int idPago) throws SQLException {
-        Connection conn = MySQLConnection.getConnection();
-
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID)) {
-            ps.setInt(1, idPago);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return mapPago(rs);
-            }
-        }
-        return null;
-    }
-
-    public List<Pago> findAll() throws SQLException {
-        List<Pago> pagos = new ArrayList<>();
-        Connection conn = MySQLConnection.getConnection();
-
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                pagos.add(mapPago(rs));
-            }
-        }
-        return pagos;
-    }
-
-    // =========================
-    // MAPEADOR
-    // =========================
-
-    private Pago mapPago(ResultSet rs) throws SQLException {
-        return new Pago(
-                rs.getInt("id"),
-                MetodoPago.valueOf(rs.getString("metodo")),
-                rs.getTimestamp("fecha_pago").toLocalDateTime(),
-                rs.getDouble("monto"),
-                EstadoPago.valueOf(rs.getString("estado")),
-                new ReservaDAO().findById(rs.getInt("id_reserva"))
-        );
-    }
 }
 

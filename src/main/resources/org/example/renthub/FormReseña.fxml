@@ -53,12 +53,11 @@
             <Button onAction="#onCancelar" text="Cancelar"
                     styleClass="btn-secondary"/>
 
-            <Button onAction="#onPublicar" text="Publicar Reseña"
+            <Button onAction="#onGuardar" text="Publicar Reseña"
                     styleClass="btn-primary"/>
+
         </HBox>
 
     </VBox>
 
 </AnchorPane>
-
-
