@@ -46,7 +46,7 @@ public class LoginController {
             String passwordCifrada = Utiles.hashPassword(password);
 
             // Validación de seguridad (En un entorno real aquí se acoplaría un desencriptador tipo BCrypt)
-            if (usuario == null || !usuario.getContrasena().equals(passwordCifrada)) {
+            if (usuario == null || !usuario.getContrasena().equals(password)) {
                 mostrarAlerta("Error", "Correo o contraseña incorrectos");
                 return;
             }

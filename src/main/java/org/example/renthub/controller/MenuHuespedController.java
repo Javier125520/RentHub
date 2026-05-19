@@ -64,7 +64,7 @@ public class MenuHuespedController {
 
     /** Intercambia la zona de trabajo inyectando el historial de comentarios publicados */
     @FXML
-    private void verResenas() {
+    private void verReseñas() {
         cargarVista("MisReseñasView.fxml");
         marcarActivo(btnMisResenas);
     }

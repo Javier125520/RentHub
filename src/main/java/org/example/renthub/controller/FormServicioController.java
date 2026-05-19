@@ -106,6 +106,7 @@ public class FormServicioController {
 
     @FXML private void onCerrar() { cerrar(); }
 
+    @FXML
     private void cerrar() {
         Stage stage = (Stage) txtNombre.getScene().getWindow();
         stage.close();

@@ -60,12 +60,12 @@
                                 </VBox>
 
                                 <VBox GridPane.columnIndex="1" styleClass="stat-card stat-green" alignment="CENTER_LEFT" spacing="5">
-                                    <Label text="Reservas" styleClass="stat-label" wrapText="true" textAlignment="CENTER"/>
+                                    <Label text="Reservas" styleClass="stat-label" wrapText="true" alignment="CENTER_LEFT"/>
                                     <Label fx:id="lblReservas" text="8" styleClass="stat-value"/>
                                 </VBox>
 
                                 <VBox GridPane.rowIndex="1" styleClass="stat-card stat-yellow" alignment="CENTER_LEFT" spacing="5">
-                                    <Label text="Pendientes" styleClass="stat-label" wrapText="true" textAlignment="CENTER"/>
+                                    <Label text="Pendientes" styleClass="stat-label" wrapText="true" alignment="CENTER_LEFT"/>
                                     <Label fx:id="lblPendientes" text="1" styleClass="stat-value"/>
                                 </VBox>
 

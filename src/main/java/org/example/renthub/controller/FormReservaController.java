@@ -108,7 +108,7 @@ public class FormReservaController {
      * Valida la coherencia de datos y ejecuta el guardado de la reserva (INSERT o UPDATE) bajo Active Record.
      */
     @FXML
-    private void onGuardar() {
+    private void confirmar() {
         LocalDate inicio = fechaInicio.getValue();
         LocalDate fin = fechaFin.getValue();
 
@@ -158,6 +158,7 @@ public class FormReservaController {
         }
     }
 
+    @FXML
     private void cerrar() {
         Stage stage = (Stage) lblTitulo.getScene().getWindow();
         stage.close();
