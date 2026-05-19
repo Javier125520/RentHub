@@ -10,6 +10,7 @@ import org.example.renthub.model.Reserva;
 import org.example.renthub.model.Usuario;
 import org.example.renthub.model.enums.EstadoReserva;
 import org.example.renthub.services.Sesion;
+import org.example.renthub.utils.Utiles;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -84,9 +85,9 @@ public class FormReservaController {
         LocalDate fin = fechaFin.getValue();
 
         // Validación perimetral de seguridad: si faltan datos o las fechas están invertidas
-        if (inicio == null || fin == null || !fin.isAfter(inicio)) {
+        if (!Utiles.fechasValidas(inicio, fin)) {
             totalContainer.setVisible(false);
-            totalContainer.setManaged(false); // Libera el espacio físico del layout
+            totalContainer.setManaged(false);
             return;
         }
 
@@ -121,7 +122,7 @@ public class FormReservaController {
             double total = noches * inmueble.getPrecioNoche();
 
             if (modoEdicion) {
-                // 🔥 OPERACIÓN UPDATE ACTIVE RECORD
+                // UPDATE
                 reservaEditando.setFechaEntrada(inicio);
                 reservaEditando.setFechaSalida(fin);
                 reservaEditando.setPrecioTotal(total);
@@ -131,7 +132,7 @@ public class FormReservaController {
                 activeReserva.update();
 
             } else {
-                // 🔥 OPERACIÓN INSERT ACTIVE RECORD
+                // INSERT
                 Usuario huesped = Sesion.getUsuario(); // Recuperamos al usuario autenticado de la sesión global
 
                 ReservaDAO nuevaReservaActive = new ReservaDAO();
@@ -142,7 +143,6 @@ public class FormReservaController {
                 nuevaReservaActive.setPrecioTotal(total);
                 nuevaReservaActive.setEstado(EstadoReserva.PENDIENTE); // Nace en estado de pre-pago
 
-                // El método .insert() validará automáticamente si las fechas se solapan con otra reserva en MySQL
                 boolean exito = nuevaReservaActive.insert();
                 if (!exito) {
                     mostrarError("El alojamiento no está disponible en las fechas seleccionadas.");
@@ -157,8 +157,6 @@ public class FormReservaController {
             mostrarError("No se pudo guardar la reserva en el sistema.");
         }
     }
-
-    @FXML private void onCancelar() { cerrar(); }
 
     private void cerrar() {
         Stage stage = (Stage) lblTitulo.getScene().getWindow();

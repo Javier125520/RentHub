@@ -12,6 +12,7 @@ import org.example.renthub.model.enums.RolUsuario;
 import java.io.IOException;
 import javafx.scene.Scene;
 import org.example.renthub.services.Sesion;
+import org.example.renthub.utils.Utiles;
 
 /**
  * Controlador de Accesos y Autenticación del ecosistema de RentHub.
@@ -42,16 +43,18 @@ public class LoginController {
             // Buscamos si existe alguna cuenta registrada con ese correo electrónico único
             Usuario usuario = UsuarioDAO.findByCorreo(correo);
 
+            String passwordCifrada = Utiles.hashPassword(password);
+
             // Validación de seguridad (En un entorno real aquí se acoplaría un desencriptador tipo BCrypt)
-            if (usuario == null || !usuario.getContrasena().equals(password)) {
+            if (usuario == null || !usuario.getContrasena().equals(passwordCifrada)) {
                 mostrarAlerta("Error", "Correo o contraseña incorrectos");
                 return;
             }
 
-            // 🔑 PUNTO CRÍTICO: Registramos la instancia del usuario en el Singleton global de la Sesión
+            // Registramos la instancia del usuario en el Singleton global de la Sesión
             Sesion.setUsuario(usuario);
 
-            // BIFURCACIÓN DE UX: Redirección al panel especializado según el Rol asignado
+            // Redirección al panel especializado según el Rol asignado
             if (usuario.getRol() == RolUsuario.HUESPED) {
                 cambiarPantalla("MenuHuesped.fxml", event);
             } else {

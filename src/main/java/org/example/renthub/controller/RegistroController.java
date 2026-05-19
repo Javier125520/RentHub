@@ -11,6 +11,7 @@ import org.example.renthub.model.enums.RolUsuario;
 import org.example.renthub.model.Usuario;
 import java.io.IOException;
 import javafx.scene.Scene;
+import org.example.renthub.utils.Utiles;
 
 /**
  * Controlador para la Pantalla de Creación y Registro de nuevas cuentas en RentHub.
@@ -35,12 +36,21 @@ public class RegistroController {
         String nombre = nombreField.getText();
         String correo = emailField.getText();
         String password = passwordField.getText();
-
-        // Operador ternario para capturar la selección del ToggleGroup de roles de usuario
         RolUsuario rol = rbPropietario.isSelected() ? RolUsuario.PROPIETARIO : RolUsuario.HUESPED;
 
         if (nombre.isEmpty() || correo.isEmpty() || password.isEmpty()) {
             showAlert("Error", "Todos los campos son obligatorios");
+            return;
+        }
+
+        // 👤 ¡AQUÍ LOS USAS! Validaciones de seguridad añadidas
+        if (!Utiles.correoValido(correo)) {
+            showAlert("Error", "El formato del correo electrónico no es válido.");
+            return;
+        }
+
+        if (!Utiles.passwordValida(password)) {
+            showAlert("Error", "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.");
             return;
         }
 

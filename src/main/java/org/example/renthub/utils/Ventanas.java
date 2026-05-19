@@ -25,7 +25,6 @@ public class Ventanas {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
 
-            // 🔑 Ajusta el stage al contenido real
             stage.sizeToScene();
 
             stage.showAndWait();
@@ -59,7 +58,6 @@ public class Ventanas {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
 
-            // 🔑 Ajusta el stage al contenido real
             stage.sizeToScene();
 
             stage.showAndWait();

@@ -15,6 +15,8 @@ import org.example.renthub.DAO.ReseñaDAO;
 import org.example.renthub.model.Usuario;
 import org.example.renthub.DAO.UsuarioDAO;
 import org.example.renthub.services.Sesion;
+import org.example.renthub.utils.Utiles;
+
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -124,10 +126,12 @@ public class PerfilHuespedController {
             }
 
             try {
+                String nuevaPasswordCifrada = Utiles.hashPassword(nuevaPassword);
+
                 UsuarioDAO activeUsuario = new UsuarioDAO(Sesion.getUsuario());
-                activeUsuario.setContrasena(nuevaPassword);
+                activeUsuario.setContrasena(nuevaPasswordCifrada);
                 activeUsuario.update();
-                Sesion.getUsuario().setContrasena(nuevaPassword);
+                Sesion.getUsuario().setContrasena(nuevaPasswordCifrada);
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Éxito");
