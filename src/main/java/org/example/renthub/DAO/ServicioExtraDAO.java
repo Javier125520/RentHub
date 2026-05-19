@@ -6,49 +6,62 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServicioExtraDAO {
+/**
+ * Clase de Acceso a Datos (DAO) para el catálogo de Servicios Extras del sistema.
+ */
+public class ServicioExtraDAO extends ServicioExtra {
 
-    private final Connection conn;
-
-    // =========================
-    // SQL
-    // =========================
+    // =========================================================================
+    // SENTENCIAS SQL
+    // =========================================================================
     private static final String INSERT =
-            "INSERT INTO servicio_extra (nombre, descripcion) VALUES (?, ?)";
+            "INSERT INTO servicio_extra (nombre, descripcion) VALUES (?, ?);";
 
     private static final String UPDATE =
-            "UPDATE servicio_extra SET nombre = ?, descripcion = ? WHERE id_servicio = ?";
+            "UPDATE servicio_extra SET nombre = ?, descripcion = ? WHERE id_servicio = ?;";
 
     private static final String DELETE =
-            "DELETE FROM servicio_extra WHERE id_servicio = ?";
-
-    private static final String SELECT_BY_ID =
-            "SELECT * FROM servicio_extra WHERE id_servicio = ?";
+            "DELETE FROM servicio_extra WHERE id_servicio = ?;";
 
     private static final String SELECT_ALL =
-            "SELECT * FROM servicio_extra";
+            "SELECT * FROM servicio_extra;";
 
-    // =========================
-    // Constructor
-    // =========================
+    // =========================================================================
+    // CONSTRUCTORES
+    // =========================================================================
     public ServicioExtraDAO() {
-        this.conn = MySQLConnection.getConnection();
+        super();
     }
 
-    // =========================
-    // CRUD
-    // =========================
+    public ServicioExtraDAO(int idServicio, String nombre, String descripcion) {
+        super(idServicio, nombre, descripcion);
+    }
 
-    public boolean insert(ServicioExtra s) throws SQLException {
+    /** Constructor por copia para transformar el catálogo plano en activos operativos */
+    public ServicioExtraDAO(ServicioExtra s) {
+        super();
+        this.setIdServicio(s.getIdServicio());
+        this.setNombre(s.getNombre());
+        this.setDescripcion(s.getDescripcion());
+    }
+
+    // =========================================================================
+    // MÉTODOS CRUD DE INSTANCIA (Active Record)
+    // =========================================================================
+
+    /** Registra un nuevo tipo de servicio global en el sistema */
+    public boolean insert() throws SQLException {
+        Connection conn = MySQLConnection.getConnection();
         try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, s.getNombre());
-            ps.setString(2, s.getDescripcion());
+            ps.setString(1, this.getNombre());
+            ps.setString(2, this.getDescripcion());
 
             int rows = ps.executeUpdate();
             if (rows > 0) {
-                ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    s.setIdServicio(rs.getInt(1));
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        this.setIdServicio(rs.getInt(1));
+                    }
                 }
                 return true;
             }
@@ -56,24 +69,43 @@ public class ServicioExtraDAO {
         }
     }
 
-    public boolean update(ServicioExtra s) throws SQLException {
+    /** Modifica las propiedades globales de un servicio extra */
+    public boolean update() throws SQLException {
+        Connection conn = MySQLConnection.getConnection();
         try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
-            ps.setString(1, s.getNombre());
-            ps.setString(2, s.getDescripcion());
-            ps.setInt(3, s.getIdServicio());
+            ps.setString(1, this.getNombre());
+            ps.setString(2, this.getDescripcion());
+            ps.setInt(3, this.getIdServicio());
             return ps.executeUpdate() > 0;
         }
     }
 
-    public boolean delete(int idServicio) throws SQLException {
+    /** Elimina permanentemente el servicio extra del catálogo global */
+    public boolean remove() throws SQLException {
+        Connection conn = MySQLConnection.getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
+            ps.setInt(1, this.getIdServicio());
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    // =========================================================================
+    // MÉTODOS DE CONSULTA ESTÁTICOS
+    // =========================================================================
+
+    /** Borrado estático mediante paso directo de ID */
+    public static boolean delete(int idServicio) throws SQLException {
+        Connection conn = MySQLConnection.getConnection();
         try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
             ps.setInt(1, idServicio);
             return ps.executeUpdate() > 0;
         }
     }
 
-    public List<ServicioExtra> findAll() throws SQLException {
+    /** Recupera la lista completa de opciones del catálogo global de servicios extras */
+    public static List<ServicioExtra> findAll() throws SQLException {
         List<ServicioExtra> servicios = new ArrayList<>();
+        Connection conn = MySQLConnection.getConnection();
 
         try (PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
              ResultSet rs = ps.executeQuery()) {
@@ -85,11 +117,10 @@ public class ServicioExtraDAO {
         return servicios;
     }
 
-    // =========================
-    // MAPPER
-    // =========================
-
-    private ServicioExtra mapServicio(ResultSet rs) throws SQLException {
+    // =========================================================================
+    // MAPEADOR INTERNO
+    // =========================================================================
+    private static ServicioExtra mapServicio(ResultSet rs) throws SQLException {
         return new ServicioExtra(
                 rs.getInt("id_servicio"),
                 rs.getString("nombre"),

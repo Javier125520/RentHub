@@ -15,8 +15,9 @@
         <Label text="Reservas realizadas en tus propiedades" styleClass="description"/>
     </VBox>
 
-    <!-- LISTA DE RESERVAS -->
-    <VBox fx:id="reservasContainer" spacing="20"/>
+    <ScrollPane fitToWidth="true" styleClass="scroll">
+        <VBox fx:id="reservasContainer" spacing="20"/>
+    </ScrollPane>
 
     <!-- RESUMEN -->
     <VBox styleClass="income-summary" spacing="8">

@@ -17,7 +17,6 @@
     <!-- CONTADOR -->
     <Label fx:id="lblContador" styleClass="results"/>
 
-
     <!-- LISTA DE RESERVAS -->
     <ScrollPane fitToWidth="true" styleClass="scroll">
         <VBox fx:id="contenedorReservas" spacing="20"/>

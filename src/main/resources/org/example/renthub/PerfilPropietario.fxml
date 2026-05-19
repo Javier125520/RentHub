@@ -7,144 +7,92 @@
 <AnchorPane xmlns="http://javafx.com/javafx/17.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.renthub.controller.PerfilPropietarioController"
-            prefWidth="520"
             stylesheets="@css/propietario.css">
 
-    <ScrollPane fitToWidth="true">
+    <ScrollPane fitToWidth="true"
+                AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+                AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
         <content>
-            <VBox spacing="18" styleClass="modal-container">
-                <padding>
-                    <Insets top="24" right="24" bottom="24" left="24"/>
-                </padding>
+            <StackPane>
+                <VBox spacing="18" styleClass="modal-container" maxWidth="1000" minWidth="600" HBox.hgrow="ALWAYS">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
 
-                <!-- Header -->
-                <VBox spacing="4">
-                    <Label text="Mi Perfil"
-                           styleClass="modal-title"/>
-                    <Label text="Información de tu cuenta"
-                           styleClass="modal-subtitle"/>
-                </VBox>
-
-                <!-- Información principal -->
-                <HBox spacing="16">
-
-                    <!-- Información personal -->
-                    <VBox spacing="12"
-                          styleClass="card"
-                          HBox.hgrow="ALWAYS">
-
-                        <Label text="👤 Información Personal"
-                               styleClass="card-title"/>
-
-                        <VBox spacing="6">
-                            <Label text="Nombre"
-                                   styleClass="info-label"/>
-                            <Label fx:id="lblNombre"
-                                   text="Javier Guerrero Hurtado"
-                                   styleClass="info-value"/>
-                        </VBox>
-
-                        <VBox spacing="6">
-                            <Label text="Correo Electrónico"
-                                   styleClass="info-label"/>
-                            <Label fx:id="lblEmail"
-                                   text="javier.guerrero07@gmail.com"
-                                   styleClass="info-value"/>
-                        </VBox>
-
-                        <VBox spacing="6">
-                            <Label text="Tipo de Usuario"
-                                   styleClass="info-label"/>
-                            <Label text="Propietario"
-                                   styleClass="info-value"/>
-                        </VBox>
+                    <VBox spacing="4">
+                        <Label text="Mi Perfil" styleClass="modal-title"/>
+                        <Label text="Información de tu cuenta" styleClass="modal-subtitle"/>
                     </VBox>
 
-                    <!-- Estadísticas -->
-                    <VBox spacing="12"
-                          styleClass="card"
-                          HBox.hgrow="ALWAYS">
+                    <HBox spacing="16" alignment="TOP_CENTER">
 
-                        <Label text="⭐ Estadísticas"
-                               styleClass="card-title"/>
+                        <VBox spacing="12" styleClass="card" HBox.hgrow="ALWAYS">
+                            <Label text="👤 Información Personal" styleClass="card-title"/>
 
-                        <GridPane hgap="12" vgap="12">
-
-                            <VBox styleClass="stat-card stat-blue">
-                                <Label text="Total Viviendas"
-                                       styleClass="stat-label"/>
-                                <Label fx:id="lblViviendas"
-                                       text="3"
-                                       styleClass="stat-value"/>
+                            <VBox spacing="6">
+                                <Label text="Nombre" styleClass="info-label"/>
+                                <Label fx:id="lblNombre" text="Javier Guerrero Hurtado" styleClass="info-value" wrapText="true"/>
                             </VBox>
 
-                            <VBox GridPane.columnIndex="1"
-                                  styleClass="stat-card stat-green">
-                                <Label text="Reservas"
-                                       styleClass="stat-label"/>
-                                <Label fx:id="lblReservas"
-                                       text="8"
-                                       styleClass="stat-value"/>
+                            <VBox spacing="6">
+                                <Label text="Correo Electrónico" styleClass="info-label"/>
+                                <Label fx:id="lblEmail" text="javier.guerrero07@gmail.com" styleClass="info-value" wrapText="true"/>
                             </VBox>
 
-                            <VBox GridPane.rowIndex="1"
-                                  styleClass="stat-card stat-yellow">
-                                <Label text="Pendientes"
-                                       styleClass="stat-label"/>
-                                <Label fx:id="lblPendientes"
-                                       text="1"
-                                       styleClass="stat-value"/>
+                            <VBox spacing="6">
+                                <Label text="Tipo de Usuario" styleClass="info-label"/>
+                                <Label text="Propietario" styleClass="info-value"/>
                             </VBox>
+                        </VBox>
 
-                            <VBox GridPane.columnIndex="1"
-                                  GridPane.rowIndex="1"
-                                  styleClass="stat-card stat-purple">
-                                <Label text="Reseñas"
-                                       styleClass="stat-label"/>
-                                <Label fx:id="lblResenas"
-                                       text="5"
-                                       styleClass="stat-value"/>
-                            </VBox>
+                        <VBox spacing="12" styleClass="card" HBox.hgrow="ALWAYS">
+                            <Label text="⭐ Estadísticas" styleClass="card-title"/>
 
-                        </GridPane>
-                    </VBox>
+                            <GridPane hgap="12" vgap="12" alignment="CENTER">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="50" />
+                                    <ColumnConstraints percentWidth="50" />
+                                </columnConstraints>
 
-                </HBox>
+                                <VBox styleClass="stat-card stat-blue" alignment="CENTER" spacing="5">
+                                    <Label text="Total Viviendas" styleClass="stat-label" wrapText="true" alignment="CENTER_LEFT"/>
+                                    <Label fx:id="lblViviendas" text="3" styleClass="stat-value"/>
+                                </VBox>
 
-                <!-- Actividad reciente -->
-                <VBox spacing="10"
-                      styleClass="card">
+                                <VBox GridPane.columnIndex="1" styleClass="stat-card stat-green" alignment="CENTER_LEFT" spacing="5">
+                                    <Label text="Reservas" styleClass="stat-label" wrapText="true" textAlignment="CENTER"/>
+                                    <Label fx:id="lblReservas" text="8" styleClass="stat-value"/>
+                                </VBox>
 
-                    <Label text="📅 Actividad Reciente"
-                           styleClass="card-title"/>
+                                <VBox GridPane.rowIndex="1" styleClass="stat-card stat-yellow" alignment="CENTER_LEFT" spacing="5">
+                                    <Label text="Pendientes" styleClass="stat-label" wrapText="true" textAlignment="CENTER"/>
+                                    <Label fx:id="lblPendientes" text="1" styleClass="stat-value"/>
+                                </VBox>
 
-                    <Label fx:id="lblUltimaReserva"
-                           text="Última reserva: 6 de enero de 2026"
-                           styleClass="activity-text"/>
+                                <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="stat-card stat-purple" alignment="CENTER_LEFT" spacing="5">
+                                    <Label text="Reseñas" styleClass="stat-label" wrapText="true" textAlignment="CENTER"/>
+                                    <Label fx:id="lblResenas" text="5" styleClass="stat-value"/>
+                                </VBox>
+                            </GridPane>
+                        </VBox>
 
-                    <Label fx:id="lblUltimaResena"
-                           text="Última reseña recibida: 5 de enero de 2026"
-                           styleClass="activity-text"/>
-                </VBox>
-
-                <!-- Acciones -->
-                <VBox spacing="12"
-                      styleClass="card">
-
-                    <Label text="⚙ Acciones de Cuenta"
-                           styleClass="card-title"/>
-
-                    <HBox spacing="12">
-                        <Button text="🚪 Cerrar Sesión"
-                                styleClass="btn-danger"/>
-                        <Button text="🔒 Cambiar Contraseña"
-                                styleClass="btn-secondary"/>
                     </HBox>
-                </VBox>
 
-            </VBox>
+                    <VBox spacing="10" styleClass="card">
+                        <Label text="📅 Actividad Reciente" styleClass="card-title"/>
+                        <Label fx:id="lblUltimaReserva" text="Última reserva: 6 de enero de 2026" styleClass="activity-text"/>
+                        <Label fx:id="lblUltimaResena" text="Última reseña recibida: 5 de enero de 2026" styleClass="activity-text"/>
+                    </VBox>
+
+                    <VBox spacing="12" styleClass="card">
+                        <Label text="⚙ Acciones de Cuenta" styleClass="card-title"/>
+                        <HBox spacing="12">
+                            <Button text="🚪 Cerrar Sesión" styleClass="btn-danger" onAction="#onCerrarSesion"/>
+                            <Button text="🔒 Cambiar Contraseña" styleClass="btn-secondary" onAction="#onCambiarContrasena"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </StackPane>
         </content>
     </ScrollPane>
-
 </AnchorPane>
-

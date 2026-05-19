@@ -11,30 +11,30 @@
     <!-- HEADER -->
     <top>
         <HBox styleClass="header" alignment="CENTER_LEFT" spacing="15">
-            <Label text="🏠 HomeRent" styleClass="logo"/>
+            <Label text="🏠" styleClass="logo-icon"/>
 
-            <VBox>
+            <VBox alignment="CENTER_LEFT">
+                <Label text="RentHub" styleClass="logo"/>
                 <Label text="Panel de Huésped" styleClass="subtitle"/>
             </VBox>
 
             <Region HBox.hgrow="ALWAYS"/>
 
             <Label fx:id="lblUsuario" styleClass="user-name"/>
-            <Button text="Cerrar sesión" styleClass="btn-outline" onAction="#onLogout"/>
+            <Button text="Cerrar Sesión" styleClass="btn-outline" onAction="#onLogout"/>
         </HBox>
     </top>
 
     <center>
-        <VBox spacing="25" styleClass="content">
+        <VBox spacing="25" styleClass="content" alignment="CENTER">
 
-            <!-- TABS -->
             <HBox spacing="15" alignment="CENTER" styleClass="tabs">
-                <Button text="🏠 Viviendas" styleClass="tab-active" onAction="#verViviendas"/>
-                <Button text="📅 Mis Reservas" styleClass="tab" onAction="#verReservas"/>
-                <Button text="⭐ Mis Reseñas" styleClass="tab" onAction="#verReseñas"/>
+                <Button fx:id="btnViviendas" text="🏠 Viviendas" styleClass="tab-active" onAction="#verViviendas"/>
+                <Button fx:id="btnMisReservas" text="📅 Mis Reservas" styleClass="tab" onAction="#verReservas"/>
+                <Button fx:id="btnMisResenas" text="⭐ Mis Reseñas" styleClass="tab" onAction="#verReseñas"/>
             </HBox>
 
-            <StackPane fx:id="contenidoCentral" VBox.vgrow="ALWAYS"/>
+            <StackPane fx:id="contenidoCentral" styleClass="view-container"/>
 
         </VBox>
     </center>

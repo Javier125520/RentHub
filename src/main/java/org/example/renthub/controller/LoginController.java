@@ -8,24 +8,26 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.renthub.DAO.UsuarioDAO;
 import org.example.renthub.model.Usuario;
-import org.example.renthub.connection.MySQLConnection;
-import java.sql.Connection;
 import org.example.renthub.model.enums.RolUsuario;
 import java.io.IOException;
 import javafx.scene.Scene;
 import org.example.renthub.services.Sesion;
 
+/**
+ * Controlador de Accesos y Autenticación del ecosistema de RentHub.
+ * Valida credenciales contra MySQL y bifurca la navegación al menú correspondiente según el rol del usuario.
+ */
 public class LoginController {
 
-    @FXML
-    private TextField emailField;
+    // =========================================================================
+    // COMPONENTES FXML
+    // =========================================================================
+    @FXML private TextField emailField;
+    @FXML private PasswordField passwordField; // Campo de contraseña enmascarado
 
-    @FXML
-    private PasswordField passwordField;
-
-    // =========================
-    // LOGIN
-    // =========================
+    /**
+     * Captura las entradas e inicia el flujo de autenticación del usuario.
+     */
     @FXML
     private void onLogin(ActionEvent event) {
         String correo = emailField.getText();
@@ -37,19 +39,19 @@ public class LoginController {
         }
 
         try {
-            Connection conn = MySQLConnection.getConnection();
-            UsuarioDAO usuarioDAO = new UsuarioDAO(conn);
+            // Buscamos si existe alguna cuenta registrada con ese correo electrónico único
+            Usuario usuario = UsuarioDAO.findByCorreo(correo);
 
-            Usuario usuario = usuarioDAO.findByCorreo(correo);
-
+            // Validación de seguridad (En un entorno real aquí se acoplaría un desencriptador tipo BCrypt)
             if (usuario == null || !usuario.getContrasena().equals(password)) {
                 mostrarAlerta("Error", "Correo o contraseña incorrectos");
                 return;
             }
 
+            // 🔑 PUNTO CRÍTICO: Registramos la instancia del usuario en el Singleton global de la Sesión
             Sesion.setUsuario(usuario);
 
-            // Redirigir según rol
+            // BIFURCACIÓN DE UX: Redirección al panel especializado según el Rol asignado
             if (usuario.getRol() == RolUsuario.HUESPED) {
                 cambiarPantalla("MenuHuesped.fxml", event);
             } else {
@@ -62,30 +64,33 @@ public class LoginController {
         }
     }
 
-    // =========================
-    // IR A REGISTRO
-    // =========================
+    /** Redirige al flujo de creación de cuentas de la Pantalla de Registro */
     @FXML
     private void irARegistro(ActionEvent event) {
         cambiarPantalla("PantallaRegistro.fxml", event);
     }
 
-    // =========================
-    // UTILIDAD CAMBIO PANTALLA
-    // =========================
+    /**
+     * Método genérico reutilizable para conmutar escenarios de pantallas en el hilo principal de JavaFX.
+     * @param fxml El nombre del fichero de vista a cargar.
+     */
     private void cambiarPantalla(String fxml, ActionEvent event) {
         try {
+            // Conseguimos el Stage (Ventana física) que disparó el ActionEvent
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Cargamos de forma asíncrona la nueva estructura del nodo raíz
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/org/example/renthub/" + fxml)
             );
+
+            // Intercambiamos la escena manteniendo el tamaño de la ventana
             stage.setScene(new Scene(loader.load()));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     private void mostrarAlerta (String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

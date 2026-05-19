@@ -2,9 +2,7 @@ package org.example.renthub.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,20 +13,20 @@ import javafx.stage.Stage;
 import org.example.renthub.model.ImagenInmueble;
 import org.example.renthub.model.Inmueble;
 import org.example.renthub.model.InmuebleServicio;
-import org.example.renthub.model.ServicioExtra;
-import org.example.renthub.utils.Ventanas;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controlador para la tarjeta visual de un inmueble en la vista del Huésped.
+ * Gestiona el carrusel de imágenes local, la muestra de servicios y la apertura del formulario de reserva.
+ */
 public class CardInmuebleHuespedController {
 
-    // =========================
-    // FXML
-    // =========================
+    // =========================================================================
+    // COMPONENTES VISUALES ENLAZADOS AL FXML
+    // =========================================================================
     @FXML private ImageView imagen;
-
     @FXML private Label titulo;
     @FXML private Label precio;
     @FXML private Label ciudad;
@@ -36,20 +34,19 @@ public class CardInmuebleHuespedController {
     @FXML private Label descripcion;
     @FXML private Label habitaciones;
     @FXML private Label capacidad;
-
     @FXML private FlowPane contenedorServicios;
 
-    // =========================
-    // DATOS
-    // =========================
+    // =========================================================================
+    // ATRIBUTOS DE LÓGICA E INTERNOCONEXIÓN
+    // =========================================================================
     private Inmueble inmueble;
-
     private List<ImagenInmueble> imagenes = new ArrayList<>();
     private int indiceImagen = 0;
 
-    // =========================
-    // SET INMUEBLE
-    // =========================
+    /**
+     * Enlaza el modelo del inmueble a la tarjeta e inicia la carga de componentes visuales.
+     * @param inmueble Instancia del alojamiento seleccionado.
+     */
     public void setInmueble(Inmueble inmueble) {
         this.inmueble = inmueble;
         this.imagenes = inmueble.getImagenes();
@@ -59,9 +56,9 @@ public class CardInmuebleHuespedController {
         cargarServicios();
     }
 
-    // =========================
-    // CARGA DE DATOS
-    // =========================
+    /**
+     * Setea los textos e información básica del alojamiento en las etiquetas correspondientes.
+     */
     private void cargarDatos() {
         titulo.setText(inmueble.getTitulo());
         precio.setText(String.format("%.2f € / noche", inmueble.calcularPrecioFinalPorNoche()));
@@ -73,9 +70,9 @@ public class CardInmuebleHuespedController {
         capacidad.setText("👥 " + inmueble.getCapacidad() + " huéspedes");
     }
 
-    // =========================
-    // IMÁGENES (CARRUSEL)
-    // =========================
+    /**
+     * Valida e inicializa la carga del carrusel gráfico de fotografías de la vivienda.
+     */
     private void cargarImagenes() {
         if (imagenes == null || imagenes.isEmpty()) {
             imagen.setImage(null);
@@ -84,7 +81,9 @@ public class CardInmuebleHuespedController {
         mostrarImagenActual();
     }
 
-
+    /**
+     * Procesa la ruta local de la imagen indexada en el índice actual y la renderiza en el ImageView.
+     */
     private void mostrarImagenActual() {
         if (imagenes == null || imagenes.isEmpty()) {
             imagen.setImage(null);
@@ -95,22 +94,25 @@ public class CardInmuebleHuespedController {
         File file = new File(img.getUrl());
 
         if (file.exists()) {
+            // Conversión segura de ruta de disco a URI compatible con el motor gráfico de JavaFX
             Image image = new Image(
                     file.toURI().toString(),
-                    300,    // ancho
-                    180,    // alto
-                    false,  // preserveRatio
-                    true,   // smooth
-                    false   // ❌ backgroundLoading DESACTIVADO
+                    300,
+                    180,
+                    false,
+                    true,
+                    false
             );
-
             imagen.setImage(image);
         } else {
-            System.out.println("Imagen NO encontrada: " + img.getUrl());
+            System.out.println("Imagen NO encontrada en el sistema: " + img.getUrl());
             imagen.setImage(null);
         }
     }
 
+    /**
+     * Retrocede una fotografía en el carrusel circular.
+     */
     @FXML
     private void imagenAnterior() {
         if (imagenes.isEmpty()) return;
@@ -119,6 +121,9 @@ public class CardInmuebleHuespedController {
         mostrarImagenActual();
     }
 
+    /**
+     * Avanza una fotografía en el carrusel circular.
+     */
     @FXML
     private void imagenSiguiente() {
         if (imagenes.isEmpty()) return;
@@ -127,9 +132,9 @@ public class CardInmuebleHuespedController {
         mostrarImagenActual();
     }
 
-    // =========================
-    // SERVICIOS
-    // =========================
+    /**
+     * Genera dinámicamente etiquetas con formato de pastilla (chips) para los servicios del inmueble.
+     */
     private void cargarServicios() {
         contenedorServicios.getChildren().clear();
 
@@ -137,26 +142,27 @@ public class CardInmuebleHuespedController {
 
         for (InmuebleServicio s : inmueble.getServicios()) {
             Label chip = new Label("✔ " + s.getServicio().getNombre());
-            chip.getStyleClass().add("service-chip");
+            chip.getStyleClass().add("service-chip"); // Estilo definido en tu css
             contenedorServicios.getChildren().add(chip);
         }
     }
 
-    // =========================
-    // RESERVAR
-    // =========================
+    /**
+     * Evento al hacer clic en 'Reservar'. Carga el formulario modal inyectándole los datos del inmueble.
+     */
     @FXML
     private void onReservar() {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/org/example/renthub/FormReserva.fxml")
             );
-
             VBox root = loader.load();
 
+            // Transferencia de datos segura hacia el controlador modal
             FormReservaController controller = loader.getController();
-            controller.setInmueble(inmueble); // 🔑 AQUÍ ESTÁ LA CLAVE
+            controller.setInmueble(inmueble);
 
+            // Configuración del escenario emergente bloqueante
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -167,8 +173,5 @@ public class CardInmuebleHuespedController {
             e.printStackTrace();
         }
     }
-
-
 }
-
 

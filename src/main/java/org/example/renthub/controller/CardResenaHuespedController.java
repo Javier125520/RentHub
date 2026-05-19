@@ -11,12 +11,18 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.renthub.DAO.ReseñaDAO;
 import org.example.renthub.model.Reseña;
-
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+/**
+ * Controlador de las tarjetas del historial de comentarios del Huésped.
+ * Permite la rectificación o la eliminación directa de la opinión emitida por el cliente.
+ */
 public class CardResenaHuespedController {
 
+    // =========================================================================
+    // COMPONENTES FXML
+    // =========================================================================
     @FXML private Label lblTituloInmueble;
     @FXML private Label lblUbicacion;
     @FXML private Label lblEstrellas;
@@ -25,78 +31,62 @@ public class CardResenaHuespedController {
     @FXML private Label lblFecha;
 
     private Reseña resena;
-
+    // Formateador localizado en español para las fechas de publicación
     private final DateTimeFormatter formatter =
             DateTimeFormatter.ofPattern("dd MMMM yyyy");
 
-    // =========================
-    // SET RESEÑA
-    // =========================
+    /**
+     * Setea e hidrata los campos de la tarjeta con la reseña seleccionada.
+     */
     public void setResena(Reseña resena) {
         this.resena = resena;
         cargarDatos();
     }
 
-    // =========================
-    // CARGAR DATOS
-    // =========================
+    /**
+     * Escribe las descripciones, fechas formateadas e inicia la generación algorítmica de estrellas.
+     */
     private void cargarDatos() {
-
-        lblTituloInmueble.setText(
-                resena.getInmueble().getTitulo()
-        );
-
+        lblTituloInmueble.setText(resena.getInmueble().getTitulo());
         lblUbicacion.setText(
-                resena.getInmueble().getCiudad() + "\n" +
-                        resena.getInmueble().getDireccion()
+                resena.getInmueble().getCiudad() + "\n" + resena.getInmueble().getDireccion()
         );
-
         lblComentario.setText(resena.getComentario());
-
-        lblFecha.setText(
-                resena.getFecha().format(formatter)
-        );
-
+        lblFecha.setText(resena.getFecha().format(formatter));
         lblPuntuacion.setText(String.valueOf(resena.getPuntuacion()));
 
-        // Generar estrellas visuales
+        // Generar caracteres de estrellas visuales dinámicas según la base de datos
         lblEstrellas.setText(generarEstrellas(resena.getPuntuacion()));
     }
 
-    // =========================
-    // GENERAR ESTRELLAS
-    // =========================
+    /**
+     * Algoritmo de concatenación para pintar caracteres de estrellas rellenas o vacías según puntuación.
+     */
     private String generarEstrellas(int puntuacion) {
-
         StringBuilder estrellas = new StringBuilder();
 
         for (int i = 0; i < puntuacion; i++) {
             estrellas.append("★");
         }
-
         for (int i = puntuacion; i < 5; i++) {
             estrellas.append("☆");
         }
-
         return estrellas.toString();
     }
 
-    // =========================
-    // EDITAR
-    // =========================
+    /**
+     * Abre el modal del formulario de reseñas en modo edición conservando los datos previos.
+     */
     @FXML
     private void onEditar() {
-
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/org/example/renthub/FormReseña.fxml")
             );
-
             Parent root = loader.load();
 
-            // Obtener controller del formulario
             FormResenaController controller = loader.getController();
-            controller.setResena(resena); // 🔥 le pasamos la reseña
+            controller.setResena(resena); // Fuerza al formulario a entrar en modoEdición = true
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -104,7 +94,7 @@ public class CardResenaHuespedController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
-            // 🔥 Cuando se cierre, refrescamos el card
+            // Refresca la tarjeta local con las modificaciones hechas al volver del modal
             actualizarCard();
 
         } catch (Exception e) {
@@ -112,18 +102,18 @@ public class CardResenaHuespedController {
         }
     }
 
+    /** Sincroniza dinámicamente las etiquetas de la tarjeta en memoria tras una edición exitosa */
     private void actualizarCard() {
         lblComentario.setText(resena.getComentario());
         lblPuntuacion.setText(String.valueOf(resena.getPuntuacion()));
         lblEstrellas.setText("⭐".repeat(resena.getPuntuacion()));
     }
 
-    // =========================
-    // ELIMINAR
-    // =========================
+    /**
+     * Lanza una ventana de confirmación para eliminar físicamente la reseña de la base de datos.
+     */
     @FXML
     private void onEliminar() {
-
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setHeaderText("¿Eliminar esta reseña?");
         confirm.setContentText("Esta acción no se puede deshacer.");
@@ -131,12 +121,11 @@ public class CardResenaHuespedController {
         Optional<ButtonType> result = confirm.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-
             try {
-                ReseñaDAO dao = new ReseñaDAO();
-                dao.delete(resena.getId());
+                // Invocamos el borrado estático de la fila en MySQL
+                ReseñaDAO.delete(resena.getId());
 
-                // 🔥 Eliminar visualmente el card
+                // Ocultamos la tarjeta de la interfaz sin reiniciar modificando los estados del nodo
                 lblComentario.getParent().setVisible(false);
                 lblComentario.getParent().setManaged(false);
 

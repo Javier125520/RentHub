@@ -53,35 +53,6 @@ public class Usuario {
     public List<Reseña> getResenas() { return resenas; }
     public void setResenas(List<Reseña> resenas) { this.resenas = resenas; }
 
-    // utilidades para mantener coherencia bidireccional
-
-    public void addInmueble(Inmueble inmueble) {
-        if (!inmuebles.contains(inmueble)) {
-            inmuebles.add(inmueble);
-            inmueble.setPropietario(this);
-        }
-    }
-
-    public void removeInmueble(Inmueble inmueble) {
-        if (inmuebles.remove(inmueble)) {
-            inmueble.setPropietario(null);
-        }
-    }
-
-    public void addReserva(Reserva r) {
-        if (!reservas.contains(r)) {
-            reservas.add(r);
-            r.setHuesped(this);
-        }
-    }
-
-    public void addResena(Reseña res) {
-        if (!resenas.contains(res)) {
-            resenas.add(res);
-            res.setHuesped(this);
-        }
-    }
-
     @Override
     public String toString() {
         return "Usuario{" +

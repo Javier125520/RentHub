@@ -2,46 +2,60 @@ package org.example.renthub.DAO;
 
 import org.example.renthub.model.*;
 import org.example.renthub.connection.MySQLConnection;
-import org.example.renthub.model.enums.EstadoPago;
-import org.example.renthub.model.enums.MetodoPago;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class PagoDAO {
+/**
+ * Clase de Acceso a Datos (DAO) para el registro contable de cobros de transacciones de reservas.
+ */
+public class PagoDAO extends Pago {
 
-    // =========================
-    // SQL
-    // =========================
-
+    // =========================================================================
+    // SENTENCIAS SQL
+    // =========================================================================
     private static final String INSERT =
-            "INSERT INTO pago (metodo, fecha_pago, monto, estado, id_reserva) VALUES (?, ?, ?, ?, ?)";
+            "INSERT INTO pago (metodo, fecha_pago, monto, estado, id_reserva) VALUES (?, ?, ?, ?, ?);";
 
     private static final String DELETE =
-            "DELETE FROM pago WHERE id = ?";
+            "DELETE FROM pago WHERE id_pago = ?;";
 
-    // =========================
-    // INSERT
-    // =========================
+    // =========================================================================
+    // CONSTRUCTORES
+    // =========================================================================
+    public PagoDAO() {
+        super();
+    }
 
-    public boolean insert(Pago p) throws SQLException {
+    /** Constructor por copia: Sincroniza la información del modelo con la porción Active Record */
+    public PagoDAO(Pago p) {
+        super();
+        this.setId(p.getId());
+        this.setMetodo(p.getMetodo());
+        this.setFechaPago(p.getFechaPago());
+        this.setMonto(p.getMonto());
+        this.setEstado(p.getEstado());
+        this.setReserva(p.getReserva());
+    }
+
+    // =========================================================================
+    // MÉTODOS CRUD DE INSTANCIA (Active Record)
+    // =========================================================================
+
+    /** Registra la factura de pago enlazándola con el identificador de su reserva asociada */
+    public boolean insert() throws SQLException {
         Connection conn = MySQLConnection.getConnection();
-
         try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
-
-            ps.setString(1, p.getMetodo().name());
-            ps.setTimestamp(2, Timestamp.valueOf(p.getFechaPago()));
-            ps.setDouble(3, p.getMonto());
-            ps.setString(4, p.getEstado().name());
-            ps.setInt(5, p.getReserva().getIdReserva());
+            ps.setString(1, this.getMetodo().name());
+            ps.setTimestamp(2, Timestamp.valueOf(this.getFechaPago())); // Conversión de LocalDateTime a Timestamp de MySQL
+            ps.setDouble(3, this.getMonto());
+            ps.setString(4, this.getEstado().name());
+            ps.setInt(5, this.getReserva().getIdReserva());
 
             int rows = ps.executeUpdate();
-
             if (rows > 0) {
-                ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    p.setId(rs.getInt(1));
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        this.setId(rs.getInt(1));
+                    }
                 }
                 return true;
             }
@@ -49,18 +63,25 @@ public class PagoDAO {
         }
     }
 
-    // =========================
-    // DELETE
-    // =========================
-
-    public boolean delete(int idPago) throws SQLException {
+    /** Elimina el registro contable desde la instancia actual */
+    public boolean remove() throws SQLException {
         Connection conn = MySQLConnection.getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
+            ps.setInt(1, this.getId());
+            return ps.executeUpdate() > 0;
+        }
+    }
 
+    // =========================================================================
+    // MÉTODOS DE CONSULTA ESTÁTICOS
+    // =========================================================================
+
+    /** Elimina un recibo de pago de forma estática */
+    public static boolean delete(int idPago) throws SQLException {
+        Connection conn = MySQLConnection.getConnection();
         try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
             ps.setInt(1, idPago);
             return ps.executeUpdate() > 0;
         }
     }
-
 }
-

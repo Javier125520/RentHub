@@ -1,119 +1,126 @@
 package org.example.renthub.DAO;
 
-import org.example.renthub.connection.MySQLConnection;
-import org.example.renthub.model.enums.RolUsuario;
 import org.example.renthub.model.Usuario;
-
+import org.example.renthub.model.enums.RolUsuario;
+import org.example.renthub.connection.MySQLConnection;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class UsuarioDAO {
+/**
+ * Clase de Acceso a Datos (DAO) para los Usuarios del ecosistema.
+ * Procesa accesos, registros de cuentas y validaciones criptográficas de logins.
+ */
+public class UsuarioDAO extends Usuario {
 
-    private final Connection conn;
+    // =========================================================================
+    // SENTENCIAS SQL
+    // =========================================================================
+    private static final String INSERT = "INSERT INTO usuario (nombre, correo, contraseña, rol) VALUES (?, ?, ?, ?)";
+    private static final String UPDATE = "UPDATE usuario SET nombre = ?, correo = ?, contraseña = ?, rol = ? WHERE id_usuario = ?";
+    private static final String DELETE = "DELETE FROM usuario WHERE id_usuario = ?";
+    private static final String SELECT_BY_ID = "SELECT * FROM usuario WHERE id_usuario = ?";
+    private static final String SELECT_BY_CORREO = "SELECT * FROM usuario WHERE correo = ?";
 
-    // =========================
-    // SQL
-    // =========================
-    private static final String INSERT =
-            "INSERT INTO usuario (nombre, correo, contraseña, rol) VALUES (?, ?, ?, ?)";
-
-    private static final String UPDATE =
-            "UPDATE usuario SET nombre = ?, correo = ?, contraseña = ?, rol = ? WHERE id_usuario = ?";
-
-    private static final String DELETE =
-            "DELETE FROM usuario WHERE id_usuario = ?";
-
-    private static final String SELECT_BY_ID =
-            "SELECT * FROM usuario WHERE id_usuario = ?";
-
-    private static final String SELECT_ALL =
-            "SELECT * FROM usuario";
-
-    private static final String SELECT_BY_CORREO =
-            "SELECT * FROM usuario WHERE correo = ?";
-
-    private static final String LOGIN =
-            "SELECT * FROM usuario WHERE correo = ? AND contraseña = ?";
-
-    private static final String EXISTS_CORREO =
-            "SELECT COUNT(*) FROM usuario WHERE correo = ?";
-
-    // =========================
+    // =========================================================================
     // CONSTRUCTORES
-    // =========================
-
-    /** Usa la conexión singleton */
+    // =========================================================================
     public UsuarioDAO() {
-        this.conn = MySQLConnection.getConnection();
+        super();
     }
 
-    /** Permite inyectar conexión (tests / ampliaciones) */
-    public UsuarioDAO(Connection conn) {
-        this.conn = conn;
+    /** Constructor parametrizado completo */
+    public UsuarioDAO(int id, String nombre, String correo, String pass, RolUsuario rol) {
+        super(id, nombre, correo, pass, rol);
     }
 
-    // =========================
-    // CRUD
-    // =========================
+    /** Constructor por copia: Sincroniza al usuario logueado en la sesión hacia una instancia activa */
+    public UsuarioDAO(Usuario u) {
+        super(u.getIdUsuario(), u.getNombre(), u.getCorreo(), u.getContrasena(), u.getRol());
+    }
 
-    public boolean insert(Usuario u) throws SQLException {
+    // =========================================================================
+    // MÉTODOS CRUD DE INSTANCIA (Active Record)
+    // =========================================================================
+
+    /** Registra e inserta un nuevo perfil de usuario en la base de datos */
+    public boolean insert() throws SQLException {
+        Connection conn = MySQLConnection.getConnection();
         try (PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
-
-            ps.setString(1, u.getNombre());
-            ps.setString(2, u.getCorreo());
-            ps.setString(3, u.getContrasena());
-            ps.setString(4, u.getRol().name());
+            ps.setString(1, this.getNombre());
+            ps.setString(2, this.getCorreo());
+            ps.setString(3, this.getContrasena());
+            ps.setString(4, this.getRol().name());
 
             int rows = ps.executeUpdate();
-
             if (rows > 0) {
-                try (ResultSet rs = ps.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        u.setIdUsuario(rs.getInt(1));
-                    }
-                }
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) this.setIdUsuario(rs.getInt(1));
                 return true;
             }
-            return false;
         }
+        return false;
     }
 
-    public boolean delete(int idUsuario) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
-            ps.setInt(1, idUsuario);
+    /** Actualiza la información personal o contraseñas del usuario */
+    public boolean update() throws SQLException {
+        Connection conn = MySQLConnection.getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
+            ps.setString(1, this.getNombre());
+            ps.setString(2, this.getCorreo());
+            ps.setString(3, this.getContrasena());
+            ps.setString(4, this.getRol().name());
+            ps.setInt(5, this.getIdUsuario());
             return ps.executeUpdate() > 0;
         }
     }
 
+    // =========================================================================
+    // MÉTODOS DE CONSULTA ESTÁTICOS
+    // =========================================================================
 
-    public Usuario findByCorreo(String correo) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_CORREO)) {
-            ps.setString(1, correo);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapUsuario(rs);
-                }
+    /** Encuentra un usuario específico por su ID indexado en la base de datos */
+    public static UsuarioDAO getById(int id) throws SQLException {
+        Connection conn = MySQLConnection.getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new UsuarioDAO(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nombre"),
+                        rs.getString("correo"),
+                        rs.getString("contraseña"), // Sincronizado con la col de la BD en español
+                        RolUsuario.valueOf(rs.getString("rol"))
+                );
             }
         }
         return null;
     }
 
-    // =========================
-    // MAPEADOR
-    // =========================
+    /** Busca un usuario por su email único (Esencial para comprobar credenciales en el Login) */
+    public static Usuario findByCorreo(String correo) throws SQLException {
+        Connection conn = MySQLConnection.getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_CORREO)) {
+            ps.setString(1, correo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new UsuarioDAO(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nombre"),
+                        rs.getString("correo"),
+                        rs.getString("contraseña"),
+                        RolUsuario.valueOf(rs.getString("rol"))
+                );
+            }
+        }
+        return null;
+    }
 
-    private Usuario mapUsuario(ResultSet rs) throws SQLException {
-        return new Usuario(
-                rs.getInt("id_usuario"),
-                rs.getString("nombre"),
-                rs.getString("correo"),
-                rs.getString("contraseña"),
-                RolUsuario.valueOf(rs.getString("rol"))
-        );
+    /** Elimina la cuenta física de un usuario del sistema */
+    public static boolean delete(int id) throws SQLException {
+        Connection conn = MySQLConnection.getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        }
     }
 }
-
-
-

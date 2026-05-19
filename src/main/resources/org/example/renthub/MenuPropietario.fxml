@@ -10,9 +10,10 @@
 
     <!-- HEADER -->
     <top>
-        <HBox styleClass="header" spacing="15" alignment="CENTER_LEFT">
+        <HBox styleClass="header" alignment="CENTER_LEFT" spacing="15">
             <Label text="🏠" styleClass="logo-icon"/>
-            <VBox>
+
+            <VBox alignment="CENTER_LEFT">
                 <Label text="RentHub" styleClass="logo"/>
                 <Label text="Panel de Propietario" styleClass="subtitle"/>
             </VBox>
@@ -24,11 +25,9 @@
         </HBox>
     </top>
 
-    <!-- CONTENIDO -->
     <center>
-        <VBox spacing="30" styleClass="content">
+        <VBox spacing="30" styleClass="content" alignment="TOP_CENTER">
 
-            <!-- TABS -->
             <HBox alignment="CENTER" spacing="15" styleClass="tabs">
                 <Button fx:id="btnMisViviendas" text="🏠 Mis Viviendas" styleClass="tab-active" onAction="#verMisViviendas"/>
                 <Button fx:id="btnServicios" text="🛠 Servicios" styleClass="tab" onAction="#verServicios"/>
@@ -36,8 +35,7 @@
                 <Button fx:id="btnResenas" text="⭐ Reseñas" styleClass="tab" onAction="#verResenas"/>
             </HBox>
 
-            <!-- AQUÍ SE CAMBIA EL CONTENIDO -->
-            <StackPane fx:id="contenidoCentral"/>
+            <StackPane fx:id="contenidoCentral" styleClass="view-container"/>
 
         </VBox>
     </center>
